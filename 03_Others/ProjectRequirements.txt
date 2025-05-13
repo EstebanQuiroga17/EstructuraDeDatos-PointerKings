@@ -1,0 +1,29 @@
+Proyecto:
+Usando listas doblemente circulares todo con punteros, nada con arreglos, nada con funciones.
+Hacer una cuenta, abrir una cuenta de ahorros o corriente, y automatizar 
+Retiro, deposito y me queda el saldo.
+Todo eso hacer en una lista doblemente enlazada circular.
+
+Ha calificar:
+1. El Modelo, todo bien modelado, solo diagrama de clases. 1.5 pts
+2. Guardar en un archivo binario. 1.5 pts
+3. Validaciones con el uso y manejo de try catch 
+4. Programación debe contener(Tipos de datos abstractos, funciones lambda, Recursividad, Plantillas(Template), Metodos sobre cargados,  ) todo esto está dentro de la categoría de validaiones. 4pts
+
+NADA DE USO DE FUNCIONES PROPIAS DEL C
+DEBEMOS CREAR UNA FUNCION PARA PODER USARLA
+
+Minimo 3 consultas
+Consulta de rangos de fechas(usando filtros, como publicación, titulo, autor)
+Consulta personalizada(Ejm: Busque los libros con el nombre de la persona "Solis", y en la misma consulta filtre por el DNI)
+Una sola Funcion para hacer una consultas(Usar lambda)
+Otra mas a nuestro criterio
+
+Extras
+1. Instalador con clave del producto(Readme). 1 pto
+1. Sacar el Backup del archivo hasta ese momento. 1pto
+1. Restaurar (Restaura cualquier punto del backup, para volver al archivo). 1pto
+1. Hacer el menú de ayuda(ayuda técnica del programa, en vez de los mas va un librito, se abre una ventana individual) usando un wizard
+1. Hacer in cifrado utilizando cualquier método, Cesar, MD5, SHD, (cifras los datos que tenga el archivo)
+1. Decifrar lo cifrado
+1. Menu de cursores

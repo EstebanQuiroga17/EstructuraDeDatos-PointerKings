@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1745966703 source:c:\users\tevs\desktop\espe\tareas\tercersemestre\estructuradedatos\talleres\tallergrupal1\potenciasde2\controller\potenciasdedos.cpp
+	"../Model/PotenciasDeDos.h"
+
+1745966351 c:\users\tevs\desktop\espe\tareas\tercersemestre\estructuradedatos\talleres\tallergrupal1\potenciasde2\model\potenciasdedos.h
+
+1745966703 source:c:\users\tevs\desktop\espe\tareas\tercersemestre\estructuradedatos\talleres\tallergrupal1\potenciasde2\view\main.cpp
+	<iostream>
+	"../Model/PotenciasDeDos.h"
+	"../Model/ValidarDatos.h"
+
+1745964655 c:\users\tevs\desktop\espe\tareas\tercersemestre\estructuradedatos\talleres\tallergrupal1\potenciasde2\controller\potenciasdedos.cpp
+	"../Model/PotenciasDeDos.h"
+
+1745966362 source:c:\users\tevs\desktop\espe\tareas\tercersemestre\estructuradedatos\talleres\tallergrupal1\potenciasde2\controller\validardatos.cpp
+	<iostream>
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	"../Model/ValidarDatos.h"
+
+1745787767 c:\users\tevs\desktop\espe\tareas\tercersemestre\estructuradedatos\talleres\tallergrupal1\potenciasde2\model\validardatos.h
+

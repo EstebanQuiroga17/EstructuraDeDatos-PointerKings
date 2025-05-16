@@ -1,14 +1,14 @@
 /***********************************************************************
  * Module:  PersonalData.h
  * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 19:39:48
+ * Modified: jueves, 15 de mayo de 2025 18:50:15
  * Purpose: Declaration of the class PersonalData
  ***********************************************************************/
 
 #if !defined(__BankManagerProject_PersonalData_h)
 #define __BankManagerProject_PersonalData_h
 
-class Node<User>;
+class User;
 
 #include <Date.h>
 
@@ -25,8 +25,10 @@ public:
    void setBirthDate(Date newBirthDate);
    PersonalData();
    ~PersonalData();
+   std::string getEmail(void);
+   void setEmail(std::string newEmail);
 
-   Node<User>* node<User>;
+   User* user;
 
 protected:
 private:
@@ -35,6 +37,7 @@ private:
    std::string DNI;
    Date birthDate;
    std::string country;
+   std::string email;
 
 
 };

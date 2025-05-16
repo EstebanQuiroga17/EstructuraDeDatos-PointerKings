@@ -1,12 +1,14 @@
 /***********************************************************************
  * Module:  Date.h
  * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 19:40:31
+ * Modified: jueves, 15 de mayo de 2025 20:47:56
  * Purpose: Declaration of the class Date
  ***********************************************************************/
 
 #if !defined(__BankManagerProject_Date_h)
 #define __BankManagerProject_Date_h
+
+class Time;
 
 #include <Time.h>
 
@@ -21,6 +23,8 @@ public:
    void setMonth(int newMonth);
    Anio getYear(void);
    void setYear(Anio newYear);
+
+   Time* time;
 
 protected:
 private:

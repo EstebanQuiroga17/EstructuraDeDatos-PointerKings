@@ -1,11 +1,10 @@
 /***********************************************************************
  * Module:  BankMovements.cpp
  * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 18:41:56
+ * Modified: jueves, 15 de mayo de 2025 21:40:53
  * Purpose: Implementation of the class BankMovements
  ***********************************************************************/
 
-#include "Node<User>.h"
 #include "BankMovements.h"
 
 ////////////////////////////////////////////////////////////////////////
@@ -35,23 +34,23 @@ void BankMovements::setId(int newId)
 ////////////////////////////////////////////////////////////////////////
 // Name:       BankMovements::getAmmount()
 // Purpose:    Implementation of BankMovements::getAmmount()
-// Return:     int
+// Return:     float
 ////////////////////////////////////////////////////////////////////////
 
-int BankMovements::getAmmount(void)
+float BankMovements::getAmmount(void)
 {
    return ammount;
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       BankMovements::setAmmount(int newAmmount)
+// Name:       BankMovements::setAmmount(float newAmmount)
 // Purpose:    Implementation of BankMovements::setAmmount()
 // Parameters:
 // - newAmmount
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void BankMovements::setAmmount(int newAmmount)
+void BankMovements::setAmmount(float newAmmount)
 {
    ammount = newAmmount;
 }
@@ -59,23 +58,23 @@ void BankMovements::setAmmount(int newAmmount)
 ////////////////////////////////////////////////////////////////////////
 // Name:       BankMovements::getUser()
 // Purpose:    Implementation of BankMovements::getUser()
-// Return:     Node<User>
+// Return:     User
 ////////////////////////////////////////////////////////////////////////
 
-Node<User> BankMovements::getUser(void)
+User BankMovements::getUser(void)
 {
    return user;
 }
 
 ////////////////////////////////////////////////////////////////////////
-// Name:       BankMovements::setUser(Node<User> newUser)
+// Name:       BankMovements::setUser(User newUser)
 // Purpose:    Implementation of BankMovements::setUser()
 // Parameters:
 // - newUser
 // Return:     void
 ////////////////////////////////////////////////////////////////////////
 
-void BankMovements::setUser(Node<User> newUser)
+void BankMovements::setUser(User newUser)
 {
    user = newUser;
 }
@@ -102,4 +101,26 @@ Date BankMovements::getDate(void)
 void BankMovements::setDate(Date newDate)
 {
    date = newDate;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       BankMovements::calculateBalance()
+// Purpose:    Implementation of BankMovements::calculateBalance()
+// Return:     float
+////////////////////////////////////////////////////////////////////////
+
+float BankMovements::calculateBalance(void)
+{
+   // TODO : implement
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       BankMovements::printReceipt()
+// Purpose:    Implementation of BankMovements::printReceipt()
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void BankMovements::printReceipt(void)
+{
+   // TODO : implement
 }

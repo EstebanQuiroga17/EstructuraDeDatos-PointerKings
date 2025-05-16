@@ -1,7 +1,7 @@
 /***********************************************************************
  * Module:  Deposit.h
  * Author:  TEVS
- * Modified: martes, 13 de mayo de 2025 19:12:06
+ * Modified: jueves, 15 de mayo de 2025 18:48:55
  * Purpose: Declaration of the class Deposit
  ***********************************************************************/
 
@@ -9,15 +9,20 @@
 #define __BankManagerProject_Deposit_h
 
 #include <BankMovements.h>
+#include <User.h>
 
 class Deposit : public BankMovements
 {
 public:
    Deposit();
    ~Deposit();
+   User getDestinationUser(void);
+   void setDestinationUser(User newDestinationUser);
 
 protected:
 private:
+   User destinationUser;
+
 
 };
 

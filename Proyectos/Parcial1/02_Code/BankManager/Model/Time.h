@@ -1,7 +1,7 @@
 /***********************************************************************
  * Module:  Time.h
  * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 19:40:15
+ * Modified: jueves, 15 de mayo de 2025 20:47:56
  * Purpose: Declaration of the class Time
  ***********************************************************************/
 

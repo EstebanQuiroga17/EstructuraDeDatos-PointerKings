@@ -1,11 +1,11 @@
 /***********************************************************************
  * Module:  PersonalData.cpp
  * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 19:39:48
+ * Modified: jueves, 15 de mayo de 2025 18:50:15
  * Purpose: Implementation of the class PersonalData
  ***********************************************************************/
 
-#include "Node<User>.h"
+#include "User.h"
 #include "PersonalData.h"
 
 ////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ void PersonalData::setBirthDate(Date newBirthDate)
 
 PersonalData::PersonalData()
 {
-   node<User> = NULL;
+   user = NULL;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -124,4 +124,28 @@ PersonalData::PersonalData()
 PersonalData::~PersonalData()
 {
    // TODO : implement
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       PersonalData::getEmail()
+// Purpose:    Implementation of PersonalData::getEmail()
+// Return:     std::string
+////////////////////////////////////////////////////////////////////////
+
+std::string PersonalData::getEmail(void)
+{
+   return email;
+}
+
+////////////////////////////////////////////////////////////////////////
+// Name:       PersonalData::setEmail(std::string newEmail)
+// Purpose:    Implementation of PersonalData::setEmail()
+// Parameters:
+// - newEmail
+// Return:     void
+////////////////////////////////////////////////////////////////////////
+
+void PersonalData::setEmail(std::string newEmail)
+{
+   email = newEmail;
 }

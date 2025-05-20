@@ -1,53 +1,27 @@
-/***********************************************************************
- * Module:  Year.cpp
- * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 19:40:31
- * Purpose: Implementation of the class Year
- ***********************************************************************/
+#include "..\Model\Year.h"
+#include "..\Model\DateValidator.h"
 
-#include "Year.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Year::Year()
-// Purpose:    Implementation of Year::Year()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Year::Year()
-{
+bool Year::getLeapYear(void) {
+    return leapYear;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Year::~Year()
-// Purpose:    Implementation of Year::~Year()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Year::~Year()
-{
-   // TODO : implement
+void Year::setLeapYear(bool newLeapYear) {
+    leapYear = newLeapYear;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Year::getLeapYear()
-// Purpose:    Implementation of Year::getLeapYear()
-// Return:     bool
-////////////////////////////////////////////////////////////////////////
-
-bool Year::getLeapYear(void)
-{
-   return leapYear;
+int Year::getYear(void) {
+    return year;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Year::setLeapYear(bool newLeapYear)
-// Purpose:    Implementation of Year::setLeapYear()
-// Parameters:
-// - newLeapYear
-// Return:     void
-////////////////////////////////////////////////////////////////////////
+void Year::setYear(int newYear) {
+    year = newYear;
+}
 
-void Year::setLeapYear(bool newLeapYear)
-{
-   leapYear = newLeapYear;
+Year::Year(int newYear) {
+    year = newYear;
+    leapYear = DateValidator::validateLeapYear(year);
+}
+
+Year::~Year() {
+    // No dynamic memory to release
 }

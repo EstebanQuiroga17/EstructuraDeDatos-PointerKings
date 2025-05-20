@@ -1,48 +1,35 @@
-/***********************************************************************
- * Module:  DateValidator.cpp
- * Author:  TEVS
- * Modified: lunes, 12 de mayo de 2025 20:03:25
- * Purpose: Implementation of the class DateValidator
- ***********************************************************************/
+#include "../Model/DateValidator.h"
 
-#include "DateValidator.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       DateValidator::validateLeapYear(int year)
-// Purpose:    Implementation of DateValidator::validateLeapYear()
-// Parameters:
-// - year
-// Return:     bool
-////////////////////////////////////////////////////////////////////////
-
-bool DateValidator::validateLeapYear(int year)
-{
-   // TODO : implement
+bool DateValidator::validateLeapYear(int year) {
+    if (year % 4 != 0) {
+        return false;
+    } else if (year % 100 != 0) {
+        return true;
+    } else if (year % 400 != 0) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       DateValidator::validateMonth(int month)
-// Purpose:    Implementation of DateValidator::validateMonth()
-// Parameters:
-// - month
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int DateValidator::validateMonth(int month)
-{
-   // TODO : implement
+int DateValidator::monthDays(int month, int year) {
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+        return 31;
+    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+        return 30;
+    } else if (month == 2) {
+        if (validateLeapYear(year) == true) {
+            return 29;
+        } else {
+            return 28;
+        }
+    }
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       DateValidator::validateDay(int day, int month)
-// Purpose:    Implementation of DateValidator::validateDay()
-// Parameters:
-// - day
-// - month
-// Return:     bool
-////////////////////////////////////////////////////////////////////////
-
-bool DateValidator::validateDay(int day, int month)
-{
-   // TODO : implement
+bool DateValidator::validateDay(int day, int daysInMonth) {
+    if (day < 1 || day > daysInMonth) {
+        return false;
+    } else {
+        return true;
+    }
 }

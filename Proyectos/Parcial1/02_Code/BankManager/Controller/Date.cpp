@@ -1,103 +1,83 @@
-/***********************************************************************
- * Module:  Date.cpp
- * Author:  TEVS
- * Modified: jueves, 15 de mayo de 2025 20:47:56
- * Purpose: Implementation of the class Date
- ***********************************************************************/
+#include <chrono>
+#include <iostream>
+#include "../Model/Date.h"
+#include "../Model/Year.h"
+#include "../Model/DateValidator.h"
 
-#include "Time.h"
-#include "Date.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::Date()
-// Purpose:    Implementation of Date::Date()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Date::Date()
-{
-   time = NULL;
+int Date::getDay(void) {
+    return day;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::~Date()
-// Purpose:    Implementation of Date::~Date()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Date::~Date()
-{
-   // TODO : implement
+void Date::setDay(int newDay) {
+    day = newDay;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::getDay()
-// Purpose:    Implementation of Date::getDay()
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int Date::getDay(void)
-{
-   return day;
+int Date::getMonth(void) {
+    return month;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::setDay(int newDay)
-// Purpose:    Implementation of Date::setDay()
-// Parameters:
-// - newDay
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void Date::setDay(int newDay)
-{
-   day = newDay;
+void Date::setMonth(int newMonth) {
+    month = newMonth;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::getMonth()
-// Purpose:    Implementation of Date::getMonth()
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int Date::getMonth(void)
-{
-   return month;
+Year Date::getYear(void) {
+    return year;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::setMonth(int newMonth)
-// Purpose:    Implementation of Date::setMonth()
-// Parameters:
-// - newMonth
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void Date::setMonth(int newMonth)
-{
-   month = newMonth;
+void Date::setYear(Year newYear) {
+    year = newYear;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::getYear()
-// Purpose:    Implementation of Date::getYear()
-// Return:     Anio
-////////////////////////////////////////////////////////////////////////
-
-Anio Date::getYear(void)
-{
-   return year;
+int Date::getDaysInMonth(void) {
+    return daysInMonth;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Date::setYear(Anio newYear)
-// Purpose:    Implementation of Date::setYear()
-// Parameters:
-// - newYear
-// Return:     void
-////////////////////////////////////////////////////////////////////////
+void Date::setDaysInMonth(int newDaysInMonth) {
+    daysInMonth = newDaysInMonth;
+}
 
-void Date::setYear(Anio newYear)
-{
-   year = newYear;
+Time Date::getTime(void) {
+    return time;
+}
+
+void Date::setTime(Time newTime) {
+    time = newTime;
+}
+
+Date::Date(Year newYear, int newMonth, int newDay) {
+    year = newYear;
+    month = newMonth;
+    day = newDay;
+    daysInMonth = DateValidator::monthDays(year.getYear(), month);
+}
+
+Date::~Date() {
+
+}
+
+
+void Date::print() {
+    std::cout << "Fecha: " << day << "/" << month << "/" << year.getYear() << std::endl;
+    std::cout << "Hora: " << time.getHour() << ":" << time.getMinute() << ":" << time.getSecond() << std::endl;
+}
+
+Date Date::localDate() {
+    auto now = std::chrono::system_clock::now();
+    std::time_t nowC = std::chrono::system_clock::to_time_t(now);
+    std::tm* local = std::localtime(&nowC);
+
+    Year currentYear(local->tm_year + 1900);
+    int currentMonth = local->tm_mon + 1;
+    int currentDay = local->tm_mday;
+
+    Date currentDate(currentYear, currentMonth, currentDay);
+
+    Time currentTime;
+    currentTime.setHour(local->tm_hour);
+    currentTime.setMinute(local->tm_min);
+    currentTime.setSecond(local->tm_sec);
+
+    currentDate.setTime(currentTime);
+
+    return currentDate;
 }

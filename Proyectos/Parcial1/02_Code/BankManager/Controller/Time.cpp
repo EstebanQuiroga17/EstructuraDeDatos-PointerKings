@@ -1,101 +1,35 @@
-/***********************************************************************
- * Module:  Time.cpp
- * Author:  TEVS
- * Modified: jueves, 15 de mayo de 2025 20:47:56
- * Purpose: Implementation of the class Time
- ***********************************************************************/
+#include "..\Model\Time.h"
 
-#include "Time.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::getHour()
-// Purpose:    Implementation of Time::getHour()
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int Time::getHour(void)
-{
-   return hour;
+int Time::getHour(void) {
+    return hour;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::setHour(int newHour)
-// Purpose:    Implementation of Time::setHour()
-// Parameters:
-// - newHour
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void Time::setHour(int newHour)
-{
-   hour = newHour;
+void Time::setHour(int newHour) {
+    hour = newHour;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::getMinute()
-// Purpose:    Implementation of Time::getMinute()
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int Time::getMinute(void)
-{
-   return minute;
+int Time::getMinute(void) {
+    return minute;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::setMinute(int newMinute)
-// Purpose:    Implementation of Time::setMinute()
-// Parameters:
-// - newMinute
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void Time::setMinute(int newMinute)
-{
-   minute = newMinute;
+void Time::setMinute(int newMinute) {
+    minute = newMinute;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::getSecond()
-// Purpose:    Implementation of Time::getSecond()
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int Time::getSecond(void)
-{
-   return second;
+int Time::getSecond(void) {
+    return second;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::setSecond(int newSecond)
-// Purpose:    Implementation of Time::setSecond()
-// Parameters:
-// - newSecond
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void Time::setSecond(int newSecond)
-{
-   second = newSecond;
+void Time::setSecond(int newSecond) {
+    second = newSecond;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::Time()
-// Purpose:    Implementation of Time::Time()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Time::Time()
-{
+Time::Time() {
+    hour = 0;
+    minute = 0;
+    second = 0;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       Time::~Time()
-// Purpose:    Implementation of Time::~Time()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
-Time::~Time()
-{
-   // TODO : implement
+Time::~Time() {
+    // No dynamic memory to release
 }

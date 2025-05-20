@@ -1,23 +1,9 @@
-/***********************************************************************
- * Module:  DateValidator.h
- * Author:  TEVS
- * Modified: lunes, 12 de mayo de 2025 20:03:25
- * Purpose: Declaration of the class DateValidator
- ***********************************************************************/
+#pragma once
 
-#if !defined(__BankManagerProject_DateValidator_h)
-#define __BankManagerProject_DateValidator_h
-
-class DateValidator
-{
+class DateValidator {
 public:
-   bool validateLeapYear(int year);
-   int validateMonth(int month);
-   bool validateDay(int day, int month);
-
-protected:
-private:
-
+   static bool validateLeapYear(int year);
+   static int monthDays(int month, int year);
+   static bool validateDay(int day, int month);
 };
 
-#endif

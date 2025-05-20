@@ -1,39 +1,31 @@
-/***********************************************************************
- * Module:  Date.h
- * Author:  TEVS
- * Modified: jueves, 15 de mayo de 2025 20:47:56
- * Purpose: Declaration of the class Date
- ***********************************************************************/
+#pragma once
 
-#if !defined(__BankManagerProject_Date_h)
-#define __BankManagerProject_Date_h
-
-class Time;
-
-#include <Time.h>
+#include "Year.h"
+#include "Time.h"
 
 class Date
 {
 public:
-   Date();
-   ~Date();
-   int getDay(void);
-   void setDay(int newDay);
-   int getMonth(void);
-   void setMonth(int newMonth);
-   Anio getYear(void);
-   void setYear(Anio newYear);
-
-   Time* time;
+    int getDay(void);
+    void setDay(int newDay);
+    int getMonth(void);
+    void setMonth(int newMonth);
+    Year getYear(void);
+    void setYear(Year newYear);
+    int getDaysInMonth(void);
+    void setDaysInMonth(int newDaysInMonth);
+    Time getTime(void);
+    void setTime(Time newTime);
+    void print();
+    Date localDate();
+    Date(Year newYear, int newMonth, int newDay);
+    ~Date();
 
 protected:
 private:
-   int day;
-   int month;
-   Anio year;
-   Time time;
-
-
+    int day;
+    int month;
+    Year year;
+    int daysInMonth;
+    Time time;
 };
-
-#endif

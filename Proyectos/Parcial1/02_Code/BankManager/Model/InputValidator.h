@@ -1,13 +1,12 @@
 #pragma once
 #include <string>
 #include <regex>
-using namespace std;
 
 class InputValidator
 {
 public:
-    static bool isInteger(string input);
-    static bool isFloat(string input);
-    static bool isEmail(string input);
+    static bool isInteger(std::string input);
+    static bool isFloat(std::string input);
+    static bool isEmail(std::string input);
 };
 

@@ -14,7 +14,8 @@ public:
     MenuManager();
     void loadOptions(const std::vector<std::string>& opciones);
     void printMenu();
-    void runMenuLoop();
+    int runMenuLoopReturnIndex(); // <-- AGRÉGALO AQUÍ
+    // void runMenuLoop(); // <-- Puedes borrar/comentar este si ya no lo usas
 };
 
 #endif

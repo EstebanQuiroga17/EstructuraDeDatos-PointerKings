@@ -1,10 +1,17 @@
-#include "../Model/InputValidator.h"
 #include <iostream>
+#include "../Model/InputValidator.h"
+
+
+
 using namespace std;
 
 int main(){
-    int number;
-    cin>> number;
-    bool truth = InputValidator::isFloat(to_string(number));
-    cout<<truth<<endl;
+    std::string input;
+    std::cout << "Ingrese un número para validar si es float: ";
+    std::cin >> input;
+
+    bool esFloat = InputValidator::isFloat(input);
+    std::cout << "Es float válido? " << (esFloat ? "Sí" : "No") << std::endl;
+
+    return 0;
 }

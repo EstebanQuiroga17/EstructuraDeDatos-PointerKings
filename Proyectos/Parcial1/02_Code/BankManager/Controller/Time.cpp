@@ -1,35 +1,35 @@
-#include "..\Model\Time.h"
+#include "../Model/Clock.h"
 
-int Time::getHour(void) {
+int Clock::getHour(void) {
     return hour;
 }
 
-void Time::setHour(int newHour) {
+void Clock::setHour(int newHour) {
     hour = newHour;
 }
 
-int Time::getMinute(void) {
+int Clock::getMinute(void) {
     return minute;
 }
 
-void Time::setMinute(int newMinute) {
+void Clock::setMinute(int newMinute) {
     minute = newMinute;
 }
 
-int Time::getSecond(void) {
+int Clock::getSecond(void) {
     return second;
 }
 
-void Time::setSecond(int newSecond) {
+void Clock::setSecond(int newSecond) {
     second = newSecond;
 }
 
-Time::Time() {
+Clock::Clock() {
     hour = 0;
     minute = 0;
     second = 0;
 }
 
-Time::~Time() {
-    // No dynamic memory to release
+Clock::~Clock() {
+    
 }

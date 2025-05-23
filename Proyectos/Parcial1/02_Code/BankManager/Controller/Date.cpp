@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include "../Model/Clock.h"
 #include "../Model/Date.h"
 #include "../Model/Year.h"
 #include "../Model/DateValidator.h"
@@ -36,20 +37,20 @@ void Date::setDaysInMonth(int newDaysInMonth) {
     daysInMonth = newDaysInMonth;
 }
 
-Time Date::getTime(void) {
+Clock Date::getTime(void) {
     return time;
 }
 
-void Date::setTime(Time newTime) {
+void Date::setTime(Clock newTime) {
     time = newTime;
 }
 
-Date::Date(Year newYear, int newMonth, int newDay) {
-    year = newYear;
-    month = newMonth;
-    day = newDay;
+Date::Date(Year newYear, int newMonth, int newDay)
+    : year(newYear), month(newMonth), day(newDay)
+{
     daysInMonth = DateValidator::monthDays(year.getYear(), month);
 }
+
 
 Date::~Date() {
 
@@ -72,7 +73,7 @@ Date Date::localDate() {
 
     Date currentDate(currentYear, currentMonth, currentDay);
 
-    Time currentTime;
+    Clock currentTime;
     currentTime.setHour(local->tm_hour);
     currentTime.setMinute(local->tm_min);
     currentTime.setSecond(local->tm_sec);

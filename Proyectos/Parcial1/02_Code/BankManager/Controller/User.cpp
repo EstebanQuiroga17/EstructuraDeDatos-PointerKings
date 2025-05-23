@@ -1,164 +1,110 @@
-/***********************************************************************
- * Module:  User.cpp
- * Author:  TEVS
- * Modified: jueves, 15 de mayo de 2025 19:00:42
- * Purpose: Implementation of the class User
- ***********************************************************************/
-
 #include "BankAccount.h"
-#include "BankMovements.h"
-#include "List<T>.h"
+#include "../Model/PersonalData.h"
+#include "../Model/BankMovement.h"
+#include "../Model/List.h"
+#include "../Model/WithDraw.h"
+#include "../Model/Deposit.h"
 #include "User.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       User::withDraw()
-// Purpose:    Implementation of User::withDraw()
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void User::withDraw(void)
+using namespace std;
+void User::withDraw(float amount, char accountType)
 {
-   // TODO : implement
+   if(accountType == 's'){
+      savingsAccount.setBalance(savingsAccount.getBalance() - amount);
+   }
+   if(accountType == 'c'){
+      checkingAccount.setBalance(checkingAccount.getBalance() - amount);
+   }
+   WithDraw withDraw(amount, *this, Date()); 
+   bankMovements.insert(withDraw);
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::depositTo(BankAccount destinantionAccount)
-// Purpose:    Implementation of User::depositTo()
-// Parameters:
-// - destinantionAccount
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void User::depositTo(BankAccount destinantionAccount)
+void User::depositTo(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts)
 {
-   // TODO : implement
+   BankAccount* destinantionAccount;
+   if(accountType == 's'){
+      destinantionAccount = &destinationUser.getSavingsAccount();
+   }
+   else if(accountType == 'c'){
+      destinantionAccount = &destinationUser.getCheckingAccount();
+   }
+
+   if(bankAccounts.search(*destinantionAccount) == nullptr){
+      cout<<"Cuenta no encontrada"<<endl;
+      return;
+   }else{
+      destinantionAccount->setBalance(destinantionAccount->getBalance() + amount);
+      //Descount amount from the user account
+      if(accountType == 's'){
+         savingsAccount.setBalance(savingsAccount.getBalance() - amount);
+      }
+      if(accountType == 'c'){
+         checkingAccount.setBalance(checkingAccount.getBalance() - amount);
+      }
+   }
+   Date localDate = Date::localDate();
+   Deposit deposit(amount, *this, localDate, destinationUser);
+   bankMovements.insert(deposit);
+   destinationUser.getBankMovements().insert(deposit);
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::depositMe()
-// Purpose:    Implementation of User::depositMe()
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void User::depositMe(void)
+void User::depositMe(float amount, char accountType)
 {
-   // TODO : implement
-}
+   if(accountType == 's'){
+      savingsAccount.setBalance(savingsAccount.getBalance() + amount);
+   }
+   if(accountType == 'c'){
+      checkingAccount.setBalance(checkingAccount.getBalance() + amount);
+   }
+   Date localDate = Date::localDate();
+   Deposit deposit(amount, *this, localDate, *this);
+   bankMovements.insert(deposit);
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::getPersonalData()
-// Purpose:    Implementation of User::getPersonalData()
-// Return:     PersonalData
-////////////////////////////////////////////////////////////////////////
+}
 
 PersonalData User::getPersonalData(void)
 {
    return personalData;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::setPersonalData(PersonalData newPersonalData)
-// Purpose:    Implementation of User::setPersonalData()
-// Parameters:
-// - newPersonalData
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
 void User::setPersonalData(PersonalData newPersonalData)
 {
    personalData = newPersonalData;
 }
-
-////////////////////////////////////////////////////////////////////////
-// Name:       User::getSavingsAccount()
-// Purpose:    Implementation of User::getSavingsAccount()
-// Return:     BankAccount
-////////////////////////////////////////////////////////////////////////
 
 BankAccount User::getSavingsAccount(void)
 {
    return savingsAccount;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::setSavingsAccount(BankAccount newSavingsAccount)
-// Purpose:    Implementation of User::setSavingsAccount()
-// Parameters:
-// - newSavingsAccount
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
 void User::setSavingsAccount(BankAccount newSavingsAccount)
 {
    savingsAccount = newSavingsAccount;
 }
-
-////////////////////////////////////////////////////////////////////////
-// Name:       User::getCheckingAccount()
-// Purpose:    Implementation of User::getCheckingAccount()
-// Return:     BankAccount
-////////////////////////////////////////////////////////////////////////
 
 BankAccount User::getCheckingAccount(void)
 {
    return checkingAccount;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::setCheckingAccount(BankAccount newCheckingAccount)
-// Purpose:    Implementation of User::setCheckingAccount()
-// Parameters:
-// - newCheckingAccount
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
 void User::setCheckingAccount(BankAccount newCheckingAccount)
 {
    checkingAccount = newCheckingAccount;
 }
-
-////////////////////////////////////////////////////////////////////////
-// Name:       User::getBankMovements()
-// Purpose:    Implementation of User::getBankMovements()
-// Return:     List<BankMovement>
-////////////////////////////////////////////////////////////////////////
 
 List<BankMovement> User::getBankMovements(void)
 {
    return bankMovements;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::setBankMovements(List<BankMovement> newBankMovements)
-// Purpose:    Implementation of User::setBankMovements()
-// Parameters:
-// - newBankMovements
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
 void User::setBankMovements(List<BankMovement> newBankMovements)
 {
    bankMovements = newBankMovements;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       User::User()
-// Purpose:    Implementation of User::User()
-// Return:     
-////////////////////////////////////////////////////////////////////////
-
 User::User()
 {
-   bankAccount = NULL;
-   object = NULL;
-   list = NULL;
+   // TODO : implement
 }
-
-////////////////////////////////////////////////////////////////////////
-// Name:       User::~User()
-// Purpose:    Implementation of User::~User()
-// Return:     
-////////////////////////////////////////////////////////////////////////
 
 User::~User()
 {

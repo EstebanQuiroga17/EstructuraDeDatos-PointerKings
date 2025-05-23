@@ -1,13 +1,7 @@
-/***********************************************************************
- * Module:  BankAccount.h
- * Author:  TEVS
- * Modified: miércoles, 14 de mayo de 2025 18:53:27
- * Purpose: Declaration of the class BankAccount
- ***********************************************************************/
 
-#if !defined(__BankManagerProject_BankAccount_h)
-#define __BankManagerProject_BankAccount_h
 
+#pragma once
+#include <string>
 class BankAccount
 {
 public:
@@ -29,4 +23,3 @@ private:
 
 };
 
-#endif

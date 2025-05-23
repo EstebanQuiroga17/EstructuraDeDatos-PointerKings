@@ -2,7 +2,7 @@
 
 #include "PersonalData.h"
 #include "BankAccount.h"
-#include "../Model/BankMovement.h"
+#include "BankMovement.h"
 #include "List.h"
 
 class User

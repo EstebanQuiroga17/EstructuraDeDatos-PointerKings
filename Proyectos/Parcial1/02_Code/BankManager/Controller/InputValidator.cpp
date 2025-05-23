@@ -1,29 +1,57 @@
 #include "../Model/InputValidator.h"
 #include <stdexcept>
 #include <regex>
+#include <conio.h>
 using namespace std;
 
 
-bool InputValidator::isInteger(string input) {
+float InputValidator::isFloat(string message) {
     try {
-        regex pattern("^\\d+$");
-        if (!regex_match(input, pattern)) {
-            throw invalid_argument("No es entero válido.");
+        char c;
+        bool dot=false;
+        int valor,i=0;
+        char dato[10];
+        printf("%s",message);
+        while((c=getch())!=13){
+            if(c>='0'&& c<='9' || c=='.'){
+                if(i==0 && c=='.'){
+                    continue;
+                }
+                if(c=='.'){
+                    if(dot){
+                        continue;
+                    }
+                    dot=true;
+                }
+                dato[i++]=c;
+                printf("%c",c);
+            }
         }
-        return true;
+        dato[i]='\0';
+        valor=atoi(dato);
+        printf("\n");
+        return valor;
     } catch (...) {
-        return false;
+        return;
     }
 }
 
-bool InputValidator::isFloat(string input) {
+int InputValidator::isInteger(string input) {
     try {
-        regex pattern("^\\d*(\\.\\d+)?$");
-        size_t dotCount = count(input.begin(), input.end(), '.');
-        if (!regex_match(input, pattern) || dotCount > 1) {
-            throw invalid_argument("No es float válido.");
-        }
-        return true;
+        char c;
+	int valor,i=0;
+	char dato[10];
+	printf("%s",input);
+	while((c=getch())!=13){
+		if(c>='0'&& c<='9'){
+			dato[i++]=c;
+			printf("%c",c);
+		}
+	}
+	dato[i]='\0';
+	valor=atoi(dato);
+	printf("\n");
+	return valor;
     } catch (...) {
         return false;
     }
@@ -33,7 +61,7 @@ bool InputValidator::isEmail(string input) {
     try {
         regex pattern(R"(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|net|org|gov|edu|edu\.ec|es|info|co|ec)$)");
         if (!regex_match(input, pattern)) {
-            throw invalid_argument("No es email válido.");
+            throw invalid_argument("Email no valido.");
         }
         return true;
     } catch (...) {

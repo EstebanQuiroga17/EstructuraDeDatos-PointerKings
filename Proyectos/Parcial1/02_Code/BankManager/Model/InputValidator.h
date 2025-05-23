@@ -6,8 +6,8 @@
 
 class InputValidator {
 public:
-    static bool isInteger(std::string input);
-    static bool isFloat(std::string input);
+    static int isInteger(std::string input);
+    static float isFloat(std::string input);
     static bool isEmail(std::string input);
 };
 

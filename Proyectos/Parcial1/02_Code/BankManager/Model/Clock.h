@@ -1,6 +1,6 @@
 #pragma once
 
-class Time
+class Clock
 {
 public:
    int getHour(void);
@@ -9,15 +9,12 @@ public:
    void setMinute(int newMinute);
    int getSecond(void);
    void setSecond(int newSecond);
-   Time();
-   ~Time();
+   Clock();
+   ~Clock();
 
 protected:
 private:
    int hour;
    int minute;
    int second;
-
-
 };
-

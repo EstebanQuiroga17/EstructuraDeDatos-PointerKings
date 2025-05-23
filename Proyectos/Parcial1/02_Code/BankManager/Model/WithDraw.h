@@ -1,18 +1,14 @@
-/***********************************************************************
- * Module:  WithDraw.h
- * Author:  TEVS
- * Modified: martes, 13 de mayo de 2025 19:11:53
- * Purpose: Declaration of the class WithDraw
- ***********************************************************************/
+
 
 #if !defined(__BankManagerProject_WithDraw_h)
 #define __BankManagerProject_WithDraw_h
 
-#include <BankMovements.h>
+#include "BankMovement.h"
 
-class WithDraw : public BankMovements
+class WithDraw : public BankMovement
 {
 public:
+   WithDraw(float ammount, User user, Date date);
    WithDraw();
    ~WithDraw();
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Year.h"
-#include "Time.h"
+#include "Clock.h"
 
 class Date
 {
@@ -14,10 +14,11 @@ public:
     void setYear(Year newYear);
     int getDaysInMonth(void);
     void setDaysInMonth(int newDaysInMonth);
-    Time getTime(void);
-    void setTime(Time newTime);
+    Clock getTime(void);
+    void setTime(Clock newTime);
     void print();
-    Date localDate();
+    static Date localDate();
+    Date();
     Date(Year newYear, int newMonth, int newDay);
     ~Date();
 
@@ -27,5 +28,5 @@ private:
     int month;
     Year year;
     int daysInMonth;
-    Time time;
+    Clock time;
 };

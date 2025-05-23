@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /***********************************************************************
  * Module:  BankAccount.h
  * Author:  TEVS
@@ -8,7 +9,12 @@
 #include <string>
 #if !defined(__BankManagerProject_BankAccount_h)
 #define __BankManagerProject_BankAccount_h
+=======
 
+>>>>>>> 86ab7beba04576460a3d16e24771b7f5fd14201d
+
+#pragma once
+#include <string>
 class BankAccount
 {
 public:
@@ -30,4 +36,3 @@ private:
 
 };
 
-#endif

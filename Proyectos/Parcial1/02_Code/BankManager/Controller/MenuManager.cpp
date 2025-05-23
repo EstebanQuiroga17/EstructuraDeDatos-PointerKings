@@ -1,51 +1,60 @@
-/***********************************************************************
- * Module:  MenuManager.cpp
- * Author:  TEVS
- * Modified: jueves, 15 de mayo de 2025 21:36:24
- * Purpose: Implementation of the class MenuManager
- ***********************************************************************/
+#include "../Model/List.h"
+#include "../Model/MenuManager.h"
+#include <iostream>
+#include <conio.h> // Para _getch()
+using namespace std;
 
-#include "MenuManager.h"
-
-////////////////////////////////////////////////////////////////////////
-// Name:       MenuManager::printMenu()
-// Purpose:    Implementation of MenuManager::printMenu()
-// Return:     void
-////////////////////////////////////////////////////////////////////////
-
-void MenuManager::printMenu(void)
-{
-   // TODO : implement
+// Constructor
+MenuManager::MenuManager() {
+    cursor = nullptr;
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       MenuManager::readKey()
-// Purpose:    Implementation of MenuManager::readKey()
-// Return:     char
-////////////////////////////////////////////////////////////////////////
-
-char MenuManager::readKey(void)
-{
-   // TODO : implement
+// Carga las opciones al menú
+void MenuManager::loadOptions(const vector<string>& opciones) {
+    for (const auto& op : opciones) {
+        menuOptions.insert(op);
+    }
+    cursor = menuOptions.getHead();
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       MenuManager::execute()
-// Purpose:    Implementation of MenuManager::execute()
-// Return:     int
-////////////////////////////////////////////////////////////////////////
-
-int MenuManager::execute(void)
-{
-   // TODO : implement
+// Imprime el menú, resaltando la opción seleccionada
+void MenuManager::printMenu() {
+    Node<string>* current = menuOptions.getHead();
+    if (!current) {
+        cout << "Menú vacío" << endl;
+        return;
+    }
+    do {
+        if (current == cursor)
+            cout << ">> ";
+        else
+            cout << "   ";
+        cout << current->getValue() << endl;
+        current = current->getNextNode();
+    } while (current != menuOptions.getHead());
 }
 
-////////////////////////////////////////////////////////////////////////
-// Name:       MenuManager::MenuManager()
-// Purpose:    Implementation of MenuManager::MenuManager()
-// Return:     
-////////////////////////////////////////////////////////////////////////
+// Ejecuta el menú interactivo
+void MenuManager::runMenuLoop() {
+    bool running = true;
+    while (running) {
+        system("cls");
+        cout << " Usa ↑ y ↓ para navegar. Enter para seleccionar.\n\n";
+        printMenu();
 
-MenuManager::MenuManager()
-{
+        char key = _getch();
+        if (key == -32) { // Teclas especiales (flechas)
+            key = _getch();
+            if (key == 72) // Flecha arriba
+                cursor = cursor->getPreviousNode();
+            else if (key == 80) // Flecha abajo
+                cursor = cursor->getNextNode();
+        } else if (key == 13) { // Enter
+            system("cls");
+            cout << "Seleccionaste: " << cursor->getValue() << endl;
+            if (cursor->getValue() == "Salir")
+                running = false;
+            system("pause");
+        }
+    }
 }

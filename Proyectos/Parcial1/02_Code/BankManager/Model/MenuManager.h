@@ -1,26 +1,20 @@
-/***********************************************************************
- * Module:  MenuManager.h
- * Author:  TEVS
- * Modified: jueves, 15 de mayo de 2025 21:36:24
- * Purpose: Declaration of the class MenuManager
- ***********************************************************************/
-
 #if !defined(__BankManagerProject_MenuManager_h)
 #define __BankManagerProject_MenuManager_h
 
-class MenuManager
-{
-public:
-   void printMenu(void);
-   char readKey(void);
-   int execute(void);
-   MenuManager();
+#pragma once
+#include "List.h"
+#include <vector>
+#include <string>
 
-protected:
+class MenuManager {
 private:
-   int options;
-
-
+    List<std::string> menuOptions;
+    Node<std::string>* cursor;
+public:
+    MenuManager();
+    void loadOptions(const std::vector<std::string>& opciones);
+    void printMenu();
+    void runMenuLoop();
 };
 
 #endif

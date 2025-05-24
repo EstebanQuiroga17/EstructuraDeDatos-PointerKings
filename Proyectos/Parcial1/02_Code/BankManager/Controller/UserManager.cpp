@@ -64,6 +64,43 @@ void UserManager::crearUsuario() {
     system("pause");
 }
 
+User* UserManager::login() {
+    string cuentaIngresada;
+
+    while (true) {
+        system("cls");
+        cout << "=== LOGIN ===" << endl;
+        cout << "Ingrese número de cuenta (ahorros o corriente), o escriba 0 para salir: ";
+        cin >> cuentaIngresada;
+
+        // Permite salir escribiendo 0
+        if (cuentaIngresada == "0") {
+            cout << "Login cancelado.\n";
+            system("pause");
+            return nullptr;
+        }
+
+        Node<User>* actual = usuarios.getHead();
+        if (!actual) {
+            cout << "No hay usuarios registrados.\n";
+            system("pause");
+            return nullptr;
+        }
+        do {
+            User usuario = actual->getValue(); //IMPORTANTE SI QUEREMOS MODIFICAR EL USUARIOS DEBEMOS CAMBIAR EL NOTO Y HACER POR REFERENCIA T& Node<T>::getValue()
+            if (usuario.getSavingsAccount().getAccountNumber() == cuentaIngresada ||
+                usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
+                cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << "!\n";
+                system("pause");
+                return &usuario;
+            }
+            actual = actual->getNextNode();
+        } while (actual != usuarios.getHead());
+
+        cout << "Cuenta no encontrada. Intente de nuevo o escriba 0 para salir.\n";
+        system("pause");
+    }
+}
 
 // void UserManager::mostrarUsuarios() {
 //     Node<User>* actual = usuarios.getHead();

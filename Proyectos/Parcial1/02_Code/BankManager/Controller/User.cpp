@@ -113,28 +113,28 @@ User::~User()
    // TODO : implement
 }
 
-void User::guardarBinario(std::ofstream& out) const {
+void User::saveBinary(std::ofstream& out) const {
     // Guardar datos personales
-    personalData.guardarBinario(out);
+    personalData.saveBinary(out);
 
     // Guardar cuentas
-    savingsAccount.guardarBinario(out);
-    checkingAccount.guardarBinario(out);
+    savingsAccount.saveBinary(out);
+    checkingAccount.saveBinary(out);
 
     // Guardar lista de movimientos
-    bankMovements.guardarBinario(out); // Debes tener este método en tu List<T>
+    bankMovements.saveBinary(out); // Debes tener este método en tu List<T>
 }
 
-bool User::cargarBinario(std::ifstream& in) {
+bool User::loadBinary(std::ifstream& in) {
     // Leer datos personales
-    personalData.cargarBinario(in);
+    personalData.loadBinary(in);
 
     // Leer cuentas
-    savingsAccount.cargarBinario(in);
-    checkingAccount.cargarBinario(in);
+    savingsAccount.loadBinary(in);
+    checkingAccount.loadBinary(in);
 
     // Leer lista de movimientos
-    bankMovements.cargarBinario(in);
+    bankMovements.loadBinary(in);
 
     return true;
 }

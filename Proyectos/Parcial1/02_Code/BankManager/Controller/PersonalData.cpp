@@ -65,7 +65,7 @@ void PersonalData::setEmail(std::string newEmail)
    email = newEmail;
 }
 
-void PersonalData::guardarBinario(std::ofstream& out) const {
+void PersonalData::saveBinary(std::ofstream& out) const {
     // Guardar name
     int len = name.size();
     out.write(reinterpret_cast<const char*>(&len), sizeof(int));
@@ -85,7 +85,7 @@ void PersonalData::guardarBinario(std::ofstream& out) const {
     out.write(ptrDNI, len);
 
     // Guardar birthDate
-    birthDate.guardarBinario(out);
+    birthDate.saveBinary(out);
 
     // Guardar email
     len = email.size();
@@ -100,7 +100,7 @@ void PersonalData::guardarBinario(std::ofstream& out) const {
     out.write(ptrCountry, len);
 }
 
-bool PersonalData::cargarBinario(std::ifstream& in) {
+bool PersonalData::loadBinary(std::ifstream& in) {
     // Leer name
     int len = 0;
     in.read(reinterpret_cast<char*>(&len), sizeof(int));
@@ -127,7 +127,7 @@ bool PersonalData::cargarBinario(std::ifstream& in) {
     delete buffer;
 
     // Leer birthDate
-    birthDate.cargarBinario(in);
+    birthDate.loadBinary(in);
 
     // Leer email
     in.read(reinterpret_cast<char*>(&len), sizeof(int));

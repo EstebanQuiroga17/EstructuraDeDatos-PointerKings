@@ -18,8 +18,8 @@ public:
    ~PersonalData();
    std::string getEmail(void);
    void setEmail(std::string newEmail);
-   void guardarBinario(std::ofstream& out) const;
-   bool cargarBinario(std::ifstream& in);
+   void saveBinary(std::ofstream& out) const;
+   bool loadBinary(std::ifstream& in);
    void mostrar() const;
 
 

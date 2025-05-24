@@ -8,8 +8,8 @@ public:
    void setLeapYear(bool newLeapYear);
    int getYear(void);
    void setYear(int year);
-   void guardarBinario(std::ofstream& out) const;
-   bool cargarBinario(std::ifstream& in);
+   void saveBinary(std::ofstream& out) const;
+   bool loadBinary(std::ifstream& in);
    Year(); 
    Year(int newYear);
    ~Year();

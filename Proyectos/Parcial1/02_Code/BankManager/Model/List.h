@@ -17,8 +17,8 @@ public:
     Node<T>* search(T value);
     bool update(Node<T>* oldValue, Node<T>* newValue);
     void printList();
-    void guardarBinario(std::ofstream& out) const;
-    bool cargarBinario(std::ifstream& in);
+    void saveBinary(std::ofstream& out) const;
+    bool loadBinary(std::ifstream& in);
 
 
     Node<T>* getHead() const;
@@ -136,7 +136,7 @@ void List<T>::setHead(Node<T>* newHead) {
 
 // Guarda la lista completa en binario (recorriendo solo con punteros, sin corchetes)
 template <typename T>
-void List<T>::guardarBinario(std::ofstream& out) const {
+void List<T>::saveBinary(std::ofstream& out) const {
     // Contar elementos
     int cantidad = 0;
     Node<T>* actual = head;
@@ -150,13 +150,13 @@ void List<T>::guardarBinario(std::ofstream& out) const {
 
     actual = head;
     for (int i = 0; i < cantidad; ++i) {
-        actual->getValue().guardarBinario(out); // Asume que T tiene guardarBinario
+        actual->getValue().saveBinary(out); // Asume que T tiene saveBinary
         actual = actual->getNextNode();
     }
 }
 
 template <typename T>
-bool List<T>::cargarBinario(std::ifstream& in) {
+bool List<T>::loadBinary(std::ifstream& in) {
     // Limpiar la lista primero (opcional pero recomendado)
     if (head) {
         Node<T>* current = head->getNextNode();
@@ -174,7 +174,7 @@ bool List<T>::cargarBinario(std::ifstream& in) {
 
     for (int i = 0; i < cantidad; ++i) {
         T obj;
-        obj.cargarBinario(in); // Asume que T tiene cargarBinario
+        obj.loadBinary(in); // Asume que T tiene loadBinary
         insert(obj);           // Inserta usando solo punteros
     }
     return true;

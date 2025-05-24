@@ -10,8 +10,8 @@ public:
    void setMinute(int newMinute);
    int getSecond(void);
    void setSecond(int newSecond);
-   void guardarBinario(std::ofstream& out) const;
-   bool cargarBinario(std::ifstream& in);
+   void saveBinary(std::ofstream& out) const;
+   bool loadBinary(std::ifstream& in);
    Clock();
    ~Clock();
 

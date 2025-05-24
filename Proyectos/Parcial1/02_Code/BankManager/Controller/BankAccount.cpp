@@ -66,7 +66,7 @@ BankAccount::BankAccount() : balance(0.0f), accountNumber(""), type("")
 }
 
 
-void BankAccount::guardarBinario(std::ofstream& out) const {
+void BankAccount::saveBinary(std::ofstream& out) const {
     // Guardar balance
     out.write(reinterpret_cast<const char*>(&balance), sizeof(float));
 
@@ -83,7 +83,7 @@ void BankAccount::guardarBinario(std::ofstream& out) const {
     out.write(ptrType, len);
 }
 
-bool BankAccount::cargarBinario(std::ifstream& in) {
+bool BankAccount::loadBinary(std::ifstream& in) {
     // Leer balance
     in.read(reinterpret_cast<char*>(&balance), sizeof(float));
 

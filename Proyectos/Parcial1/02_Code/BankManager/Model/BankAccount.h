@@ -9,8 +9,8 @@ public:
    void setAccountNumber(std::string newAccountNumber);
    std::string getType(void);
    void setType(std::string newType);
-   void guardarBinario(std::ofstream& out) const;
-   bool cargarBinario(std::ifstream& in);
+   void saveBinary(std::ofstream& out) const;
+   bool loadBinary(std::ifstream& in);
    bool operator==(const BankAccount& account1) const;
 
    BankAccount(); 

@@ -82,7 +82,7 @@ BankMovement::BankMovement()
 {
 }
 
-void BankMovement::guardarBinario(std::ofstream& out) const {
+void BankMovement::saveBinary(std::ofstream& out) const {
     // Guardar id
     int len = id.size();
     out.write(reinterpret_cast<const char*>(&len), sizeof(int));
@@ -93,13 +93,13 @@ void BankMovement::guardarBinario(std::ofstream& out) const {
     out.write(reinterpret_cast<const char*>(&ammount), sizeof(float));
 
     // Guardar user
-    user->guardarBinario(out);
+    user->saveBinary(out);
 
     // Guardar date
-    date.guardarBinario(out);
+    date.saveBinary(out);
 }
 
-bool BankMovement::cargarBinario(std::ifstream& in) {
+bool BankMovement::loadBinary(std::ifstream& in) {
     // Leer id
     int len = 0;
     in.read(reinterpret_cast<char*>(&len), sizeof(int));
@@ -113,10 +113,10 @@ bool BankMovement::cargarBinario(std::ifstream& in) {
     in.read(reinterpret_cast<char*>(&ammount), sizeof(float));
 
     // Leer user
-    user->cargarBinario(in);
+    user->loadBinary(in);
 
     // Leer date
-    date.cargarBinario(in);
+    date.loadBinary(in);
 
     return true;
 }

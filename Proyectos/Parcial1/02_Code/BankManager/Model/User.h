@@ -24,8 +24,8 @@ public:
    List<BankMovement> getBankMovements(void);
    
    void setBankMovements(List<BankMovement> newBankMovements);
-   void guardarBinario(std::ofstream& out) const;
-   bool cargarBinario(std::ifstream& in);
+   void saveBinary(std::ofstream& out) const;
+   bool loadBinary(std::ifstream& in);
    User();
    ~User();
 

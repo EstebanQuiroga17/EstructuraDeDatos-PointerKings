@@ -13,35 +13,35 @@ class BinaryCifration
 {
 public:
 template <typename T>
-    static void guardarObjeto(const T& obj, const std::string& ruta) {
+    static void saveObject(const T& obj, const std::string& ruta) {
         std::ofstream out(ruta.c_str(), std::ios::binary | std::ios::trunc);
         if (!out) return;
-        obj.guardarBinario(out);
+        obj.saveBinary(out);
         out.close();
     }
 
     template <typename T>
-    static bool cargarObjeto(T& obj, const std::string& ruta) {
+    static bool loadObject(T& obj, const std::string& ruta) {
         std::ifstream in(ruta.c_str(), std::ios::binary);
         if (!in) return false;
-        obj.cargarBinario(in);
+        obj.loadBinary(in);
         in.close();
         return true;
     }
 
     template <typename T>
-    static void guardarLista(const List<T>& lista, const std::string& ruta) {
+    static void saveList(const List<T>& lista, const std::string& ruta) {
         std::ofstream out(ruta.c_str(), std::ios::binary | std::ios::trunc);
         if (!out) return;
-        lista.guardarBinario(out); // Tu método de la lista
+        lista.saveBinary(out); // método de la lista
         out.close();
     }
 
     template <typename T>
-    static bool cargarLista(List<T>& lista, const std::string& ruta) {
+    static bool loadList(List<T>& lista, const std::string& ruta) {
         std::ifstream in(ruta.c_str(), std::ios::binary);
         if (!in) return false;
-        lista.cargarBinario(in); // Tu método de la lista
+        lista.loadBinary(in); // método de la lista
         in.close();
         return true;
     }

@@ -18,8 +18,8 @@ public:
     void setTime(Clock newTime);
     void print();
     static Date localDate();
-    void guardarBinario(std::ofstream& out) const;
-    bool cargarBinario(std::ifstream& in);
+    void saveBinary(std::ofstream& out) const;
+    bool loadBinary(std::ifstream& in);
     Date();
     Date(Year newYear, int newMonth, int newDay);
     ~Date();

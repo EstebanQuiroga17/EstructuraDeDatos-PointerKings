@@ -1,6 +1,8 @@
 #pragma once
 #include "Node.h"
 #include <iostream>
+#include <fstream> //CAMBIO IMPORTANTE PUEDE BORRAR
+
 
 template <typename T>
 class List {

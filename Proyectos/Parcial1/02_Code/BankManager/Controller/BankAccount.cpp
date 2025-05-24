@@ -34,7 +34,7 @@ void BankAccount::setType(std::string newType)
    type = newType;
 }
 
-string BankAccount::generateAccountNumber(int digits = 10, std::string number = "") {
+string BankAccount::generateAccountNumber(int digits, std::string number) {
     if (digits == 0) {
         if (number[0] == '0') {
             return generateAccountNumber(10, "");

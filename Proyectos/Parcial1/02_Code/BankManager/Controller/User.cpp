@@ -83,7 +83,7 @@ void User::setSavingsAccount(BankAccount newSavingsAccount)
    savingsAccount = newSavingsAccount;
 }
 
-const BankAccount& User::getCheckingAccount(void) const
+BankAccount& User::getCheckingAccount(void)
 {
    return checkingAccount;
 }

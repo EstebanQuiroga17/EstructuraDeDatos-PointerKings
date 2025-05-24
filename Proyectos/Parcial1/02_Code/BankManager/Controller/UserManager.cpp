@@ -1,6 +1,7 @@
 #include "UserManager.h"
 #include <iostream>
 #include "User.h"
+#include "User.cpp"
 #include "BankAccount.h"
 #include "List.h"
 #include "Node.h"
@@ -12,26 +13,49 @@ using namespace std;
 UserManager::UserManager() {}
 
 void UserManager::crearUsuario() {
-    string nombre, cedula, numCuenta, tipo;
-    float saldo;
+    string nombre, apellido, cedula, email;
+    string numCuentaAhorros, numCuentaCorriente, tipoAhorros, tipoCorriente;
+    float saldoAhorros = 0, saldoCorriente = 0;
 
     system("cls");
     cout << "=== Registro de nuevo usuario ===" << endl;
     cout << "Nombre: ";      cin >> nombre;
+    cout << "Apellido: ";    cin >> apellido;
     cout << "Cedula: ";      cin >> cedula;
-    cout << "Numero de cuenta: "; cin >> numCuenta;
-    cout << "Tipo de cuenta: ";   cin >> tipo;
-    cout << "Saldo inicial: ";    cin >> saldo;
+    cout << "Email: ";       cin >> email;
 
-    BankAccount cuenta;
-    cuenta.setAccountNumber(numCuenta);
-    cuenta.setBalance(saldo);
-    cuenta.setType(tipo);
+    // Ahorros
+    cout << "Numero de cuenta de ahorros: ";   cin >> numCuentaAhorros;
+    cout << "Tipo de cuenta de ahorros: ";     cin >> tipoAhorros;
+    cout << "Saldo inicial de ahorros: ";      cin >> saldoAhorros;
 
+    // Corriente
+    cout << "Numero de cuenta corriente: ";    cin >> numCuentaCorriente;
+    cout << "Tipo de cuenta corriente: ";      cin >> tipoCorriente;
+    cout << "Saldo inicial corriente: ";       cin >> saldoCorriente;
+
+    // Crea los objetos de cuenta
+    BankAccount cuentaAhorros, cuentaCorriente;
+    cuentaAhorros.setAccountNumber(numCuentaAhorros);
+    cuentaAhorros.setType(tipoAhorros);
+    cuentaAhorros.setBalance(saldoAhorros);
+
+    cuentaCorriente.setAccountNumber(numCuentaCorriente);
+    cuentaCorriente.setType(tipoCorriente);
+    cuentaCorriente.setBalance(saldoCorriente);
+
+    // PersonalData
+    PersonalData datos;
+    datos.setName(nombre);
+    datos.setLastName(apellido);
+    datos.setDNI(cedula);
+    datos.setEmail(email);
+
+    // Usuario
     User usuario;
-    usuario.setNombre(nombre);
-    usuario.setCedula(cedula);
-    usuario.setCuenta(cuenta);
+    usuario.setPersonalData(datos);
+    usuario.setSavingsAccount(cuentaAhorros);
+    usuario.setCheckingAccount(cuentaCorriente);
 
     usuarios.insert(usuario);
 
@@ -39,34 +63,6 @@ void UserManager::crearUsuario() {
     system("pause");
 }
 
-User* UserManager::login() {
-    string cuentaIngresada;
-    while (true) {
-        system("cls");
-        cout << "=== LOGIN ===" << endl;
-        cout << "Ingrese numero de cuenta: ";
-        cin >> cuentaIngresada;
-
-        Node<User>* actual = usuarios.getHead();
-        if (!actual) {
-            cout << "No hay usuarios registrados.\n";
-            system("pause");
-            return nullptr;
-        }
-        do {
-            User& usuario = actual->getValue();
-            if (usuario.getCuenta().getAccountNumber() == cuentaIngresada) {
-                cout << "Login exitoso, bienvenido " << usuario.getNombre() << "!\n";
-                system("pause");
-                return &usuario;
-            }
-            actual = actual->getNextNode();
-        } while (actual != usuarios.getHead());
-
-        cout << "Cuenta no encontrada. Intente de nuevo.\n";
-        system("pause");
-    }
-}
 
 void UserManager::mostrarUsuarios() {
     Node<User>* actual = usuarios.getHead();
@@ -76,15 +72,14 @@ void UserManager::mostrarUsuarios() {
     }
     cout << "=== Lista de usuarios ===\n";
     do {
-        User& usuario = actual->getValue();
-        cout << "Nombre: " << usuario.getNombre()
-             << ", Cedula: " << usuario.getCedula()
-             << ", Cuenta: " << usuario.getCuenta().getAccountNumber()
-             << ", Saldo: " << usuario.getCuenta().getBalance() << endl;
+        const User& usuario = actual->getValue();
+        cout << "Nombre: " << usuario.getPersonalData().getName()
+             << " " << usuario.getPersonalData().getLastName()
+             << ", Cedula: " << usuario.getPersonalData().getDNI()
+             << ", Cuenta Ahorros: " << usuario.getSavingsAccount().getAccountNumber()
+             << ", Saldo Ahorros: " << usuario.getSavingsAccount().getBalance()
+             << ", Cuenta Corriente: " << usuario.getCheckingAccount().getAccountNumber()
+             << ", Saldo Corriente: " << usuario.getCheckingAccount().getBalance() << endl;
         actual = actual->getNextNode();
     } while (actual != usuarios.getHead());
-}
-
-List<User>& UserManager::getUsuarios() {
-    return usuarios;
 }

@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/USUARIO/Desktop/PruebasProy/pruebaarchivos/EstructuraDeDatos-PointerKings/Proyectos/Parcial1/02_Code/BankManager/Controller",
+      "program": "c:/Users/USUARIO/Desktop/PruebasProy/pruebaarchivos/EstructuraDeDatos-PointerKings/Proyectos/Parcial1/02_Code/BankManager/Controller/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}

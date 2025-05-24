@@ -11,7 +11,7 @@ float InputValidator::isFloat(string message) {
         bool dot=false;
         int valor,i=0;
         char dato[10];
-        printf("%s",message);
+        printf("%s",message.c_str());
         while((c=getch())!=13){
             if(c>='0'&& c<='9' || c=='.'){
                 if(i==0 && c=='.'){
@@ -32,8 +32,9 @@ float InputValidator::isFloat(string message) {
         printf("\n");
         return valor;
     } catch (...) {
-        return;
+        return 0.0f;
     }
+    return 0.0f;
 }
 
 int InputValidator::isInteger(string input) {
@@ -53,8 +54,9 @@ int InputValidator::isInteger(string input) {
 	printf("\n");
 	return valor;
     } catch (...) {
-        return false;
+        return 0;
     }
+    return 0;
 }
 
 bool InputValidator::isEmail(string input) {
@@ -67,4 +69,5 @@ bool InputValidator::isEmail(string input) {
     } catch (...) {
         return false;
     }
+    return false;
 }

@@ -17,17 +17,9 @@ public:
    PersonalData getPersonalData(void);
 
    void setPersonalData(PersonalData newPersonalData);
-<<<<<<< HEAD
    BankAccount& getSavingsAccount(void);
    void setSavingsAccount(BankAccount newSavingsAccount);
    BankAccount& getCheckingAccount(void);
-=======
-   BankAccount getSavingsAccount(void);
-
-   void setSavingsAccount(BankAccount newSavingsAccount);
-   BankAccount getCheckingAccount(void);
-
->>>>>>> 9abf4de00e55df170fc2f1f7314b3f58915c2bb2
    void setCheckingAccount(BankAccount newCheckingAccount);
    List<BankMovement> getBankMovements(void);
    

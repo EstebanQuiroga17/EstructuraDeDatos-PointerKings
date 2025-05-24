@@ -4,7 +4,7 @@
 std::string PersonalData::getName(void)
 {
    return name;
-}
+}  
 
 void PersonalData::setName(std::string newName)
 {

@@ -3,6 +3,8 @@
 #include "..\Model\BankAccount.h"
 #include "..\Model\List.h"
 #include "..\Model\Node.h"
+#include "..\Model\BinaryCifration.h"
+#include "..\Model\CesarCifration.h"
 #include <iostream>
 
 
@@ -11,7 +13,14 @@
 #include <cstdlib> // Para system("cls") y system("pause")
 using namespace std;
 
-UserManager::UserManager() {}
+UserManager::UserManager() {
+    loadUsers(); // Carga los usuarios al iniciar
+    // Si no hay usuarios, puedes crear uno por defecto o dejarlo vacío
+    if (usuarios.getHead() == nullptr) {
+        cout << "No hay usuarios registrados. Por favor, registre uno.\n";
+        system("pause");
+    }
+}
 
 void UserManager::crearUsuario() {
     string nombre, apellido, cedula, email;
@@ -60,6 +69,7 @@ void UserManager::crearUsuario() {
 
     usuarios.insert(usuario);
 
+    saveUsers(); // Guarda después de insertar
     cout << "Usuario creado exitosamente!\n";
     system("pause");
 }
@@ -121,3 +131,40 @@ User* UserManager::login() {
 //         actual = actual->getNextNode();
 //     } while (actual != usuarios.getHead());
 // }
+
+void UserManager::saveUsers() {
+    BinaryCifration::saveList(usuarios, "users.dat");
+    CesarCifration cesar(3); // Usa tu desplazamiento preferido
+    cesar.encryptFile("users.dat");
+}
+
+void UserManager::loadUsers() {
+    CesarCifration cesar(3); // Usa el mismo desplazamiento que arriba
+    cesar.decryptFile("users.dat");
+    BinaryCifration::loadList(usuarios, "users.dat");
+    cesar.encryptFile("users.dat"); // Vuelve a cifrar inmediatamente después de leer
+}
+
+void UserManager::mostrarUsuarios() {
+    Node<User>* actual = usuarios.getHead();
+    if (!actual) {
+        std::cout << "No hay usuarios.\n";
+        return;
+    }
+    std::cout << "=== Lista de usuarios ===\n";
+    int i = 1;
+    do {
+        User usuario = actual->getValue();
+        PersonalData pd = usuario.getPersonalData();
+        std::cout << "Usuario #" << i << ":\n";
+        std::cout << "  Nombre: " << pd.getName() << " " << pd.getLastName() << "\n";
+        std::cout << "  Cedula: " << pd.getDNI() << "\n";
+        std::cout << "  Cuenta Ahorros: " << usuario.getSavingsAccount().getAccountNumber()
+                  << " | Saldo: $" << usuario.getSavingsAccount().getBalance() << "\n";
+        std::cout << "  Cuenta Corriente: " << usuario.getCheckingAccount().getAccountNumber()
+                  << " | Saldo: $" << usuario.getCheckingAccount().getBalance() << "\n";
+        std::cout << "------------------------------\n";
+        actual = actual->getNextNode();
+        ++i;
+    } while (actual != usuarios.getHead());
+}

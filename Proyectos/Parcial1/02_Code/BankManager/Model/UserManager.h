@@ -13,5 +13,7 @@ public:
     void mostrarUsuarios();        // Para debug (opcional)
     // Puedes agregar métodos como eliminar, modificar, etc.
     List<User>& getUsuarios();     // Acceso a la lista si la necesitas afuera
+    void saveUsers();
+    void loadUsers();
 };
     

@@ -17,7 +17,7 @@ void MenuManager::loadOptions(const vector<string>& opciones) {
     cursor = menuOptions.getHead();
 }
 
-// Imprime el menú, resaltando la opción seleccionada
+//impresion del menú
 void MenuManager::printMenu() {
     Node<string>* current = menuOptions.getHead();
     if (!current) {
@@ -34,27 +34,64 @@ void MenuManager::printMenu() {
     } while (current != menuOptions.getHead());
 }
 
-// Ejecuta el menú interactivo
-void MenuManager::runMenuLoop() {
+//Función que retorna el índice seleccionado
+int MenuManager::runMenuLoopReturnIndex() {
     bool running = true;
+    int index = 0;
+    Node<string>* current = menuOptions.getHead();
+    int total = 0;
+    do {
+        total++;
+        current = current->getNextNode();
+    } while (current != menuOptions.getHead());
+
+    cursor = menuOptions.getHead();
+    index = 0;
+
     while (running) {
         system("cls");
         cout << " Usa ↑ y ↓ para navegar. Enter para seleccionar.\n\n";
         printMenu();
 
         char key = _getch();
-        if (key == -32) { // Teclas especiales (flechas)
+        if (key == -32) {
             key = _getch();
-            if (key == 72) // Flecha arriba
+            if (key == 72) { // Arriba
                 cursor = cursor->getPreviousNode();
-            else if (key == 80) // Flecha abajo
+                index = (index - 1 + total) % total;
+            } else if (key == 80) { // Abajo
                 cursor = cursor->getNextNode();
-        } else if (key == 13) { // Enter
-            system("cls");
-            cout << "Seleccionaste: " << cursor->getValue() << endl;
-            if (cursor->getValue() == "Salir")
-                running = false;
-            system("pause");
+                index = (index + 1) % total;
+            }
+        } else if (key == 13) {
+            return index;
         }
     }
+    return index;
 }
+
+// // Método para ejecutar el menú visualizar (opcional)
+// //Ejecutor del menú
+// void MenuManager::runMenuLoop() {
+//     bool running = true;
+//     while (running) {
+//         system("cls");
+//         cout << " Usa ↑ y ↓ para navegar. Enter para seleccionar.\n\n";
+//         printMenu();
+
+//         char key = _getch();
+//         if (key == -32) { // Teclas especiales (flechas)
+//             key = _getch();
+//             if (key == 72) // Flecha arriba
+//                 cursor = cursor->getPreviousNode();
+//             else if (key == 80) // Flecha abajo
+//                 cursor = cursor->getNextNode();
+//         } else if (key == 13) { // Enter
+//             system("cls");
+//             cout << "Seleccionaste: " << cursor->getValue() << endl;
+//             if (cursor->getValue() == "Salir")
+//                 running = false;
+//             system("pause");
+//         }
+//     }
+// }

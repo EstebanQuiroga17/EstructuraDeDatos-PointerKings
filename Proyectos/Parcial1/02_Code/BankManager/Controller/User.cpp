@@ -73,7 +73,7 @@ void User::setPersonalData(PersonalData newPersonalData)
    personalData = newPersonalData;
 }
 
-const BankAccount& User::getSavingsAccount(void) const
+BankAccount& User::getSavingsAccount(void) 
 {
    return savingsAccount;
 }

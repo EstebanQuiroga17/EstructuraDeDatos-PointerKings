@@ -17,9 +17,9 @@ public:
    PersonalData getPersonalData(void) const; //cambio a constante
 
    void setPersonalData(PersonalData newPersonalData);
-   const BankAccount& getSavingsAccount(void) const; //cambio a constante
+   BankAccount& getSavingsAccount(void); //cambio a constante
    void setSavingsAccount(BankAccount newSavingsAccount);
-   const BankAccount& getCheckingAccount(void) const; //cambio a constante
+   BankAccount& getCheckingAccount(void); //cambio a constante
    void setCheckingAccount(BankAccount newCheckingAccount);
    List<BankMovement> getBankMovements(void);
    

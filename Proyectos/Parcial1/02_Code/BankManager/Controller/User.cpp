@@ -18,22 +18,21 @@ void User::withDraw(float amount, char accountType)
    bankMovements.insert(withDraw);
 }
 
-void User::depositTo(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts)
+void User::deposit(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts)
 {
-   BankAccount* destinantionAccount;
+   BankAccount* destinationAccount;
    if(accountType == 's'){
-      destinantionAccount = &destinationUser.getSavingsAccount();
+      destinationAccount = &destinationUser.getSavingsAccount();
    }
    else if(accountType == 'c'){
-      destinantionAccount = &destinationUser.getCheckingAccount();
+      destinationAccount = &destinationUser.getCheckingAccount();
    }
 
-   if(bankAccounts.search(*destinantionAccount) == nullptr){
+   if(bankAccounts.search(*destinationAccount) == nullptr){
       cout<<"Cuenta no encontrada"<<endl;
       return;
    }else{
-      destinantionAccount->setBalance(destinantionAccount->getBalance() + amount);
-      //Descount amount from the user account
+      destinationAccount->setBalance(destinationAccount->getBalance() + amount);
       if(accountType == 's'){
          savingsAccount.setBalance(savingsAccount.getBalance() - amount);
       }
@@ -41,13 +40,14 @@ void User::depositTo(User& destinationUser,char accountType,float amount,List<Ba
          checkingAccount.setBalance(checkingAccount.getBalance() - amount);
       }
    }
+   
    Date localDate = Date::localDate();
    Deposit deposit(amount, *this, localDate, destinationUser);
    bankMovements.insert(deposit);
    destinationUser.getBankMovements().insert(deposit);
 }
 
-void User::depositMe(float amount, char accountType)
+void User::deposit(float amount, char accountType)
 {
    if(accountType == 's'){
       savingsAccount.setBalance(savingsAccount.getBalance() + amount);

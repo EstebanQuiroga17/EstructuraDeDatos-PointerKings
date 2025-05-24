@@ -14,7 +14,7 @@ void BankAccount::setBalance(float newBalance)
    balance = newBalance;
 }
 
-std::string BankAccount::getAccountNumber(void)
+std::string BankAccount::getAccountNumber(void) const
 {
    return accountNumber;
 }
@@ -100,4 +100,12 @@ bool BankAccount::cargarBinario(std::ifstream& in) {
     delete buffer;
 
     return true;
+}
+
+bool BankAccount::operator==(const BankAccount& account1) const{
+    if(this->accountNumber == account1.accountNumber){
+        return true;
+    }else{
+        return false;
+    }
 }

@@ -11,9 +11,9 @@ class User
 public:
    void withDraw(float amount, char type);
 
-   void depositTo(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts);
+   void deposit(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts);
    
-   void depositMe(float amount, char accountType);
+   void deposit(float amount, char accountType);
    PersonalData getPersonalData(void);
 
    void setPersonalData(PersonalData newPersonalData);

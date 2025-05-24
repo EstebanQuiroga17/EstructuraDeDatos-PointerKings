@@ -11,6 +11,10 @@ public:
    void setAccountNumber(std::string newAccountNumber);
    std::string getType(void);
    void setType(std::string newType);
+   void guardarBinario(std::ofstream& out) const;
+   bool cargarBinario(std::ifstream& in);
+
+
    BankAccount();
    ~BankAccount();
 
@@ -19,7 +23,4 @@ private:
    float balance;
    std::string accountNumber;
    std::string type;
-
-
 };
-

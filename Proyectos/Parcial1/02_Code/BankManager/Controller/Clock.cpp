@@ -33,3 +33,16 @@ Clock::Clock() {
 Clock::~Clock() {
     
 }
+
+void Clock::guardarBinario(std::ofstream& out) const {
+    out.write(reinterpret_cast<const char*>(&hour), sizeof(int));
+    out.write(reinterpret_cast<const char*>(&minute), sizeof(int));
+    out.write(reinterpret_cast<const char*>(&second), sizeof(int));
+}
+
+bool Clock::cargarBinario(std::ifstream& in) {
+    in.read(reinterpret_cast<char*>(&hour), sizeof(int));
+    in.read(reinterpret_cast<char*>(&minute), sizeof(int));
+    in.read(reinterpret_cast<char*>(&second), sizeof(int));
+    return true;
+}

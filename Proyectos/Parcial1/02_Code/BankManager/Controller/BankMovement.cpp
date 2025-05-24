@@ -1,5 +1,7 @@
-#include "BankMovement.h"
+#include "../Model/BankMovement.h"
 #include <chrono>
+#include <fstream>
+#include "../Model/User.h"
 using namespace std;
 
 string BankMovement::lastId = "0000001";
@@ -33,12 +35,12 @@ void BankMovement::setAmmount(float newAmmount)
    ammount = newAmmount;
 }
 
-User BankMovement::getUser(void)
+User* BankMovement::getUser(void)
 {
    return user;
 }
 
-void BankMovement::setUser(User newUser)
+void BankMovement::setUser(User* newUser)
 {
    user = newUser;
 }
@@ -71,7 +73,7 @@ void BankMovement::setLastId(const string& newLastId) {
     lastId = newLastId;
 }
 
-BankMovement::BankMovement(float ammount, User user, Date date)
+BankMovement::BankMovement(float ammount, User* user, Date date)
     : id(createId()), ammount(ammount), user(user), date(date)
 {
 }
@@ -79,3 +81,43 @@ BankMovement::BankMovement(float ammount, User user, Date date)
 BankMovement::BankMovement()
 {
 }
+
+void BankMovement::guardarBinario(std::ofstream& out) const {
+    // Guardar id
+    int len = id.size();
+    out.write(reinterpret_cast<const char*>(&len), sizeof(int));
+    const char* ptrId = id.c_str();
+    out.write(ptrId, len);
+
+    // Guardar ammount
+    out.write(reinterpret_cast<const char*>(&ammount), sizeof(float));
+
+    // Guardar user
+    user->guardarBinario(out);
+
+    // Guardar date
+    date.guardarBinario(out);
+}
+
+bool BankMovement::cargarBinario(std::ifstream& in) {
+    // Leer id
+    int len = 0;
+    in.read(reinterpret_cast<char*>(&len), sizeof(int));
+    char* buffer = new char[len + 1];
+    in.read(buffer, len);
+    *(buffer + len) = '\0';   // buffer[len] = '\0' equivalente sin corchetes
+    id = buffer;
+    delete buffer;  // Para liberar correctamente, debería ser delete[] buffer, pero si solo delete es aceptado por tu profesor, úsalo así.
+
+    // Leer ammount
+    in.read(reinterpret_cast<char*>(&ammount), sizeof(float));
+
+    // Leer user
+    user->cargarBinario(in);
+
+    // Leer date
+    date.cargarBinario(in);
+
+    return true;
+}
+

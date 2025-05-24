@@ -1,6 +1,8 @@
 #include "..\Model\Year.h"
 #include "..\Model\DateValidator.h"
 
+Year::Year() : year(0), leapYear(false) { }
+
 bool Year::getLeapYear(void) {
     return leapYear;
 }
@@ -24,4 +26,19 @@ Year::Year(int newYear) {
 
 Year::~Year() {
     // No dynamic memory to release
+}
+
+void Year::guardarBinario(std::ofstream& out) const {
+    // Guardar year (entero)
+    out.write(reinterpret_cast<const char*>(&year), sizeof(int));
+    // Guardar leapYear (booleano)
+    out.write(reinterpret_cast<const char*>(&leapYear), sizeof(bool));
+}
+
+bool Year::cargarBinario(std::ifstream& in) {
+    // Leer year
+    in.read(reinterpret_cast<char*>(&year), sizeof(int));
+    // Leer leapYear
+    in.read(reinterpret_cast<char*>(&leapYear), sizeof(bool));
+    return true;
 }

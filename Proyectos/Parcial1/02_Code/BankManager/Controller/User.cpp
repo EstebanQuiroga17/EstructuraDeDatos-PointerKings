@@ -1,10 +1,10 @@
-#include "BankAccount.h"
+#include "../Model/BankAccount.h"
 #include "../Model/PersonalData.h"
 #include "../Model/BankMovement.h"
 #include "../Model/List.h"
 #include "../Model/WithDraw.h"
 #include "../Model/Deposit.h"
-#include "User.h"
+#include "../Model/User.h"
 using namespace std;
 void User::withDraw(float amount, char accountType)
 {
@@ -71,7 +71,7 @@ void User::setPersonalData(PersonalData newPersonalData)
    personalData = newPersonalData;
 }
 
-BankAccount User::getSavingsAccount(void)
+BankAccount& User::getSavingsAccount(void)
 {
    return savingsAccount;
 }
@@ -81,7 +81,7 @@ void User::setSavingsAccount(BankAccount newSavingsAccount)
    savingsAccount = newSavingsAccount;
 }
 
-BankAccount User::getCheckingAccount(void)
+BankAccount& User::getCheckingAccount(void)
 {
    return checkingAccount;
 }
@@ -109,4 +109,30 @@ User::User()
 User::~User()
 {
    // TODO : implement
+}
+
+void User::guardarBinario(std::ofstream& out) const {
+    // Guardar datos personales
+    personalData.guardarBinario(out);
+
+    // Guardar cuentas
+    savingsAccount.guardarBinario(out);
+    checkingAccount.guardarBinario(out);
+
+    // Guardar lista de movimientos
+    bankMovements.guardarBinario(out); // Debes tener este método en tu List<T>
+}
+
+bool User::cargarBinario(std::ifstream& in) {
+    // Leer datos personales
+    personalData.cargarBinario(in);
+
+    // Leer cuentas
+    savingsAccount.cargarBinario(in);
+    checkingAccount.cargarBinario(in);
+
+    // Leer lista de movimientos
+    bankMovements.cargarBinario(in);
+
+    return true;
 }

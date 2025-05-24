@@ -1,5 +1,6 @@
 #include <chrono>
 #include <iostream>
+#include <fstream>
 #include "../Model/Clock.h"
 #include "../Model/Date.h"
 #include "../Model/Year.h"
@@ -81,4 +82,33 @@ Date Date::localDate() {
     currentDate.setTime(currentTime);
 
     return currentDate;
+}
+
+void Date::guardarBinario(std::ofstream& out) const {
+    // Guardar day
+    out.write(reinterpret_cast<const char*>(&day), sizeof(int));
+    // Guardar month
+    out.write(reinterpret_cast<const char*>(&month), sizeof(int));
+    // Guardar year
+    year.guardarBinario(out);
+    // Guardar daysInMonth
+    out.write(reinterpret_cast<const char*>(&daysInMonth), sizeof(int));
+    // Guardar time
+    time.guardarBinario(out);
+}
+
+
+bool Date::cargarBinario(std::ifstream& in) {
+    // Leer day
+    in.read(reinterpret_cast<char*>(&day), sizeof(int));
+    // Leer month
+    in.read(reinterpret_cast<char*>(&month), sizeof(int));
+    // Leer year
+    year.cargarBinario(in);
+    // Leer daysInMonth
+    in.read(reinterpret_cast<char*>(&daysInMonth), sizeof(int));
+    // Leer time
+    time.cargarBinario(in);
+
+    return true;
 }

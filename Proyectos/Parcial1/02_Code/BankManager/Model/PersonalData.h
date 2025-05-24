@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <Date.h>
+#include "Date.h"
 
 class PersonalData
 {
@@ -18,6 +18,10 @@ public:
    ~PersonalData();
    std::string getEmail(void);
    void setEmail(std::string newEmail);
+   void guardarBinario(std::ofstream& out) const;
+   bool cargarBinario(std::ifstream& in);
+   void mostrar() const;
+
 
 protected:
 private:

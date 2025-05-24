@@ -28,9 +28,9 @@ float InputValidator::isFloat(string message) {
             }
         }
         dato[i]='\0';
-        valor=atoi(dato);
+        valor=atof(dato);
         printf("\n");
-        return valor;
+        return static_cast<float>(atof(dato));
     } catch (...) {
         return 0.0f;
     }

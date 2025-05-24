@@ -61,6 +61,11 @@ BankAccount::~BankAccount()
 {
 }
 
+BankAccount::BankAccount() : balance(0.0f), accountNumber(""), type("")
+{
+}
+
+
 void BankAccount::guardarBinario(std::ofstream& out) const {
     // Guardar balance
     out.write(reinterpret_cast<const char*>(&balance), sizeof(float));

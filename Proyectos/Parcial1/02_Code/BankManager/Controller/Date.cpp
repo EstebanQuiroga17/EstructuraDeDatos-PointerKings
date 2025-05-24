@@ -57,6 +57,10 @@ Date::~Date() {
 
 }
 
+Date::Date()
+{
+}
+
 
 void Date::print() {
     std::cout << "Fecha: " << day << "/" << month << "/" << year.getYear() << std::endl;

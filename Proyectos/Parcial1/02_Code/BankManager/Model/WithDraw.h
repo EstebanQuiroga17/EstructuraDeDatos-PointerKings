@@ -8,7 +8,7 @@
 class WithDraw : public BankMovement
 {
 public:
-   WithDraw(float ammount, User user, Date date);
+   WithDraw(float ammount, User* user, Date date);
    WithDraw();
    ~WithDraw();
 

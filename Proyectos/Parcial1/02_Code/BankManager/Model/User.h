@@ -14,12 +14,12 @@ public:
    void deposit(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts);
    
    void deposit(float amount, char accountType);
-   PersonalData getPersonalData(void);
+   PersonalData getPersonalData(void) const; //cambio a constante
 
    void setPersonalData(PersonalData newPersonalData);
-   BankAccount& getSavingsAccount(void);
+   BankAccount& getSavingsAccount(void) const; //cambio a constante
    void setSavingsAccount(BankAccount newSavingsAccount);
-   BankAccount& getCheckingAccount(void);
+   BankAccount& getCheckingAccount(void) const; //cambio a constante
    void setCheckingAccount(BankAccount newCheckingAccount);
    List<BankMovement> getBankMovements(void);
    

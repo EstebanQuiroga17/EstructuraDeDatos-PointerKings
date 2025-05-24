@@ -24,6 +24,7 @@ int DateValidator::monthDays(int month, int year) {
             return 28;
         }
     }
+    return 0; // Invalid month
 }
 
 bool DateValidator::validateDay(int day, int daysInMonth) {

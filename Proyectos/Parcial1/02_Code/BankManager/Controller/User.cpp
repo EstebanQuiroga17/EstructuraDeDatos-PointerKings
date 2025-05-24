@@ -14,10 +14,13 @@ void User::withDraw(float amount, char accountType)
    if(accountType == 'c'){
       checkingAccount.setBalance(checkingAccount.getBalance() - amount);
    }
-   WithDraw withDraw(amount, *this, Date()); 
+   WithDraw withDraw(amount, this, Date()); 
    bankMovements.insert(withDraw);
 }
 
+/* 
+PREGUNTAASSSSSSSSSSSSS
+*/
 void User::deposit(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts)
 {
    BankAccount* destinationAccount;
@@ -42,7 +45,7 @@ void User::deposit(User& destinationUser,char accountType,float amount,List<Bank
    }
    
    Date localDate = Date::localDate();
-   Deposit deposit(amount, *this, localDate, destinationUser);
+   Deposit deposit(amount, this, localDate, destinationUser); //DESINATION USER 
    bankMovements.insert(deposit);
    destinationUser.getBankMovements().insert(deposit);
 }
@@ -56,12 +59,11 @@ void User::deposit(float amount, char accountType)
       checkingAccount.setBalance(checkingAccount.getBalance() + amount);
    }
    Date localDate = Date::localDate();
-   Deposit deposit(amount, *this, localDate, *this);
+   Deposit deposit(amount, this, localDate); //CAMBIO EN THIS
    bankMovements.insert(deposit);
-
 }
 
-PersonalData User::getPersonalData(void)
+PersonalData User::getPersonalData(void) const //cambio a constante
 {
    return personalData;
 }
@@ -71,7 +73,7 @@ void User::setPersonalData(PersonalData newPersonalData)
    personalData = newPersonalData;
 }
 
-BankAccount& User::getSavingsAccount(void)
+BankAccount& User::getSavingsAccount(void) const
 {
    return savingsAccount;
 }
@@ -81,7 +83,7 @@ void User::setSavingsAccount(BankAccount newSavingsAccount)
    savingsAccount = newSavingsAccount;
 }
 
-BankAccount& User::getCheckingAccount(void)
+BankAccount& User::getCheckingAccount(void) const
 {
    return checkingAccount;
 }

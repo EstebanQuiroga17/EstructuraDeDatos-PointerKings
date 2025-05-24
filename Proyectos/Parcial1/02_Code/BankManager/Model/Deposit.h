@@ -11,7 +11,8 @@ class Deposit : public BankMovement
 public:
    Deposit();
    ~Deposit();
-   Deposit(float ammount, User user, Date date, User destinationUser);  
+   Deposit(float ammount, User* user, Date date, User destinationUser);  
+   Deposit(float ammount, User* user, Date date);
    User getDestinationUser(void);
    void setDestinationUser(User newDestinationUser);
 

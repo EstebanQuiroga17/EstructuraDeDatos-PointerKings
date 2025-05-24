@@ -1,9 +1,15 @@
 #include "../Model/Deposit.h"
 
-Deposit::Deposit(float ammount, User user, Date date, User destinationUser)
+Deposit::Deposit(float ammount, User* user, Date date, User destinationUser)
     : BankMovement(ammount, user, date), destinationUser(destinationUser)
 {
 }
+
+Deposit::Deposit(float ammount, User* user, Date date)
+    : BankMovement(ammount, user, date)
+{
+}
+
 
 Deposit::Deposit()
 {

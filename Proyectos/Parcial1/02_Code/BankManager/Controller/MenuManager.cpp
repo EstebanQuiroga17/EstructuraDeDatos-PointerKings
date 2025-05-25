@@ -3,6 +3,7 @@
 #include "InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
 #include <iostream>
 #include <cstdlib>
+#include <conio.h>
 
 
 using std::string;
@@ -17,6 +18,7 @@ int MenuManager::mostrarMenuPrincipal() {
         "Login",
         "Menu de ayuda",
         "Mostrar usuarios",
+        "Consultar movimientos",
         "Crear backup",
         "Restaurar backup",
         "Salir"
@@ -56,7 +58,6 @@ void MenuManager::menuOperations(UserManager& gestor, User* usuario, char tipoCu
     InputValidator validator;
     bool volver = false;
 
-    // Puedes mostrar el tipo de cuenta al usuario, si quieres
     std::string tipoCuentaStr = (tipoCuenta == 's') ? "Ahorros" : "Corriente";
 
     while (!volver) {
@@ -96,3 +97,66 @@ void MenuManager::menuOperations(UserManager& gestor, User* usuario, char tipoCu
     }
 }
 
+int MenuManager::menuQueryMovements() {
+    CursorMenu menu;
+    menu.loadOptions({
+        "Consultar por rango de fechas",
+        "Consultar por nombre y DNI",
+        "Consultar por monto mínimo",
+        "Volver"
+    });
+    int seleccion = menu.runMenuLoopReturnIndex();
+    return seleccion;
+}
+
+void showMovementsQueryMenu(UserManager& manager) {
+    InputValidator validator;
+    bool back = false;
+
+    while (!back) {
+        int option = MenuManager::menuQueryMovements();
+
+        switch (option) {
+            case 0: { // Rango de fechas
+                int y1, m1, d1, y2, m2, d2;
+                std::cout << "Fecha de inicio (AAAA MM DD): ";
+                std::cin >> y1 >> m1 >> d1;
+                std::cout << "Fecha de fin (AAAA MM DD): ";
+                std::cin >> y2 >> m2 >> d2;
+                Date from(y1, m1, d1), to(y2, m2, d2);
+
+                manager.queryMovements([&](BankMovement mov) {
+                    return mov.getDate() >= from && mov.getDate() <= to;
+                });
+                system("pause");
+                break;
+            }
+            case 1: { // Nombre y DNI
+                std::string name, dni;
+                std::cout << "Ingrese el nombre: ";
+                std::cin >> name;
+                std::cout << "Ingrese el DNI: ";
+                std::cin >> dni;
+                manager.queryMovements([&](BankMovement mov) {
+                    return mov.getUser()->getPersonalData().getName() == name &&
+                           mov.getUser()->getPersonalData().getDNI() == dni;
+                });
+                system("pause");
+                break;
+            }
+            case 2: { // Monto mínimo
+                float minAmount;
+                std::cout << "Ingrese el monto mínimo: ";
+                std::cin >> minAmount;
+                manager.queryMovements([&](BankMovement mov) {
+                    return mov.getAmmount() >= minAmount;
+                });
+                system("pause");
+                break;
+            }
+            case 3: // Volver
+                back = true;
+                break;
+        }
+    }
+}

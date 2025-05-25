@@ -12,4 +12,6 @@ public:
     //void menuOperations(UserManager& gestor, User* usuario);
     void menuOperations(UserManager& gestor, User* usuario, char tipoCuenta);
     int menuOperacionBancaria();
+    static int menuQueryMovements();
+
 };

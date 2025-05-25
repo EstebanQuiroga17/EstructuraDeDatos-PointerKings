@@ -23,6 +23,13 @@ public:
     Date();
     Date(Year newYear, int newMonth, int newDay);
     ~Date();
+    bool operator==(const Date& other) const;
+    bool operator!=(const Date& other) const;
+    bool operator<(const Date& other) const;
+    bool operator<=(const Date& other) const;
+    bool operator>(const Date& other) const;
+    bool operator>=(const Date& other) const;
+
 
 protected:
 private:

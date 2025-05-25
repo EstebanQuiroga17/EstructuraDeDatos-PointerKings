@@ -11,7 +11,7 @@ void Year::setLeapYear(bool newLeapYear) {
     leapYear = newLeapYear;
 }
 
-int Year::getYear(void) {
+int Year::getYear(void) const{
     return year;
 }
 

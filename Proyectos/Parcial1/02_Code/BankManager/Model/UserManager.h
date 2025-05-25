@@ -2,6 +2,7 @@
 #include "List.h"
 #include "User.h"
 #include <string>
+#include <functional>
 class BankAccount;
 
 class UserManager {

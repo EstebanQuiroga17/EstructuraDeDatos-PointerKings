@@ -40,7 +40,10 @@ int main() {
                 cin.ignore();
                 cin.get();
                 break;
-            case 4: {
+            case 4:
+                menu.menuQueryMovements();
+                break;
+            case 5: {
                 std::string backupName = BackupManager::getTimestampedBackupName();
                 if (BackupManager::makeBackup("users.dat", backupName)) {
                     std::cout << "Backup realizado: " << backupName << std::endl;
@@ -50,7 +53,7 @@ int main() {
                 system("pause");
                 break;
             }
-            case 5: {
+            case 6: {
                 std::string backupToRestore;
                 std::cout << "Ingrese nombre del backup a restaurar: ";
                 std::cin >> backupToRestore;
@@ -63,7 +66,7 @@ int main() {
                 system("pause");
                 break;
             }
-            case 6:
+            case 7:
                 salir = true;
                 break;
         }

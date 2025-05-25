@@ -116,3 +116,34 @@ bool Date::loadBinary(std::ifstream& in) {
 
     return true;
 }
+
+bool Date::operator==(const Date& other) const {
+    return year.getYear() == other.year.getYear() &&
+           month == other.month &&
+           day == other.day;
+}
+
+bool Date::operator!=(const Date& other) const {
+    return !(*this == other);
+}
+
+bool Date::operator<(const Date& other) const {
+    if (year.getYear() != other.year.getYear())
+        return year.getYear() < other.year.getYear();
+    if (month != other.month)
+        return month < other.month;
+    return day < other.day;
+}
+
+bool Date::operator<=(const Date& other) const {
+    return *this < other || *this == other;
+}
+
+bool Date::operator>(const Date& other) const {
+    return !(*this <= other);
+}
+
+bool Date::operator>=(const Date& other) const {
+    return !(*this < other);
+}
+

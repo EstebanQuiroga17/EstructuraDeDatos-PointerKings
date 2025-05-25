@@ -302,3 +302,31 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     std::cout << "Retiro exitoso.\n";
     retiro.printReceipt(); 
 }
+
+void UserManager::queryMovements(const std::function<bool(const BankMovement&)>& predicate) const {
+    bool found = false;
+    Node<User>* currentUser = usuarios.getHead();
+    if (!currentUser) {
+        std::cout << "No users registered.\n";
+        return;
+    }
+    do {
+        User user = currentUser->getValue();
+        List<BankMovement> movements = user.getBankMovements();
+        Node<BankMovement>* currentMov = movements.getHead();
+        if (currentMov) {
+            do {
+                BankMovement mov = currentMov->getValue();
+                if (predicate(mov)) {
+                    mov.printReceipt();
+                    found = true;
+                }
+                currentMov = currentMov->getNextNode();
+            } while (currentMov != movements.getHead());
+        }
+        currentUser = currentUser->getNextNode();
+    } while (currentUser != usuarios.getHead());
+
+    if (!found)
+        std::cout << "No movements found with that criteria.\n";
+}

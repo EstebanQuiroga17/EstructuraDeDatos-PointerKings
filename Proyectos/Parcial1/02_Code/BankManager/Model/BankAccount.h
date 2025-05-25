@@ -15,7 +15,7 @@ public:
 
    BankAccount(); 
    BankAccount( std::string type);
-   std::string generateAccountNumber(int digits = 10, std::string number = "");
+   static std::string generateAccountNumber(int digits = 10, std::string number = "");
    ~BankAccount();
 
 protected:

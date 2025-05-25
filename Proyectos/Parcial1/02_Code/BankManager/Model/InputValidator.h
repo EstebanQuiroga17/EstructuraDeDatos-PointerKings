@@ -14,7 +14,7 @@ public:
     string InputValidator::isEmail();
     string InputValidator::isLetter(const string& mensaje);
     Date InputValidator::pedirFechaNacimiento();
-    string InputValidator::isDNI();
+    string InputValidator::isDNI(); 
 };
 
 #endif 

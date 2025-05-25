@@ -18,6 +18,8 @@ public:
     void loadUsers();
     BankAccount crearCuentaAhorros();
     BankAccount crearCuentaCorriente();
+    void guardarUsuario(const PersonalData& datos, bool abrirAhorros, bool abrirCorriente);
+    PersonalData capturarDatosPersonales();
     void deposit(User* usuario, float monto, char tipoCuenta, const Date& fecha);
     void withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha);
 };

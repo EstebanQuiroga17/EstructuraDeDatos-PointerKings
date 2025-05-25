@@ -1,98 +1,54 @@
-#include "../Model/List.h"
-#include "../Model/MenuManager.h"
+#include "MenuManager.h"
+#include "CursorMenu.h" // Cambia según dónde esté tu clase de menú con cursores
 #include <iostream>
-#include <conio.h> // Para _getch()
-using namespace std;
+#include <cstdlib>
 
-// Constructor
-MenuManager::MenuManager() {
-    cursor = nullptr;
+using std::string;
+using std::vector;
+using std::cout;
+using std::cin;
+
+int MenuManager::mostrarMenuPrincipal() {
+    CursorMenu menu;
+    menu.loadOptions({
+        "Crear usuario",
+        "Login",
+        "Menu de ayuda",
+        "Mostrar usuarios",
+        "Crear backup",
+        "Restaurar backup",
+        "Salir"
+    });
+    return menu.runMenuLoopReturnIndex();
 }
 
-// Carga las opciones al menú
-void MenuManager::loadOptions(const vector<string>& opciones) {
-    for (const auto& op : opciones) {
-        menuOptions.insert(op);
+char MenuManager::menuTipoCuenta() {
+    CursorMenu menu;
+    menu.loadOptions({
+        "Cuenta de Ahorros",
+        "Cuenta Corriente",
+        "Ambas cuentas (Ahorros y Corriente)",
+        "Cancelar"
+    });
+    int seleccion = menu.runMenuLoopReturnIndex();
+    switch (seleccion) {
+        case 0: return 's'; // Solo ahorros
+        case 1: return 'c'; // Solo corriente
+        case 2: return 'a'; // Ambas cuentas
+        default: return 'x'; // Cancelar
     }
-    cursor = menuOptions.getHead();
 }
 
-//impresion del menú
-void MenuManager::printMenu() {
-    Node<string>* current = menuOptions.getHead();
-    if (!current) {
-        cout << "Menú vacío" << endl;
-        return;
-    }
-    do {
-        if (current == cursor)
-            cout << ">> ";
-        else
-            cout << "   ";
-        cout << current->getValue() << endl;
-        current = current->getNextNode();
-    } while (current != menuOptions.getHead());
+void MenuManager::mostrarAyuda() {
+    system("cls");
+    cout << "===== AYUDA =====\n";
+    cout << "1. Crear usuario: Registra un nuevo usuario con cuenta.\n";
+    cout << "2. Login: Ingresa con tu número de cuenta registrado.\n";
+    cout << "3. Menú de ayuda: Muestra esta ventana.\n";
+    cout << "4. Mostrar usuarios: Visualiza todos los usuarios cargados.\n";
+    cout << "5. Salir: Termina el programa.\n";
+    cout << "\nUsa las flechas ↑ y ↓ para moverte, Enter para seleccionar.\n";
+    cout << "\nPresiona cualquier tecla para volver al menú...";
+    cin.ignore();
+    cin.get();
 }
-
-//Función que retorna el índice seleccionado
-int MenuManager::runMenuLoopReturnIndex() {
-    bool running = true;
-    int index = 0;
-    Node<string>* current = menuOptions.getHead();
-    int total = 0;
-    do {
-        total++;
-        current = current->getNextNode();
-    } while (current != menuOptions.getHead());
-
-    cursor = menuOptions.getHead();
-    index = 0;
-
-    while (running) {
-        system("cls");
-        cout << " Usa ↑ y ↓ para navegar. Enter para seleccionar.\n\n";
-        printMenu();
-
-        char key = _getch();
-        if (key == -32) {
-            key = _getch();
-            if (key == 72) { // Arriba
-                cursor = cursor->getPreviousNode();
-                index = (index - 1 + total) % total;
-            } else if (key == 80) { // Abajo
-                cursor = cursor->getNextNode();
-                index = (index + 1) % total;
-            }
-        } else if (key == 13) {
-            return index;
-        }
-    }
-    return index;
-}
-
-
-// // Método para ejecutar el menú visualizar (opcional)
-// //Ejecutor del menú
-// void MenuManager::runMenuLoop() {
-//     bool running = true;
-//     while (running) {
-//         system("cls");
-//         cout << " Usa ↑ y ↓ para navegar. Enter para seleccionar.\n\n";
-//         printMenu();
-
-//         char key = _getch();
-//         if (key == -32) { // Teclas especiales (flechas)
-//             key = _getch();
-//             if (key == 72) // Flecha arriba
-//                 cursor = cursor->getPreviousNode();
-//             else if (key == 80) // Flecha abajo
-//                 cursor = cursor->getNextNode();
-//         } else if (key == 13) { // Enter
-//             system("cls");
-//             cout << "Seleccionaste: " << cursor->getValue() << endl;
-//             if (cursor->getValue() == "Salir")
-//                 running = false;
-//             system("pause");
-//         }
-//     }
-// }

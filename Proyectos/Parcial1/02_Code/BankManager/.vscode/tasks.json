@@ -19,6 +19,7 @@
                 "Controller/DateValidator.cpp",
                 "Controller/Deposit.cpp",
                 "Controller/InputValidator.cpp",
+                "Controller/CursorMenu.cpp",
                 "Controller/MenuManager.cpp",
                 "Controller/PersonalData.cpp",
                 "Controller/User.cpp",

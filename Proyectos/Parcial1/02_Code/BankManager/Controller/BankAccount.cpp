@@ -34,20 +34,24 @@ void BankAccount::setType(std::string newType)
    type = newType;
 }
 
-string BankAccount::generateAccountNumber(int digits, std::string number) {
+std::string BankAccount::generateAccountNumber(int digits, std::string number) {
     if (digits == 0) {
-        if (number[0] == '0') {
+        // Si el número empieza en '0', vuelve a empezar (no válido)
+        if (!number.empty() && number[0] == '0') {
             return generateAccountNumber(10, "");
         }
         return number;
     }
     if (number.empty()) {
+        // Primer dígito: entre 1 y 9 (sin cero inicial)
         number += '1' + rand() % 9;
     } else {
         number += '0' + rand() % 10;
     }
     return generateAccountNumber(digits - 1, number);
 }
+
+
 
 BankAccount::BankAccount(std::string type)
    : type(type)

@@ -70,6 +70,7 @@ int MenuManager::runMenuLoopReturnIndex() {
     return index;
 }
 
+
 // // Método para ejecutar el menú visualizar (opcional)
 // //Ejecutor del menú
 // void MenuManager::runMenuLoop() {

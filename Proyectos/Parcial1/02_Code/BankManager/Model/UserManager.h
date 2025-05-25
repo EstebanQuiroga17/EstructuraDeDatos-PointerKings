@@ -1,8 +1,8 @@
 #pragma once
 #include "List.h"
-#include "User.h" // Usa el nombre real de tu clase Usuario
-#include "BankAccount.h"
+#include "User.h"
 #include <string>
+class BankAccount;
 
 class UserManager {
 private:
@@ -18,5 +18,7 @@ public:
     void loadUsers();
     BankAccount crearCuentaAhorros();
     BankAccount crearCuentaCorriente();
+    void deposit(User* usuario, float monto, char tipoCuenta, const Date& fecha);
+    void withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha);
 };
     

@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 
+
 class MenuManager {
 private:
     List<std::string> menuOptions;

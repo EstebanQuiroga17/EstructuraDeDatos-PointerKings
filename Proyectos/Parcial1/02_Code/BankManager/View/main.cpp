@@ -22,7 +22,10 @@ int main() {
                 gestor.crearUsuario();
                 break;
             case 1:
-                gestor.login();
+                User* usuario = gestor.login();
+                if(usuario){
+                    menu.menuOperations(gestor, usuario);
+                }
                 break;
             case 2:
                system("start \"\" \"Utils\\index.html\"");
@@ -66,3 +69,4 @@ int main() {
     }
     return 0;
 }
+

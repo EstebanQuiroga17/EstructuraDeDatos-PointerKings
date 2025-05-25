@@ -7,12 +7,14 @@
 #include "..\Model\CesarCifration.h"
 #include "..\Model\InputValidator.h"
 #include "..\Model\PersonalData.h"
+#include "..\Model\WithDraw.h"
+#include "..\Model\Deposit.h"
 #include <iostream>
 
 
 #include <string>
 #include <vector>
-#include <cstdlib> // Para system("cls") y system("pause")
+#include <cstdlib> 
 using namespace std;
 
 UserManager::UserManager() {
@@ -261,4 +263,59 @@ void UserManager::mostrarUsuarios() {
         actual = actual->getNextNode();
         ++i;
     } while (actual != usuarios.getHead());
+}
+
+void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
+    if (!usuario) {
+        std::cout << "Usuario inválido.\n";
+        return;
+    }
+    if (monto <= 0) {
+        std::cout << "El monto debe ser mayor que cero.\n";
+        return;
+    }
+    if (tipoCuenta == 's') {
+        usuario->getSavingsAccount().setBalance(usuario->getSavingsAccount().getBalance() + monto);
+    } else if (tipoCuenta == 'c') {
+        usuario->getCheckingAccount().setBalance(usuario->getCheckingAccount().getBalance() + monto);
+    } else {
+        std::cout << "Tipo de cuenta inválido.\n";
+        return;
+    }
+    Deposit deposito(monto, usuario, fecha);
+    usuario->getBankMovements().insert(deposito);
+    std::cout << "Depósito exitoso.\n";
+}
+
+void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
+    if (!usuario) {
+        std::cout << "Usuario inválido.\n";
+        return;
+    }
+    if (monto <= 0) {
+        std::cout << "El monto debe ser mayor que cero.\n";
+        return;
+    }
+    if (tipoCuenta == 's') {
+        float saldo = usuario->getSavingsAccount().getBalance();
+        if (saldo < monto) {
+            std::cout << "Saldo insuficiente.\n";
+            return;
+        }
+        usuario->getSavingsAccount().setBalance(saldo - monto);
+    } else if (tipoCuenta == 'c') {
+        // Si tu cuenta corriente permite sobregiro, ajusta aquí
+        float saldo = usuario->getCheckingAccount().getBalance();
+        if (saldo < monto) {
+            std::cout << "Saldo insuficiente.\n";
+            return;
+        }
+        usuario->getCheckingAccount().setBalance(saldo - monto);
+    } else {
+        std::cout << "Tipo de cuenta inválido.\n";
+        return;
+    }
+    WithDraw retiro(monto, usuario, fecha);
+    usuario->getBankMovements().insert(retiro);
+    std::cout << "Retiro exitoso.\n";
 }

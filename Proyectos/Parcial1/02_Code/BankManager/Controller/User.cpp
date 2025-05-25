@@ -16,7 +16,6 @@ void User::withDraw(float amount, char accountType)
    }
    WithDraw withDraw(amount, this, Date()); 
    bankMovements.insert(withDraw);
-   withDraw.printReceipt();
 }
 
 /* 

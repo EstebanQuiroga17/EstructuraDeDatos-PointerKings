@@ -222,6 +222,7 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
     Deposit deposito(monto, usuario, fecha);
     usuario->getBankMovements().insert(deposito);
     std::cout << "Depósito exitoso.\n";
+    deposito.printReceipt(1); 
 }
 
 void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
@@ -255,4 +256,5 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     WithDraw retiro(monto, usuario, fecha);
     usuario->getBankMovements().insert(retiro);
     std::cout << "Retiro exitoso.\n";
+    retiro.printReceipt(); 
 }

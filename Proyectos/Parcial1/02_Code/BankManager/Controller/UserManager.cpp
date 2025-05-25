@@ -289,7 +289,14 @@ void UserManager::queryMovements(const std::function<bool(const BankMovement&)>&
 
     if (!found)
         std::cout << "No movements found with that criteria.\n";
+<<<<<<< HEAD
         
+=======
+}
+
+
+
+>>>>>>> 49aaffb201908b9c332647d3b79f7b80fc57a285
 void UserManager::eliminarUsuario() {
     string cuenta;
     system("cls");

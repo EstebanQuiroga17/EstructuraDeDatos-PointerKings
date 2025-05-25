@@ -68,3 +68,8 @@ void Node<T>::setPreviousNode(Node<T>* newPreviousNode)
 {
     previousNode = newPreviousNode;
 }
+
+template <typename T>
+T& Node<T>::getValue() {
+    return value;
+}

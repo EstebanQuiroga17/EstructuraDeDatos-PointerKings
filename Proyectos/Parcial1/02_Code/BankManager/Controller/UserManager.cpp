@@ -118,7 +118,7 @@ BankAccount UserManager::crearCuentaCorriente() {
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber(10, "");
     cout << "Número de cuenta corriente generado: " << numCuenta << endl;
-    
+
     float saldo = validator.isFloat("Saldo inicial corriente: ");
     cuenta.setAccountNumber(numCuenta);
     cuenta.setType("Corriente");
@@ -164,25 +164,6 @@ User* UserManager::login() {
     }
 }
 
-// void UserManager::mostrarUsuarios() {
-//     Node<User>* actual = usuarios.getHead();
-//     if (!actual) {
-//         cout << "No hay usuarios.\n";
-//         return;
-//     }
-//     cout << "=== Lista de usuarios ===\n";
-//     do {
-//         const User& usuario = actual->getValue();
-//         cout << "Nombre: " << usuario.getPersonalData().getName()
-//              << " " << usuario.getPersonalData().getLastName()
-//              << ", Cedula: " << usuario.getPersonalData().getDNI()
-//              << ", Cuenta Ahorros: " << usuario.getSavingsAccount().getAccountNumber()
-//              << ", Saldo Ahorros: " << usuario.getSavingsAccount().getBalance()
-//              << ", Cuenta Corriente: " << usuario.getCheckingAccount().getAccountNumber()
-//              << ", Saldo Corriente: " << usuario.getCheckingAccount().getBalance() << endl;
-//         actual = actual->getNextNode();
-//     } while (actual != usuarios.getHead());
-// }
 
 void UserManager::saveUsers() {
     BinaryCifration::saveList(usuarios, "users.dat");

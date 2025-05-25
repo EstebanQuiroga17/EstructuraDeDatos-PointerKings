@@ -6,6 +6,7 @@
 #include "../Model/Deposit.h"
 #include "../Model/User.h"
 using namespace std;
+<<<<<<< HEAD
 void User::withDraw(float amount, char accountType)
 {
    if(accountType == 's'){
@@ -64,6 +65,8 @@ void User::deposit(float amount, char accountType)
    bankMovements.insert(deposit);
    deposit.printReceipt(0); // 0 indica que es un deposito a la misma cuenta
 }
+=======
+>>>>>>> b1e5c14afaadb3d164ee748b2d9bf458ea643c65
 
 PersonalData User::getPersonalData(void) const 
 {

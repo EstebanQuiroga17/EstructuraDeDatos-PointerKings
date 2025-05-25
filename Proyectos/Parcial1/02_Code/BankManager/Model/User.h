@@ -9,11 +9,6 @@
 class User
 {
 public:
-   void withDraw(float amount, char type);
-
-   void deposit(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts);
-   
-   void deposit(float amount, char accountType);
    PersonalData getPersonalData(void) const; //cambio a constante
 
    void setPersonalData(PersonalData newPersonalData);

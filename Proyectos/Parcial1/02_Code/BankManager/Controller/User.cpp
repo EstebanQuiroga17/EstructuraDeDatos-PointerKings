@@ -16,6 +16,7 @@ void User::withDraw(float amount, char accountType)
    }
    WithDraw withDraw(amount, this, Date()); 
    bankMovements.insert(withDraw);
+   withDraw.printReceipt();
 }
 
 /* 
@@ -45,9 +46,10 @@ void User::deposit(User& destinationUser,char accountType,float amount,List<Bank
    }
    
    Date localDate = Date::localDate();
-   Deposit deposit(amount, this, localDate, destinationUser); //DESINATION USER 
+   Deposit deposit(amount, this, localDate, destinationUser); 
    bankMovements.insert(deposit);
    destinationUser.getBankMovements().insert(deposit);
+   deposit.printReceipt(1); // 1 indica que es un deposito a otra cuenta
 }
 
 void User::deposit(float amount, char accountType)
@@ -59,11 +61,12 @@ void User::deposit(float amount, char accountType)
       checkingAccount.setBalance(checkingAccount.getBalance() + amount);
    }
    Date localDate = Date::localDate();
-   Deposit deposit(amount, this, localDate); //CAMBIO EN THIS
+   Deposit deposit(amount, this, localDate); 
    bankMovements.insert(deposit);
+   deposit.printReceipt(0); // 0 indica que es un deposito a la misma cuenta
 }
 
-PersonalData User::getPersonalData(void) const //cambio a constante
+PersonalData User::getPersonalData(void) const 
 {
    return personalData;
 }
@@ -114,26 +117,20 @@ User::~User()
 }
 
 void User::saveBinary(std::ofstream& out) const {
-    // Guardar datos personales
     personalData.saveBinary(out);
 
-    // Guardar cuentas
     savingsAccount.saveBinary(out);
     checkingAccount.saveBinary(out);
 
-    // Guardar lista de movimientos
-    bankMovements.saveBinary(out); // Debes tener este método en tu List<T>
+    bankMovements.saveBinary(out); 
 }
 
 bool User::loadBinary(std::ifstream& in) {
-    // Leer datos personales
     personalData.loadBinary(in);
 
-    // Leer cuentas
     savingsAccount.loadBinary(in);
     checkingAccount.loadBinary(in);
 
-    // Leer lista de movimientos
     bankMovements.loadBinary(in);
 
     return true;

@@ -17,8 +17,8 @@ public:
    void setUser(User* newUser);
    Date getDate(void);
    void setDate(Date newDate);
-   float calculateBalance(void);
-   void printReceipt(void);
+   virtual void printReceipt(int type);
+   virtual void printReceipt();
    std::string createId(void);
    static std::string getLastId();
    static void setLastId(const std::string& newLastId);

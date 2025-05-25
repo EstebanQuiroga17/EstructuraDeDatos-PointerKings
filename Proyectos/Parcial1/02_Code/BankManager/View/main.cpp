@@ -100,7 +100,5 @@ int main() {
                 break;
         }
     }
-    // Guarda los usuarios al salir (opcional, si no los guardas en crearUsuario)
-    // gestor.saveUsers();
     return 0;
 }

@@ -1,7 +1,6 @@
 #include <fstream>
 #include "../Model/BankAccount.h"
 #include <cstdlib>
-#include <ctime>
 using namespace std;
 
 float BankAccount::getBalance(void)
@@ -36,21 +35,18 @@ void BankAccount::setType(std::string newType)
 
 std::string BankAccount::generateAccountNumber(int digits, std::string number) {
     if (digits == 0) {
-        // Si el número empieza en '0', vuelve a empezar (no válido)
         if (!number.empty() && number[0] == '0') {
             return generateAccountNumber(10, "");
         }
         return number;
     }
     if (number.empty()) {
-        // Primer dígito: entre 1 y 9 (sin cero inicial)
-        number += '1' + rand() % 9;
+        number += '1' + rand() % 9;  
     } else {
-        number += '0' + rand() % 10;
+        number += '0' + rand() % 10; 
     }
     return generateAccountNumber(digits - 1, number);
 }
-
 
 
 BankAccount::BankAccount(std::string type)
@@ -71,16 +67,14 @@ BankAccount::BankAccount() : balance(0.0f), accountNumber(""), type("")
 
 
 void BankAccount::saveBinary(std::ofstream& out) const {
-    // Guardar balance
+
     out.write(reinterpret_cast<const char*>(&balance), sizeof(float));
 
-    // Guardar accountNumber
     int len = accountNumber.size();
     out.write(reinterpret_cast<const char*>(&len), sizeof(int));
     const char* ptrAccount = accountNumber.c_str();
     out.write(ptrAccount, len);
 
-    // Guardar type
     len = type.size();
     out.write(reinterpret_cast<const char*>(&len), sizeof(int));
     const char* ptrType = type.c_str();
@@ -88,19 +82,16 @@ void BankAccount::saveBinary(std::ofstream& out) const {
 }
 
 bool BankAccount::loadBinary(std::ifstream& in) {
-    // Leer balance
     in.read(reinterpret_cast<char*>(&balance), sizeof(float));
 
-    // Leer accountNumber
     int len = 0;
     in.read(reinterpret_cast<char*>(&len), sizeof(int));
     char* buffer = new char[len + 1];
     in.read(buffer, len);
-    *(buffer + len) = '\0';  // Fin de cadena sin corchetes
+    *(buffer + len) = '\0';  
     accountNumber = buffer;
-    delete buffer;  // Si la consigna es delete y no delete[], úsalo así
+    delete buffer; 
 
-    // Leer type
     in.read(reinterpret_cast<char*>(&len), sizeof(int));
     buffer = new char[len + 1];
     in.read(buffer, len);

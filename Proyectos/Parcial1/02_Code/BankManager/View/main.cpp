@@ -21,12 +21,14 @@ int main() {
             case 0:
                 gestor.crearUsuario();
                 break;
-            case 1:
-                // User* usuario = gestor.login();
-                // if(usuario){
-                //     menu.menuOperations(gestor, usuario);
-                // }
+            case 1:{
+                User* usuario = gestor.login();
+                if(usuario){
+                    MenuManager menu;
+                    menu.menuOperations(gestor, usuario);
+                }
                 break;
+            }
             case 2:
                 system("start \"\" \"Utils\\index.html\"");
                 break;

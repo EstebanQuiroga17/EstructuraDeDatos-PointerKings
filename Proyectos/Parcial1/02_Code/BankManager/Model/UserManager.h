@@ -1,6 +1,7 @@
 #pragma once
 #include "List.h"
 #include "User.h" // Usa el nombre real de tu clase Usuario
+#include "BankAccount.h"
 #include <string>
 
 class UserManager {
@@ -15,5 +16,7 @@ public:
     List<User>& getUsuarios();     // Acceso a la lista si la necesitas afuera
     void saveUsers();
     void loadUsers();
+    BankAccount crearCuentaAhorros();
+    BankAccount crearCuentaCorriente();
 };
     

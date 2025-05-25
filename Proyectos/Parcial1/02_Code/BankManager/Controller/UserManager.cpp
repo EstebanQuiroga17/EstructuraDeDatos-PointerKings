@@ -15,6 +15,11 @@
 #include <cstdlib> // Para system("cls") y system("pause")
 using namespace std;
 
+UserManager::UserManager() {
+
+}
+
+
 void UserManager::crearUsuario() {
     system("cls");
     cout << "=== Registro de nuevo usuario ===" << endl;
@@ -35,75 +40,78 @@ void UserManager::crearUsuario() {
     datos.setBirthDate(fechaNac);
     datos.setEmail(email);
 
-    // --- Cuenta de Ahorros ---
-    cout << "\n--- Datos de la cuenta de AHORROS ---" << endl;
-    string numCuentaAhorros;
-    regex soloNumeros("^[0-9]{10}$");
-    do {
-        cout << "Numero de cuenta de ahorros (10 dígitos): ";
-        cin >> numCuentaAhorros;
-        if (!regex_match(numCuentaAhorros, soloNumeros)) {
-            cout << "Debe tener exactamente 10 dígitos numéricos.\n";
-        }
-    } while (!regex_match(numCuentaAhorros, soloNumeros));
-    
-    string tipoAhorros;
-    do {
-        cout << "Tipo de cuenta de ahorros (Ahorros): ";
-        cin >> tipoAhorros;
-        if (tipoAhorros != "Ahorros" && tipoAhorros != "ahorros") {
-            cout << "Solo se permite 'Ahorros'.\n";
-        }
-    } while (tipoAhorros != "Ahorros" && tipoAhorros != "ahorros");
+    // --- Preguntar tipo de cuenta(s) ---
+    char opcion;
+    bool abrirAhorros = false, abrirCorriente = false;
+    cout << "\n¿Desea crear cuenta de Ahorros? (s/n): ";
+    cin >> opcion;
+    if (opcion == 's' || opcion == 'S') abrirAhorros = true;
 
-    float saldoAhorros = validator.isFloat("Saldo inicial de ahorros: ");
+    cout << "¿Desea crear cuenta Corriente? (s/n): ";
+    cin >> opcion;
+    if (opcion == 's' || opcion == 'S') abrirCorriente = true;
 
-    BankAccount cuentaAhorros;
-    cuentaAhorros.setAccountNumber(numCuentaAhorros);
-    cuentaAhorros.setType(tipoAhorros);
-    cuentaAhorros.setBalance(saldoAhorros);
+    BankAccount cuentaAhorros, cuentaCorriente;
+    if (abrirAhorros)    cuentaAhorros = crearCuentaAhorros();
+    if (abrirCorriente)  cuentaCorriente = crearCuentaCorriente();
 
-    // --- Cuenta Corriente ---
-    cout << "\n--- Datos de la cuenta CORRIENTE ---" << endl;
-    string numCuentaCorriente;
-    do {
-        cout << "Numero de cuenta corriente (10 dígitos): ";
-        cin >> numCuentaCorriente;
-        if (!regex_match(numCuentaCorriente, soloNumeros)) {
-            cout << "Debe tener exactamente 10 dígitos numéricos.\n";
-        }
-    } while (!regex_match(numCuentaCorriente, soloNumeros));
-    
-    string tipoCorriente;
-    do {
-        cout << "Tipo de cuenta corriente (Corriente): ";
-        cin >> tipoCorriente;
-        if (tipoCorriente != "Corriente" && tipoCorriente != "corriente") {
-            cout << "Solo se permite 'Corriente'.\n";
-        }
-    } while (tipoCorriente != "Corriente" && tipoCorriente != "corriente");
-
-    float saldoCorriente = validator.isFloat("Saldo inicial corriente: ");
-
-    BankAccount cuentaCorriente;
-    cuentaCorriente.setAccountNumber(numCuentaCorriente);
-    cuentaCorriente.setType(tipoCorriente);
-    cuentaCorriente.setBalance(saldoCorriente);
-
-    // --- Usuario completo ---
+    // --- Crear usuario completo ---
     User usuario;
     usuario.setPersonalData(datos);
-    usuario.setSavingsAccount(cuentaAhorros);
-    usuario.setCheckingAccount(cuentaCorriente);
+
+    if (abrirAhorros)    usuario.setSavingsAccount(cuentaAhorros);
+    if (abrirCorriente)  usuario.setCheckingAccount(cuentaCorriente);
 
     usuarios.insert(usuario);
 
-    saveUsers(); // Guarda después de insertar
+    saveUsers();
     cout << "\nUsuario creado exitosamente!\n";
     system("pause");
 }
 
 
+
+BankAccount UserManager::crearCuentaAhorros() {
+    InputValidator validator;
+    cout << "\n--- Datos de la cuenta de AHORROS ---" << endl;
+    string numCuenta;
+    regex soloNumeros("^[0-9]{10}$");
+    do {
+        cout << "Numero de cuenta de ahorros (10 dígitos): ";
+        cin >> numCuenta;
+        if (!regex_match(numCuenta, soloNumeros)) {
+            cout << "Debe tener exactamente 10 dígitos numéricos.\n";
+        }
+    } while (!regex_match(numCuenta, soloNumeros));
+
+    float saldo = validator.isFloat("Saldo inicial de ahorros: ");
+    BankAccount cuenta;
+    cuenta.setAccountNumber(numCuenta);
+    cuenta.setType("Ahorros");
+    cuenta.setBalance(saldo);
+    return cuenta;
+}
+
+BankAccount UserManager::crearCuentaCorriente() {
+    InputValidator validator;
+    cout << "\n--- Datos de la cuenta CORRIENTE ---" << endl;
+    string numCuenta;
+    regex soloNumeros("^[0-9]{10}$");
+    do {
+        cout << "Numero de cuenta corriente (10 dígitos): ";
+        cin >> numCuenta;
+        if (!regex_match(numCuenta, soloNumeros)) {
+            cout << "Debe tener exactamente 10 dígitos numéricos.\n";
+        }
+    } while (!regex_match(numCuenta, soloNumeros));
+
+    float saldo = validator.isFloat("Saldo inicial corriente: ");
+    BankAccount cuenta;
+    cuenta.setAccountNumber(numCuenta);
+    cuenta.setType("Corriente");
+    cuenta.setBalance(saldo);
+    return cuenta;
+}
 
 
 
@@ -188,7 +196,7 @@ User* UserManager::login() {
                 usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
                 cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << "!\n";
                 system("pause");
-                return &usuario;
+                return &(actual->getValue());
             }
             actual = actual->getNextNode();
         } while (actual != usuarios.getHead());

@@ -169,46 +169,6 @@ User* UserManager::login(char &tipoCuenta) {
     }
 }
 
-
-// User* UserManager::login() {
-//     string cuentaIngresada;
-
-//     while (true) {
-//         system("cls");
-//         cout << "=== LOGIN ===" << endl;
-//         cout << "Ingrese número de cuenta (ahorros o corriente), o escriba 0 para salir: ";
-//         cin >> cuentaIngresada;
-
-//         // Permite salir escribiendo 0
-//         if (cuentaIngresada == "0") {
-//             cout << "Login cancelado.\n";
-//             system("pause");
-//             return nullptr;
-//         }
-
-//         Node<User>* actual = usuarios.getHead();
-//         if (!actual) {
-//             cout << "No hay usuarios registrados.\n";
-//             system("pause");
-//             return nullptr;
-//         }
-//         do {
-//             User usuario = actual->getValue(); //IMPORTANTE SI QUEREMOS MODIFICAR EL USUARIOS DEBEMOS CAMBIAR EL NOTO Y HACER POR REFERENCIA T& Node<T>::getValue()
-//             if (usuario.getSavingsAccount().getAccountNumber() == cuentaIngresada ||
-//                 usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
-//                 cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << "!\n";
-//                 system("pause");
-//                 return &(actual->getValue());
-//             }
-//             actual = actual->getNextNode();
-//         } while (actual != usuarios.getHead());
-
-//         cout << "Cuenta no encontrada. Intente de nuevo o escriba 0 para salir.\n";
-//         system("pause");
-//     }
-// }
-
-
 void UserManager::saveUsers() {
     BinaryCifration::saveList(usuarios, "users.dat");
     CesarCifration cesar(3); // Usa tu desplazamiento preferido
@@ -301,4 +261,50 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     usuario->getBankMovements().insert(retiro);
     std::cout << "Retiro exitoso.\n";
     retiro.printReceipt(); 
+}
+
+void UserManager::eliminarUsuario() {
+    string cuenta;
+    system("cls");
+    cout << "=== ELIMINAR USUARIO ===" << endl;
+    cout << "Ingrese el número de cuenta de ahorros o corriente del usuario a eliminar: ";
+    cin >> cuenta;
+
+    if (!usuarios.getHead()) {
+        cout << "No hay usuarios registrados.\n";
+        system("pause");
+        return;
+    }
+
+    Node<User>* actual = usuarios.getHead();
+    Node<User>* anterior = nullptr;
+    bool encontrado = false;
+
+    // Recorre la lista circular
+    do {
+        User& usuario = actual->getValue();
+        if (usuario.getSavingsAccount().getAccountNumber() == cuenta || usuario.getCheckingAccount().getAccountNumber() == cuenta) {
+            encontrado = true;
+            break;
+        }
+        anterior = actual;
+        actual = actual->getNextNode();
+    } while (actual != usuarios.getHead());
+
+    if (encontrado) {
+        // Si solo hay un usuario
+        if (actual == usuarios.getHead() && actual->getNextNode() == actual) {
+            usuarios.setHead(nullptr);
+        } else {
+            // Quita el nodo de la lista circular
+            if (actual == usuarios.getHead()) usuarios.setHead(actual->getNextNode());
+            anterior->setNextNode(actual->getNextNode());
+            // Libera memoria si es necesario, dependiendo de tu implementación
+        }
+        saveUsers();
+        cout << "\nUsuario eliminado exitosamente.\n";
+    } else {
+        cout << "Usuario no encontrado.\n";
+    }
+    system("pause");
 }

@@ -100,7 +100,7 @@ BankAccount UserManager::crearCuentaAhorros() {
 
     // Generar número automáticamente
     BankAccount cuenta;
-    std::string numCuenta = cuenta.generateAccountNumber(10, "");
+    std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Número de cuenta de ahorros generado: " << numCuenta << endl;
 
     float saldo = validator.isFloat("Saldo inicial de ahorros: ");
@@ -116,7 +116,7 @@ BankAccount UserManager::crearCuentaCorriente() {
 
     // Generar número automáticamente
     BankAccount cuenta;
-    std::string numCuenta = cuenta.generateAccountNumber(10, "");
+    std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Número de cuenta corriente generado: " << numCuenta << endl;
 
     float saldo = validator.isFloat("Saldo inicial corriente: ");

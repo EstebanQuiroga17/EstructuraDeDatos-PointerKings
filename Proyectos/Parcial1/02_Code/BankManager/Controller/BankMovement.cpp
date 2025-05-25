@@ -55,6 +55,13 @@ void BankMovement::setDate(Date newDate)
    date = newDate;
 }
 
+void BankMovement::printReceipt() {
+    
+}
+
+void BankMovement::printReceipt(int type) {
+    
+}
 
 string BankMovement::getLastId() {
     return lastId;

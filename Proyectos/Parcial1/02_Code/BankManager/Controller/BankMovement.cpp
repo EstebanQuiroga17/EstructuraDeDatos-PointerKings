@@ -55,15 +55,6 @@ void BankMovement::setDate(Date newDate)
    date = newDate;
 }
 
-float BankMovement::calculateBalance(void)
-{
-   return 0.0f;
-}
-
-void BankMovement::printReceipt(void)
-{
-   // TODO : implement
-}
 
 string BankMovement::getLastId() {
     return lastId;

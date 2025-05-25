@@ -8,6 +8,7 @@
 class WithDraw : public BankMovement
 {
 public:
+   void printReceipt(void) override;
    WithDraw(float ammount, User* user, Date date);
    WithDraw();
    ~WithDraw();

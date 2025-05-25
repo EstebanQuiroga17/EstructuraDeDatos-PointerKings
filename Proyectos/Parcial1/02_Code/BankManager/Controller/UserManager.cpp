@@ -126,7 +126,7 @@ BankAccount UserManager::crearCuentaCorriente() {
     return cuenta;
 }
 
-User* UserManager::login() {
+User* UserManager::login(char &tipoCuenta) {
     string cuentaIngresada;
 
     while (true) {
@@ -135,7 +135,6 @@ User* UserManager::login() {
         cout << "Ingrese número de cuenta (ahorros o corriente), o escriba 0 para salir: ";
         cin >> cuentaIngresada;
 
-        // Permite salir escribiendo 0
         if (cuentaIngresada == "0") {
             cout << "Login cancelado.\n";
             system("pause");
@@ -149,12 +148,18 @@ User* UserManager::login() {
             return nullptr;
         }
         do {
-            User usuario = actual->getValue(); //IMPORTANTE SI QUEREMOS MODIFICAR EL USUARIOS DEBEMOS CAMBIAR EL NOTO Y HACER POR REFERENCIA T& Node<T>::getValue()
-            if (usuario.getSavingsAccount().getAccountNumber() == cuentaIngresada ||
-                usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
-                cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << "!\n";
+            User& usuario = actual->getValue();
+            if (usuario.getSavingsAccount().getAccountNumber() == cuentaIngresada) {
+                tipoCuenta = 's';
+                cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << " (Cuenta de Ahorros)!\n";
                 system("pause");
-                return &(actual->getValue());
+                return &usuario;
+            }
+            if (usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
+                tipoCuenta = 'c';
+                cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << " (Cuenta Corriente)!\n";
+                system("pause");
+                return &usuario;
             }
             actual = actual->getNextNode();
         } while (actual != usuarios.getHead());
@@ -163,6 +168,45 @@ User* UserManager::login() {
         system("pause");
     }
 }
+
+
+// User* UserManager::login() {
+//     string cuentaIngresada;
+
+//     while (true) {
+//         system("cls");
+//         cout << "=== LOGIN ===" << endl;
+//         cout << "Ingrese número de cuenta (ahorros o corriente), o escriba 0 para salir: ";
+//         cin >> cuentaIngresada;
+
+//         // Permite salir escribiendo 0
+//         if (cuentaIngresada == "0") {
+//             cout << "Login cancelado.\n";
+//             system("pause");
+//             return nullptr;
+//         }
+
+//         Node<User>* actual = usuarios.getHead();
+//         if (!actual) {
+//             cout << "No hay usuarios registrados.\n";
+//             system("pause");
+//             return nullptr;
+//         }
+//         do {
+//             User usuario = actual->getValue(); //IMPORTANTE SI QUEREMOS MODIFICAR EL USUARIOS DEBEMOS CAMBIAR EL NOTO Y HACER POR REFERENCIA T& Node<T>::getValue()
+//             if (usuario.getSavingsAccount().getAccountNumber() == cuentaIngresada ||
+//                 usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
+//                 cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << "!\n";
+//                 system("pause");
+//                 return &(actual->getValue());
+//             }
+//             actual = actual->getNextNode();
+//         } while (actual != usuarios.getHead());
+
+//         cout << "Cuenta no encontrada. Intente de nuevo o escriba 0 para salir.\n";
+//         system("pause");
+//     }
+// }
 
 
 void UserManager::saveUsers() {
@@ -222,6 +266,7 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
     Deposit deposito(monto, usuario, fecha);
     usuario->getBankMovements().insert(deposito);
     std::cout << "Depósito exitoso.\n";
+    deposito.printReceipt(1); 
 }
 
 void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
@@ -255,4 +300,5 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     WithDraw retiro(monto, usuario, fecha);
     usuario->getBankMovements().insert(retiro);
     std::cout << "Retiro exitoso.\n";
+    retiro.printReceipt(); 
 }

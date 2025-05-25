@@ -49,17 +49,20 @@ int MenuManager::menuOperacionBancaria() {
         "Volver"
     });
     int seleccion = menu.runMenuLoopReturnIndex();
-    return seleccion; // 0: Depósito, 1: Retiro, 2: Volver
+    return seleccion;
 }
 
-void MenuManager::menuOperations(UserManager& gestor, User* usuario) {
+void MenuManager::menuOperations(UserManager& gestor, User* usuario, char tipoCuenta) {
     InputValidator validator;
     bool volver = false;
 
+    // Puedes mostrar el tipo de cuenta al usuario, si quieres
+    std::string tipoCuentaStr = (tipoCuenta == 's') ? "Ahorros" : "Corriente";
+
     while (!volver) {
         system("cls");
-        std::cout << "=== Operaciones Bancarias ===\n";
-        int op = MenuManager::menuOperacionBancaria(); // USO DE TU FUNCIÓN
+        std::cout << "=== Operaciones Bancarias (" << tipoCuentaStr << ") ===\n";
+        int op = MenuManager::menuOperacionBancaria();
 
         switch (op) {
             case 0: { // Depósito
@@ -68,16 +71,6 @@ void MenuManager::menuOperations(UserManager& gestor, User* usuario) {
                     monto = validator.isFloat("\nIngrese monto a depositar: ");
                     if (monto <= 0) std::cout << "El monto debe ser mayor que 0.\n";
                 } while (monto <= 0);
-
-                // Selección de tipo de cuenta con menú de cursores
-                char tipoCuenta;
-                do {
-                    tipoCuenta = MenuManager::menuTipoCuenta();
-                    if (tipoCuenta == 'a')
-                        std::cout << "Debe elegir solo una cuenta (no ambas) para operar.\n";
-                    if (tipoCuenta == 'x') break; // Cancelar
-                } while (tipoCuenta == 'a');
-                if (tipoCuenta == 'x') break;
 
                 Date fecha = Date::localDate();
                 gestor.deposit(usuario, monto, tipoCuenta, fecha);
@@ -91,16 +84,6 @@ void MenuManager::menuOperations(UserManager& gestor, User* usuario) {
                     if (monto <= 0) std::cout << "El monto debe ser mayor que 0.\n";
                 } while (monto <= 0);
 
-                // Selección de tipo de cuenta con menú de cursores
-                char tipoCuenta;
-                do {
-                    tipoCuenta = MenuManager::menuTipoCuenta();
-                    if (tipoCuenta == 'a')
-                        std::cout << "Debe elegir solo una cuenta (no ambas) para operar.\n";
-                    if (tipoCuenta == 'x') break; // Cancelar
-                } while (tipoCuenta == 'a');
-                if (tipoCuenta == 'x') break;
-
                 Date fecha = Date::localDate();
                 gestor.withdraw(usuario, monto, tipoCuenta, fecha);
                 system("pause");
@@ -112,5 +95,4 @@ void MenuManager::menuOperations(UserManager& gestor, User* usuario) {
         }
     }
 }
-
 

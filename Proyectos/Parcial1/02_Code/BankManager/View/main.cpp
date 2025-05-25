@@ -8,6 +8,7 @@ using namespace std;
 
 int main() {
     UserManager gestor;
+    MenuManager menu;
     gestor.loadUsers(); 
 
     bool salir = false;
@@ -15,17 +16,17 @@ int main() {
         system("cls");
         cout << "========== Menu Manager ==========\n\n";
 
-        int seleccion = MenuManager::mostrarMenuPrincipal();
+        int seleccion = menu.mostrarMenuPrincipal();
 
         switch (seleccion) {
             case 0:
                 gestor.crearUsuario();
                 break;
-            case 1:{
-                User* usuario = gestor.login();
-                if(usuario){
-                    MenuManager menu;
-                    menu.menuOperations(gestor, usuario);
+            case 1: {
+                char tipoCuenta; // 's' o 'c'
+                User* usuario = gestor.login(tipoCuenta);
+                if (usuario) {
+                    menu.menuOperations(gestor, usuario, tipoCuenta);
                 }
                 break;
             }

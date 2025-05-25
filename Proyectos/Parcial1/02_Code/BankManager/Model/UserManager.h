@@ -10,7 +10,7 @@ private:
 public:
     UserManager();
     void crearUsuario();           // Pide datos y crea un usuario nuevo
-    User* login();                 // Pide número de cuenta y retorna puntero al usuario si existe
+    User* login(char &tipoCuenta);                 // Pide número de cuenta y retorna puntero al usuario si existe
     void mostrarUsuarios();        // Para debug (opcional)
     // Puedes agregar métodos como eliminar, modificar, etc.
     List<User>& getUsuarios();     // Acceso a la lista si la necesitas afuera

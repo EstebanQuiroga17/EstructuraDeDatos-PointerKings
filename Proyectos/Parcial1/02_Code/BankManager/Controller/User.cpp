@@ -5,68 +5,8 @@
 #include "../Model/WithDraw.h"
 #include "../Model/Deposit.h"
 #include "../Model/User.h"
+
 using namespace std;
-<<<<<<< HEAD
-void User::withDraw(float amount, char accountType)
-{
-   if(accountType == 's'){
-      savingsAccount.setBalance(savingsAccount.getBalance() - amount);
-   }
-   if(accountType == 'c'){
-      checkingAccount.setBalance(checkingAccount.getBalance() - amount);
-   }
-   WithDraw withDraw(amount, this, Date()); 
-   bankMovements.insert(withDraw);
-}
-
-/* 
-PREGUNTAASSSSSSSSSSSSS
-*/
-void User::deposit(User& destinationUser,char accountType,float amount,List<BankAccount>& bankAccounts)
-{
-   BankAccount* destinationAccount;
-   if(accountType == 's'){
-      destinationAccount = &destinationUser.getSavingsAccount();
-   }
-   else if(accountType == 'c'){
-      destinationAccount = &destinationUser.getCheckingAccount();
-   }
-
-   if(bankAccounts.search(*destinationAccount) == nullptr){
-      cout<<"Cuenta no encontrada"<<endl;
-      return;
-   }else{
-      destinationAccount->setBalance(destinationAccount->getBalance() + amount);
-      if(accountType == 's'){
-         savingsAccount.setBalance(savingsAccount.getBalance() - amount);
-      }
-      if(accountType == 'c'){
-         checkingAccount.setBalance(checkingAccount.getBalance() - amount);
-      }
-   }
-   
-   Date localDate = Date::localDate();
-   Deposit deposit(amount, this, localDate, destinationUser); 
-   bankMovements.insert(deposit);
-   destinationUser.getBankMovements().insert(deposit);
-   deposit.printReceipt(1); // 1 indica que es un deposito a otra cuenta
-}
-
-void User::deposit(float amount, char accountType)
-{
-   if(accountType == 's'){
-      savingsAccount.setBalance(savingsAccount.getBalance() + amount);
-   }
-   if(accountType == 'c'){
-      checkingAccount.setBalance(checkingAccount.getBalance() + amount);
-   }
-   Date localDate = Date::localDate();
-   Deposit deposit(amount, this, localDate); 
-   bankMovements.insert(deposit);
-   deposit.printReceipt(0); // 0 indica que es un deposito a la misma cuenta
-}
-=======
->>>>>>> b1e5c14afaadb3d164ee748b2d9bf458ea643c65
 
 PersonalData User::getPersonalData(void) const 
 {

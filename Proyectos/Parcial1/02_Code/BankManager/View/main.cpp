@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "..\Model\UserManager.h"
 #include "..\Model\BackupManager.h"
 #include "..\Model\MenuManager.h"
@@ -26,7 +27,7 @@ int main() {
                 // }
                 break;
             case 2:
-                MenuManager::mostrarAyuda();
+                system("start \"\" \"Utils\\index.html\"");
                 break;
             case 3:
                 system("cls");

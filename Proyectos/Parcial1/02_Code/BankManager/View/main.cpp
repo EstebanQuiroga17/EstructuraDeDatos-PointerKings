@@ -8,6 +8,7 @@ using namespace std;
 
 int main() {
     UserManager gestor;
+    gestor.loadUsers(); 
 
     bool salir = false;
     while (!salir) {

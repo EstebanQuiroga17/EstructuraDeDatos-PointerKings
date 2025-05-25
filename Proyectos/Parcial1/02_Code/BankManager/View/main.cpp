@@ -89,6 +89,7 @@ int main() {
                     std::cin >> backupToRestore;
                     if (BackupManager::restoreBackup(backupToRestore, "users.dat")) {
                         std::cout << "Backup restaurado.\n";
+                        gestor.loadUsers();
                     } else {
                         std::cout << "Error al restaurar backup.\n";
                     }

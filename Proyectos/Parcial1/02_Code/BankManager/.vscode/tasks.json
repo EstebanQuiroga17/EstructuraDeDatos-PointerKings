@@ -2,17 +2,16 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compilar BankManager",
+            "label": "Compilar Mi Banco",
             "type": "shell",
             "command": "g++",
             "args": [
-                "-IModel", // Incluye Model para headers
-                "-IController", // Incluye Controller por si acaso
-                "-IView", // Incluye View si es necesario
-                "-o", "BankManager.exe", // Nombre del ejecutable
-                // Main file
+                "-IModel",
+                "-IController",
+                "-IView",
+                "-o",
+                "mi_banco.exe",
                 "View/main.cpp",
-                // Model sources (headers no se compilan, solo .cpp)
                 "Controller/BankAccount.cpp",
                 "Controller/BankMovement.cpp",
                 "Controller/Clock.cpp",
@@ -32,7 +31,7 @@
                 "isDefault": true
             },
             "problemMatcher": ["$gcc"],
-            "detail": "Compila todo el proyecto de BankManager"
+            "detail": "Compila el sistema completo de Mi Banco"
         }
     ]
 }

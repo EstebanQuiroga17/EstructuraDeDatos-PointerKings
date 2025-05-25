@@ -11,7 +11,9 @@ public:
     Node(const T& val, Node<T>* next = nullptr, Node<T>* prev = nullptr);
     ~Node();
 
-    T getValue() const;
+    T& getValue();
+    const T& getValue() const;
+
     void setValue(const T& val);
 
     Node<T>* getNextNode() const;
@@ -32,7 +34,7 @@ Node<T>::~Node()
 }
 
 template <typename T>
-T Node<T>::getValue() const
+const T& Node<T>::getValue() const
 {
     return value;
 }

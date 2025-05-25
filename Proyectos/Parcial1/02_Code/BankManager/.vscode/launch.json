@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/USUARIO/Desktop/PruebasProy/pruebaarchivos/EstructuraDeDatos-PointerKings/Proyectos/Parcial1/02_Code/BankManager/Controller",
-      "program": "c:/Users/USUARIO/Desktop/PruebasProy/pruebaarchivos/EstructuraDeDatos-PointerKings/Proyectos/Parcial1/02_Code/BankManager/Controller/build/Debug/outDebug",
+      "cwd": "c:/Users/USUARIO/Desktop/PruebasProy/pruebaarchivos/EstructuraDeDatos-PointerKings/Proyectos/Parcial1/02_Code/BankManager/.vscode",
+      "program": "c:/Users/USUARIO/Desktop/PruebasProy/pruebaarchivos/EstructuraDeDatos-PointerKings/Proyectos/Parcial1/02_Code/BankManager/.vscode/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

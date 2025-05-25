@@ -15,6 +15,11 @@
 #include <cstdlib> // Para system("cls") y system("pause")
 using namespace std;
 
+UserManager::UserManager() {
+
+}
+
+
 void UserManager::crearUsuario() {
     system("cls");
     cout << "=== Registro de nuevo usuario ===" << endl;
@@ -191,7 +196,7 @@ User* UserManager::login() {
                 usuario.getCheckingAccount().getAccountNumber() == cuentaIngresada) {
                 cout << "Login exitoso, bienvenido " << usuario.getPersonalData().getName() << "!\n";
                 system("pause");
-                return &usuario;
+                return &(actual->getValue());
             }
             actual = actual->getNextNode();
         } while (actual != usuarios.getHead());

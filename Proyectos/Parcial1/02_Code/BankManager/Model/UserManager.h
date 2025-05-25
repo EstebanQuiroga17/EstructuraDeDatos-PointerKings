@@ -16,7 +16,7 @@ public:
     List<User>& getUsuarios();     // Acceso a la lista si la necesitas afuera
     void saveUsers();
     void loadUsers();
-    BankAccount UserManager::crearCuentaAhorros();
-    BankAccount UserManager::crearCuentaCorriente();
+    BankAccount crearCuentaAhorros();
+    BankAccount crearCuentaCorriente();
 };
     

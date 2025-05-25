@@ -18,6 +18,30 @@ void mostrarAyuda() {
     cin.get();
 }
 
+void ejecutarMenuPrincipal(UserManager& gestor) {
+    bool salir = false;
+    while (!salir) {
+        system("cls");
+        MenuManager menu;
+        menu.loadOptions({
+            "Crear usuario", "Login", "Menú de ayuda", 
+            "Mostrar usuarios", "Crear backup", 
+            "Restaurar backup", "Salir"
+        });
+        int seleccion = menu.runMenuLoopReturnIndex();
+        switch (seleccion) {
+            case 0:
+                gestor.crearUsuario(); // Aquí adentro usas los validadores
+                break;
+            // ... (las demás opciones igual)
+            case 6:
+                salir = true;
+                break;
+        }
+    }
+}
+
+
 int main() {
     UserManager gestor;
 

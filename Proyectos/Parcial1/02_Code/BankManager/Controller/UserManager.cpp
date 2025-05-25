@@ -5,6 +5,8 @@
 #include "..\Model\Node.h"
 #include "..\Model\BinaryCifration.h"
 #include "..\Model\CesarCifration.h"
+#include "..\Model\InputValidator.h"
+#include "..\Model\PersonalData.h"
 #include <iostream>
 
 
@@ -13,55 +15,82 @@
 #include <cstdlib> // Para system("cls") y system("pause")
 using namespace std;
 
-UserManager::UserManager() {
-    loadUsers(); // Carga los usuarios al iniciar
-    // Si no hay usuarios, puedes crear uno por defecto o dejarlo vacío
-    if (usuarios.getHead() == nullptr) {
-        cout << "No hay usuarios registrados. Por favor, registre uno.\n";
-        system("pause");
-    }
-}
-
 void UserManager::crearUsuario() {
-    string nombre, apellido, cedula, email;
-    string numCuentaAhorros, numCuentaCorriente, tipoAhorros, tipoCorriente;
-    float saldoAhorros = 0, saldoCorriente = 0;
-
     system("cls");
     cout << "=== Registro de nuevo usuario ===" << endl;
-    cout << "Nombre: ";      cin >> nombre;
-    cout << "Apellido: ";    cin >> apellido;
-    cout << "Cedula: ";      cin >> cedula;
-    cout << "Email: ";       cin >> email;
 
-    // Ahorros
-    cout << "Numero de cuenta de ahorros: ";   cin >> numCuentaAhorros;
-    cout << "Tipo de cuenta de ahorros: ";     cin >> tipoAhorros;
-    cout << "Saldo inicial de ahorros: ";      cin >> saldoAhorros;
+    InputValidator validator;
 
-    // Corriente
-    cout << "Numero de cuenta corriente: ";    cin >> numCuentaCorriente;
-    cout << "Tipo de cuenta corriente: ";      cin >> tipoCorriente;
-    cout << "Saldo inicial corriente: ";       cin >> saldoCorriente;
+    // --- Datos personales ---
+    string nombre   = validator.isLetter("Nombre: ");
+    string apellido = validator.isLetter("Apellido: ");
+    string cedula   = validator.isDNI();
+    Date fechaNac   = validator.pedirFechaNacimiento();
+    string email    = validator.isEmail();
 
-    // Crea los objetos de cuenta
-    BankAccount cuentaAhorros, cuentaCorriente;
-    cuentaAhorros.setAccountNumber(numCuentaAhorros);
-    cuentaAhorros.setType(tipoAhorros);
-    cuentaAhorros.setBalance(saldoAhorros);
-
-    cuentaCorriente.setAccountNumber(numCuentaCorriente);
-    cuentaCorriente.setType(tipoCorriente);
-    cuentaCorriente.setBalance(saldoCorriente);
-
-    // PersonalData
     PersonalData datos;
     datos.setName(nombre);
     datos.setLastName(apellido);
     datos.setDNI(cedula);
+    datos.setBirthDate(fechaNac);
     datos.setEmail(email);
 
-    // Usuario
+    // --- Cuenta de Ahorros ---
+    cout << "\n--- Datos de la cuenta de AHORROS ---" << endl;
+    string numCuentaAhorros;
+    regex soloNumeros("^[0-9]{10}$");
+    do {
+        cout << "Numero de cuenta de ahorros (10 dígitos): ";
+        cin >> numCuentaAhorros;
+        if (!regex_match(numCuentaAhorros, soloNumeros)) {
+            cout << "Debe tener exactamente 10 dígitos numéricos.\n";
+        }
+    } while (!regex_match(numCuentaAhorros, soloNumeros));
+    
+    string tipoAhorros;
+    do {
+        cout << "Tipo de cuenta de ahorros (Ahorros): ";
+        cin >> tipoAhorros;
+        if (tipoAhorros != "Ahorros" && tipoAhorros != "ahorros") {
+            cout << "Solo se permite 'Ahorros'.\n";
+        }
+    } while (tipoAhorros != "Ahorros" && tipoAhorros != "ahorros");
+
+    float saldoAhorros = validator.isFloat("Saldo inicial de ahorros: ");
+
+    BankAccount cuentaAhorros;
+    cuentaAhorros.setAccountNumber(numCuentaAhorros);
+    cuentaAhorros.setType(tipoAhorros);
+    cuentaAhorros.setBalance(saldoAhorros);
+
+    // --- Cuenta Corriente ---
+    cout << "\n--- Datos de la cuenta CORRIENTE ---" << endl;
+    string numCuentaCorriente;
+    do {
+        cout << "Numero de cuenta corriente (10 dígitos): ";
+        cin >> numCuentaCorriente;
+        if (!regex_match(numCuentaCorriente, soloNumeros)) {
+            cout << "Debe tener exactamente 10 dígitos numéricos.\n";
+        }
+    } while (!regex_match(numCuentaCorriente, soloNumeros));
+    
+    string tipoCorriente;
+    do {
+        cout << "Tipo de cuenta corriente (Corriente): ";
+        cin >> tipoCorriente;
+        if (tipoCorriente != "Corriente" && tipoCorriente != "corriente") {
+            cout << "Solo se permite 'Corriente'.\n";
+        }
+    } while (tipoCorriente != "Corriente" && tipoCorriente != "corriente");
+
+    float saldoCorriente = validator.isFloat("Saldo inicial corriente: ");
+
+    BankAccount cuentaCorriente;
+    cuentaCorriente.setAccountNumber(numCuentaCorriente);
+    cuentaCorriente.setType(tipoCorriente);
+    cuentaCorriente.setBalance(saldoCorriente);
+
+    // --- Usuario completo ---
     User usuario;
     usuario.setPersonalData(datos);
     usuario.setSavingsAccount(cuentaAhorros);
@@ -70,9 +99,66 @@ void UserManager::crearUsuario() {
     usuarios.insert(usuario);
 
     saveUsers(); // Guarda después de insertar
-    cout << "Usuario creado exitosamente!\n";
+    cout << "\nUsuario creado exitosamente!\n";
     system("pause");
 }
+
+
+
+
+
+
+// void UserManager::crearUsuario() {
+//     string nombre, apellido, cedula, email;
+//     string numCuentaAhorros, numCuentaCorriente, tipoAhorros, tipoCorriente;
+//     float saldoAhorros = 0, saldoCorriente = 0;
+
+//     system("cls");
+//     cout << "=== Registro de nuevo usuario ===" << endl;
+//     cout << "Nombre: ";      cin >> nombre;
+//     cout << "Apellido: ";    cin >> apellido;
+//     cout << "Cedula: ";      cin >> cedula;
+//     cout << "Email: ";       cin >> email;
+
+//     // Ahorros
+//     cout << "Numero de cuenta de ahorros: ";   cin >> numCuentaAhorros;
+//     cout << "Tipo de cuenta de ahorros: ";     cin >> tipoAhorros;
+//     cout << "Saldo inicial de ahorros: ";      cin >> saldoAhorros;
+
+//     // Corriente
+//     cout << "Numero de cuenta corriente: ";    cin >> numCuentaCorriente;
+//     cout << "Tipo de cuenta corriente: ";      cin >> tipoCorriente;
+//     cout << "Saldo inicial corriente: ";       cin >> saldoCorriente;
+
+//     // Crea los objetos de cuenta
+//     BankAccount cuentaAhorros, cuentaCorriente;
+//     cuentaAhorros.setAccountNumber(numCuentaAhorros);
+//     cuentaAhorros.setType(tipoAhorros);
+//     cuentaAhorros.setBalance(saldoAhorros);
+
+//     cuentaCorriente.setAccountNumber(numCuentaCorriente);
+//     cuentaCorriente.setType(tipoCorriente);
+//     cuentaCorriente.setBalance(saldoCorriente);
+
+//     // PersonalData
+//     PersonalData datos;
+//     datos.setName(nombre);
+//     datos.setLastName(apellido);
+//     datos.setDNI(cedula);
+//     datos.setEmail(email);
+
+//     // Usuario
+//     User usuario;
+//     usuario.setPersonalData(datos);
+//     usuario.setSavingsAccount(cuentaAhorros);
+//     usuario.setCheckingAccount(cuentaCorriente);
+
+//     usuarios.insert(usuario);
+
+//     saveUsers(); // Guarda después de insertar
+//     cout << "Usuario creado exitosamente!\n";
+//     system("pause");
+// }
 
 User* UserManager::login() {
     string cuentaIngresada;

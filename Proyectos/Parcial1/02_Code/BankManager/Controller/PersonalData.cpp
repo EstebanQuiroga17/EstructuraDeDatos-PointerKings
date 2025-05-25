@@ -154,5 +154,5 @@ void PersonalData::mostrar() const {
     std::cout << "DNI: " << DNI << std::endl;
     std::cout << "Email: " << email << std::endl;
     std::cout << "Pais: " << country << std::endl;
-    std::cout << "[Fecha de nacimiento omitida]" << std::endl;
+    std::cout << "Fecha de nacimiento" << std::endl;
 }

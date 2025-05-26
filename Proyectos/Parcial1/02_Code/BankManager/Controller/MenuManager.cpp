@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-#include "MenuManager.h"
-#include "CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
-#include "InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
-=======
 #include "../Model/MenuManager.h"
-#include "../Model/CursorMenu.h"  
-#include "../Model/InputValidator.h" 
->>>>>>> 287ad6d7c68bdd41f0cd37c57c21779b9a27a662
+#include "../Model/CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
+#include "../Model/InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
@@ -56,7 +50,7 @@ int MenuManager::menuUpdateUser()
 {
     CursorMenu menu;
     menu.loadOptions({"Modificar nombre y apellido",
-                      "Modificar cedula",
+                      "Modificar cédula",
                       "Modificar fecha de nacimiento",
                       "Modificar email",
                       "Modificar tipos de cuentas",
@@ -68,7 +62,7 @@ int MenuManager::menuUpdateUser()
 int MenuManager::menuOperacionBancaria()
 {
     CursorMenu menu;
-    menu.loadOptions({"Deposito",
+    menu.loadOptions({"Depósito",
                       "Retiro",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
@@ -129,14 +123,25 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
     }
 }
 
-void printMovementsResults(const std::vector<BankMovement *> &results);
+void MenuManager::printMovementsResults(const std::vector<BankMovement*>& results) {
+    if (results.empty()) {
+        std::cout << "No movements found with that criteria.\n";
+        return;
+    }
+    std::cout << "\n=== Resultados de la consulta ===\n";
+    for (auto& mov : results) {
+        mov->printReceipt();
+        std::cout << "------------------------------\n";
+    }
+}
+
 
 int MenuManager::menuQueryMovements()
 {
     CursorMenu menu;
     menu.loadOptions({"Consultar por rango de fechas",
                       "Consultar por nombre y DNI",
-                      "Consultar por monto minimo",
+                      "Consultar por monto mínimo",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;
@@ -206,7 +211,7 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         case 2:
         { // Monto mínimo
             float minAmount;
-            std::cout << "Ingrese el monto minimo: ";
+            std::cout << "Ingrese el monto mínimo: ";
             std::cin >> minAmount;
 
             std::vector<BankMovement *> results; // <<< corregido

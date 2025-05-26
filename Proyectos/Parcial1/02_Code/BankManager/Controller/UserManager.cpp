@@ -282,6 +282,16 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         std::cout << "No movements found with that criteria.\n";
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 663124097e8f1edbeb8793e2b567fe73d998a87d
 void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
@@ -382,6 +392,18 @@ void UserManager::modificarUsuario() {
 }
 
 
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
+>>>>>>> 463115d4576e137158fb3b5d9786726e5841b466
+>>>>>>> 953dc572a61baf5677eaecca722e133698184d33
+>>>>>>> f0384f3ca1be5ce3b83d318010111a9cfbf72b00
+>>>>>>> 663124097e8f1edbeb8793e2b567fe73d998a87d
 void UserManager::eliminarUsuario() {
     string cedula;
     system("cls");

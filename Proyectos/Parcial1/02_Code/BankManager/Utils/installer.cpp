@@ -6,7 +6,7 @@
 
 class InstallerFrame : public wxFrame {
 public:
-    InstallerFrame() : wxFrame(nullptr, wxID_ANY, "Asistente de Instalación", wxDefaultPosition, wxSize(400, 250)) {
+    InstallerFrame() : wxFrame(nullptr, wxID_ANY, "Asistente de Instalacion", wxDefaultPosition, wxSize(400, 250)) {
         panel = new wxPanel(this);
 
         new wxStaticText(panel, wxID_ANY, "Ingrese su clave de producto:", wxPoint(20, 30));
@@ -53,21 +53,21 @@ private:
         std::string clave = keyInput->GetValue().ToStdString();
 
         if (!estaEnArchivo("claves_validas.txt", clave)) {
-            statusLabel->SetLabel("Clave inválida ❌");
+            statusLabel->SetLabel("Clave invalida");
             return;
         }
 
         if (estaEnArchivo("claves_usadas.txt", clave)) {
-            statusLabel->SetLabel("Clave ya usada ⚠️");
+            statusLabel->SetLabel("Clave ya usada");
             return;
         }
 
         try {
             copiarArchivo("../mi_banco.exe", std::string(std::getenv("USERPROFILE")) + "/Desktop/mi_banco.exe");
             registrarClaveUsada(clave, "claves_usadas.txt");
-            statusLabel->SetLabel("Instalación completada ✅");
+            statusLabel->SetLabel("Instalacion completada");
         } catch (...) {
-            statusLabel->SetLabel("Error al copiar archivos ❌");
+            statusLabel->SetLabel("Error al copiar archivos ");
         }
     }
 };

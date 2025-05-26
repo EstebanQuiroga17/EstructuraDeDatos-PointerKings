@@ -1,6 +1,6 @@
-#include "MenuManager.h"
-#include "CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
-#include "InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
+#include "../Model/MenuManager.h"
+#include "../Model/CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
+#include "../Model/InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
@@ -123,7 +123,18 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
     }
 }
 
-void printMovementsResults(const std::vector<BankMovement *> &results);
+void MenuManager::printMovementsResults(const std::vector<BankMovement*>& results) {
+    if (results.empty()) {
+        std::cout << "No movements found with that criteria.\n";
+        return;
+    }
+    std::cout << "\n=== Resultados de la consulta ===\n";
+    for (auto& mov : results) {
+        mov->printReceipt();
+        std::cout << "------------------------------\n";
+    }
+}
+
 
 int MenuManager::menuQueryMovements()
 {

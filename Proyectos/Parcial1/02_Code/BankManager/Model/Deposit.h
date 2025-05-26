@@ -11,7 +11,7 @@ class Deposit : public BankMovement
 public:
    Deposit();
    ~Deposit();
-   void printReceipt(int type) override;
+   void printReceipt() override;
    Deposit(float ammount, User* user, Date date, User destinationUser);  
    Deposit(float ammount, User* user, Date date);
    User getDestinationUser(void);

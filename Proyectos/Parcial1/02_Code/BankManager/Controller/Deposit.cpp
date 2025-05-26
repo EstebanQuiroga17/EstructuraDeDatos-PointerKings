@@ -31,17 +31,13 @@ void Deposit::setDestinationUser(User newDestinationUser)
    destinationUser = newDestinationUser;
 }
 
-void Deposit::printReceipt(int type){
+void Deposit::printReceipt(){
     std::cout << "\n";
     std::cout << "---------------------------------" << std::endl;
     std::cout << "Recibo de Deposito" << std::endl;
     std::cout << "Monto: " << getAmmount() << std::endl;
     std::cout << "Usuario: " << getUser()->getPersonalData().getName() << std::endl;
-    if (type == 1) { // deposito a otra cuenta
-        std::cout << "Cuenta Destino: " << destinationUser.getPersonalData().getName()<< std::endl;
-    } else { // deposito a la misma cuenta
-        std::cout << "Cuenta Destino: " << getUser()->getPersonalData().getName() << std::endl;
-    }
+    std::cout << "Cuenta Destino: " << getUser()->getPersonalData().getName() << std::endl;
     std::cout << "Fecha: ";
     getDate().print();
     std::cout << "ID de Movimiento: " << getId() << std::endl;

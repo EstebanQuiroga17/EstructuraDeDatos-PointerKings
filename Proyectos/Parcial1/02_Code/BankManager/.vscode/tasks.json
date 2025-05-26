@@ -13,6 +13,7 @@
                 "mi_banco.exe",
                 "View/main.cpp",
                 "Controller/BankAccount.cpp",
+                "Controller/BackupManager.cpp",
                 "Controller/BankMovement.cpp",
                 "Controller/Clock.cpp",
                 "Controller/Date.cpp",

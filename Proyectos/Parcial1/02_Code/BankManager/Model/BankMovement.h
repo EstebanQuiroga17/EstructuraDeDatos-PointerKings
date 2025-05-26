@@ -17,13 +17,15 @@ public:
    void setUser(User* newUser);
    Date getDate(void);
    void setDate(Date newDate);
-   virtual void printReceipt(int type);
    virtual void printReceipt();
    std::string createId(void);
    static int getLastId();
    static void setLastId(int newLastId);
    void saveBinary(std::ofstream& out) const;
    bool loadBinary(std::ifstream& in);
+   std::string getUserDNI() const { return userDNI; }
+   void setUserDNI(const std::string& dni) { userDNI = dni; }
+
 
 
 
@@ -34,5 +36,6 @@ private:
    float ammount;
    User* user;
    Date date;
+   std::string userDNI; 
 };
 

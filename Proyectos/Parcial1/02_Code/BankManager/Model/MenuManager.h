@@ -16,4 +16,5 @@ public:
     static int menuModifyUser();
     static void showModifyUserMenu(UserManager& manager);
     int menuUpdateUser();
+    static void printMovementsResults(const std::vector<BankMovement*>& results);
 };

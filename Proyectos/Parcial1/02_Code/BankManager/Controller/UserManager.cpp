@@ -218,7 +218,8 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
     Deposit deposito(monto, usuario, fecha);
     usuario->getBankMovements().insert(deposito);
     std::cout << "Depósito exitoso.\n";
-    deposito.printReceipt(1); 
+    deposito.printReceipt(); 
+    saveUsers();
 }
 
 void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
@@ -252,34 +253,32 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     usuario->getBankMovements().insert(retiro);
     std::cout << "Retiro exitoso.\n";
     retiro.printReceipt(); 
+    saveUsers();
 }
 
-void UserManager::queryMovements( const std::function<bool( BankMovement&)>& predicate)  {
-    bool found = false;
+void UserManager::queryMovements(const std::function<bool(BankMovement&)>& predicate, std::vector< BankMovement*>& results
+) const
+{
     Node<User>* currentUser = usuarios.getHead();
     if (!currentUser) {
-        std::cout << "No users registered.\n";
+        std::cout << "No hay usuarios registrados.\n";
         return;
     }
     do {
         User& user = currentUser->getValue();
-        const List<BankMovement>& movements = user.getBankMovements();
+        List<BankMovement>& movements = user.getBankMovements();
         Node<BankMovement>* currentMov = movements.getHead();
         if (currentMov) {
             do {
                 BankMovement& mov = currentMov->getValue();
                 if (predicate(mov)) {
-                    mov.printReceipt();
-                    found = true;
+                    results.push_back(&mov);
                 }
                 currentMov = currentMov->getNextNode();
             } while (currentMov != movements.getHead());
         }
         currentUser = currentUser->getNextNode();
     } while (currentUser != usuarios.getHead());
-
-    if (!found)
-        std::cout << "No movements found with that criteria.\n";
 }
 
 void UserManager::modificarUsuario() {
@@ -427,4 +426,34 @@ void UserManager::eliminarUsuario() {
     }
     system("pause");
 }
+
+void UserManager::debugMostrarTodosLosMovimientos() {
+    Node<User>* currentUser = usuarios.getHead();
+    if (!currentUser) {
+        std::cout << "No hay usuarios cargados.\n";
+        return;
+    }
+    do {
+        User& user = currentUser->getValue();
+        std::cout << "Usuario: " << user.getPersonalData().getName() << " DNI: " << user.getPersonalData().getDNI() << std::endl;
+        const List<BankMovement>& movements = user.getBankMovements();
+        Node<BankMovement>* currentMov = movements.getHead();
+        if (currentMov) {
+            int n = 0;
+            do {
+                BankMovement& mov = currentMov->getValue();
+                std::cout << "  Movimiento #" << (++n) << ": "
+                          << "Monto: " << mov.getAmmount()
+                          << ", DNI: " << mov.getUserDNI()
+                          << ", Fecha: "; mov.getDate().print();
+                currentMov = currentMov->getNextNode();
+            } while (currentMov != movements.getHead());
+        } else {
+            std::cout << "  Sin movimientos." << std::endl;
+        }
+        currentUser = currentUser->getNextNode();
+    } while (currentUser != usuarios.getHead());
+}
+
+
 

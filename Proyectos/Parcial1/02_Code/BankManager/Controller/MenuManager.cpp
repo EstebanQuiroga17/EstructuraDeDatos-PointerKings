@@ -1,6 +1,6 @@
 #include "../Model/MenuManager.h"
-#include "../Model/CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
-#include "../Model/InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
+#include "../Model/CursorMenu.h"  
+#include "../Model/InputValidator.h" 
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
@@ -50,7 +50,7 @@ int MenuManager::menuUpdateUser()
 {
     CursorMenu menu;
     menu.loadOptions({"Modificar nombre y apellido",
-                      "Modificar cédula",
+                      "Modificar cedula",
                       "Modificar fecha de nacimiento",
                       "Modificar email",
                       "Modificar tipos de cuentas",
@@ -62,7 +62,7 @@ int MenuManager::menuUpdateUser()
 int MenuManager::menuOperacionBancaria()
 {
     CursorMenu menu;
-    menu.loadOptions({"Depósito",
+    menu.loadOptions({"Deposito",
                       "Retiro",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
@@ -141,7 +141,7 @@ int MenuManager::menuQueryMovements()
     CursorMenu menu;
     menu.loadOptions({"Consultar por rango de fechas",
                       "Consultar por nombre y DNI",
-                      "Consultar por monto mínimo",
+                      "Consultar por monto minimo",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;
@@ -211,7 +211,7 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         case 2:
         { // Monto mínimo
             float minAmount;
-            std::cout << "Ingrese el monto mínimo: ";
+            std::cout << "Ingrese el monto minimo: ";
             std::cin >> minAmount;
 
             std::vector<BankMovement *> results; // <<< corregido

@@ -34,7 +34,7 @@ int InputValidator::isInteger(const std::string& mensaje) {
         } catch (...) {
             printf("value no valido. Intente de nuevo.\n");
         }
-        free(fact); // Libera memoria reservada
+        free(fact);
     } while (!ok);
     return value;
 }
@@ -47,9 +47,9 @@ float InputValidator::isFloat(const std::string& mensaje) {
         char c;
         bool dot = false;
         int i = 0;
-        char* fact = (char*)malloc(15 * sizeof(char)); // Solo punteros, sin []
+        char* fact = (char*)malloc(15 * sizeof(char)); 
         printf("%s", mensaje.c_str());
-        while ((c = getch()) != 13) { // Mientras no se presione ENTER
+        while ((c = getch()) != 13) { 
             if ((c >= '0' && c <= '9') || c == '.') {
                 if (i == 0 && c == '.') continue;
                 if (c == '.') {
@@ -93,42 +93,79 @@ string InputValidator::isEmail() {
 
 string InputValidator::isLetter(const string& mensaje) {
     string input;
-    regex onlyLetter("^[A-Za-záéíóúÁÉÍÓÚñÑ ]+$");
-    do {
-        cout << mensaje;
-        getline(cin, input);
-        if (!regex_match(input, onlyLetter)) {
-            cout << "Solo se permiten letras. Intente de nuevo." << endl;
+    char ch;
+    cout << mensaje;
+    while (true) {
+        ch = _getch();
+        if (ch == 13) {
+            cout << endl;
+            break;
         }
-    } while (!regex_match(input, onlyLetter));
+        else if (ch == 8 && !input.empty()) {
+            input.pop_back();
+            cout << "\b \b";
+        }
+        else if (
+            (ch >= 'A' && ch <= 'Z') ||
+            (ch >= 'a' && ch <= 'z') ||
+            (ch == ' ') ||
+            (static_cast<unsigned char>(ch) == 165) || // Ñ
+            (static_cast<unsigned char>(ch) == 164) || // ñ
+            (static_cast<unsigned char>(ch) == 160) || // á
+            (static_cast<unsigned char>(ch) == 130) || // é
+            (static_cast<unsigned char>(ch) == 161) || // í
+            (static_cast<unsigned char>(ch) == 162) || // ó
+            (static_cast<unsigned char>(ch) == 163)    // ú
+        ) {
+            input += ch;
+            cout << ch;
+        }
+    }
     return input;
 }
 
 string InputValidator::isDNI() {
-    string dni;
-    regex onlyNumbers("^[0-9]{10}$");
+    char* dni = (char*)malloc(11 * sizeof(char)); // 10 dígitos + '\0'
     bool valida = false;
 
     do {
-        cout << "Cedula (10 digitos): ";
-        cin >> dni;
+        int i = 0;
+        char c;
+        printf("Cédula (10 dígitos): ");
+        // Entrada caracter a caracter
+        while (i < 10) {
+            c = _getch();
+            if (c >= '0' && c <= '9') {
+                *(dni + i) = c;
+                printf("%c", c); // Mostrar
+                i++;
+            } else if (c == 8 && i > 0) { // Backspace
+                i--;
+                printf("\b \b");
+            }
+            // Ignora todo lo que no sea número o backspace
+        }
+        *(dni + i) = '\0'; // Fin de cadena
+        printf("\n");
 
+        // Validación del formato con regex
+        regex onlyNumbers("^[0-9]{10}$");
         if (!regex_match(dni, onlyNumbers)) {
             cout << "La cedula debe ser numerica y de 10 digitos." << endl;
             continue;
         }
 
+        // Validación de dígito verificador (como tu función original)
         int add = 0;
         int* weight = (int*)malloc(9 * sizeof(int));
         *(weight + 0) = 2; *(weight + 1) = 1; *(weight + 2) = 2; *(weight + 3) = 1; *(weight + 4) = 2;
         *(weight + 5) = 1; *(weight + 6) = 2; *(weight + 7) = 1; *(weight + 8) = 2;
 
-        const char* ptr = dni.c_str();
-        int validatorDigit = *(ptr + 9) - '0';
+        int validatorDigit = *(dni + 9) - '0';
 
-        for (int i = 0; i < 9; ++i) {
-            int digit = *(ptr + i) - '0';             
-            int mult = digit * (*(weight + i));
+        for (int j = 0; j < 9; ++j) {
+            int digit = *(dni + j) - '0';
+            int mult = digit * (*(weight + j));
             if (mult >= 10) mult -= 9;
             add += mult;
         }
@@ -136,25 +173,72 @@ string InputValidator::isDNI() {
         int resto = add % 10;
         int calculateDigit = (resto == 0) ? 0 : 10 - resto;
 
-        free(weight); 
+        free(weight);
 
         if (validatorDigit == calculateDigit) {
             valida = true;
         } else {
-            cout << "Cedula ecuatoriana invalida (digito verificador incorrecto)." << endl;
+            cout << "Cédula invalida." << endl;
         }
 
     } while (!valida);
 
-    return dni;
+    string result(dni);
+    free(dni);
+    return result;
 }
 
-// Pide y valida fecha de nacimiento (usa DateValidator)
+
+// string InputValidator::isDNI() {
+//     string dni;
+//     regex onlyNumbers("^[0-9]{10}$");
+//     bool valida = false;
+
+//     do {
+//         cout << "Cedula (10 digitos): ";
+//         cin >> dni;
+
+//         if (!regex_match(dni, onlyNumbers)) {
+//             cout << "La cedula debe ser numerica y de 10 digitos." << endl;
+//             continue;
+//         }
+
+//         int add = 0;
+//         int* weight = (int*)malloc(9 * sizeof(int));
+//         *(weight + 0) = 2; *(weight + 1) = 1; *(weight + 2) = 2; *(weight + 3) = 1; *(weight + 4) = 2;
+//         *(weight + 5) = 1; *(weight + 6) = 2; *(weight + 7) = 1; *(weight + 8) = 2;
+
+//         const char* ptr = dni.c_str();
+//         int validatorDigit = *(ptr + 9) - '0';
+
+//         for (int i = 0; i < 9; ++i) {
+//             int digit = *(ptr + i) - '0';             
+//             int mult = digit * (*(weight + i));
+//             if (mult >= 10) mult -= 9;
+//             add += mult;
+//         }
+
+//         int resto = add % 10;
+//         int calculateDigit = (resto == 0) ? 0 : 10 - resto;
+
+//         free(weight); 
+
+//         if (validatorDigit == calculateDigit) {
+//             valida = true;
+//         } else {
+//             cout << "Cedula ecuatoriana invalida (digito verificador incorrecto)." << endl;
+//         }
+
+//     } while (!valida);
+
+//     return dni;
+// }
+
 Date InputValidator::pedirFechaNacimiento() {
     int day, month, year;
     bool validatorDate = false;
     do {
-        year = InputValidator::isInteger("Año de nacimiento (ej: 2001): ");
+        year = InputValidator::isInteger("Anio de nacimiento (ej: 2001): ");
         month = InputValidator::isInteger("Mes de nacimiento (1-12): ");
         int diasMes = DateValidator::monthDays(month, year);
         day = InputValidator::isInteger("Dia de nacimiento: ");
@@ -169,7 +253,7 @@ Date InputValidator::pedirFechaNacimiento() {
 
         int edad = hoy.getYear().getYear() - year;
         if (edad > 100) {
-            cout << "La edad no puede ser mayor a 100 años. Intente de nuevo." << endl;
+            cout << "La edad no puede ser mayor a 100 anios. Intente de nuevo." << endl;
             validatorDate = false;
             continue;
         }
@@ -187,7 +271,7 @@ Date InputValidator::pedirFechaNacimiento() {
             edad--;
         }
 
-        cout << "Su edad es: " << edad << " años." << endl;
+        cout << "Su edad es: " << edad << " anios." << endl;
 
     } while (!validatorDate);
 

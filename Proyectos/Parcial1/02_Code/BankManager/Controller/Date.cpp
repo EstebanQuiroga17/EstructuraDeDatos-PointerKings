@@ -6,7 +6,7 @@
 #include "../Model/Year.h"
 #include "../Model/DateValidator.h"
 
-int Date::getDay(void) {
+int const Date::getDay(void) {
     return day;
 }
 
@@ -14,15 +14,16 @@ void Date::setDay(int newDay) {
     day = newDay;
 }
 
-int Date::getMonth(void) {
+int const Date::getMonth(void) {
     return month;
 }
+
 
 void Date::setMonth(int newMonth) {
     month = newMonth;
 }
 
-Year Date::getYear(void) {
+Year const Date::getYear(void) {
     return year;
 }
 

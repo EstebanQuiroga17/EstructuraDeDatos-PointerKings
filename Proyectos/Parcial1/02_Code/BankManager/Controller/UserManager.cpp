@@ -282,7 +282,6 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         std::cout << "No movements found with that criteria.\n";
 }
 
-<<<<<<< HEAD
 void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
@@ -382,14 +381,6 @@ void UserManager::modificarUsuario() {
     }
 }
 
-
-=======
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
->>>>>>> 463115d4576e137158fb3b5d9786726e5841b466
 void UserManager::eliminarUsuario() {
     string cedula;
     system("cls");
@@ -417,13 +408,6 @@ void UserManager::eliminarUsuario() {
     } while (actual != head);
 
     if (encontrado) {
-<<<<<<< HEAD
-        if (actual == usuarios.getHead() && actual->getNextNode() == actual) {
-            usuarios.setHead(nullptr);
-        } else {
-            if (actual == usuarios.getHead()) usuarios.setHead(actual->getNextNode());
-            anterior->setNextNode(actual->getNextNode());
-=======
         // Caso único: solo hay un nodo
         if (actual == actual->getNextNode()) {
             usuarios.setHead(nullptr);
@@ -434,7 +418,6 @@ void UserManager::eliminarUsuario() {
             prev->setNextNode(next);
             next->setPreviousNode(prev);
             if (actual == head) usuarios.setHead(next);
->>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
         }
         // delete actual; // Si tu lista no gestiona memoria sola
         saveUsers();

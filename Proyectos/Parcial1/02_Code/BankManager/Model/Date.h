@@ -6,11 +6,11 @@
 class Date
 {
 public:
-    int getDay(void);
+    int const  getDay(void);
     void setDay(int newDay);
-    int getMonth(void);
+    int const getMonth(void);
     void setMonth(int newMonth);
-    Year getYear(void);
+    Year const getYear(void);
     void setYear(Year newYear);
     int getDaysInMonth(void);
     void setDaysInMonth(int newDaysInMonth);
@@ -20,6 +20,7 @@ public:
     static Date localDate();
     void saveBinary(std::ofstream& out) const;
     bool loadBinary(std::ifstream& in);
+    int getYearInt() const;
     Date();
     Date(Year newYear, int newMonth, int newDay);
     ~Date();

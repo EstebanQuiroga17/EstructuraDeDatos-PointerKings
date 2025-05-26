@@ -14,6 +14,7 @@ public:
     User* login(char &tipoCuenta);                 
     void mostrarUsuarios();       
     List<User>& getUsuarios();     
+    void saveUsers();
     void loadUsers();
     BankAccount crearCuentaAhorros();
     BankAccount crearCuentaCorriente();

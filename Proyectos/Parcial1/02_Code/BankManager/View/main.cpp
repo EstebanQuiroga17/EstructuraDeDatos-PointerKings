@@ -73,6 +73,7 @@ int main() {
                 menu.showModifyUserMenu(gestor);
                 break;
             case 8:
+                gestor.saveUsers();
                 salir = true;
                 break;
         }

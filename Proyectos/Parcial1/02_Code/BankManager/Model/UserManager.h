@@ -26,7 +26,5 @@ public:
     void eliminarUsuario();
     void modificarUsuario();
     void debugMostrarTodosLosMovimientos();
-    void printMovementsResults(const std::vector<const BankMovement*>& results);
-
 };
     

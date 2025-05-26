@@ -17,7 +17,6 @@ public:
    void setUser(User* newUser);
    Date getDate(void);
    void setDate(Date newDate);
-   virtual void printReceipt(int type);
    virtual void printReceipt();
    std::string createId(void);
    static int getLastId();

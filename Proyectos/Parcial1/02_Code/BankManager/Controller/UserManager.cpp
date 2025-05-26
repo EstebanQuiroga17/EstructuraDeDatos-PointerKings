@@ -218,7 +218,7 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
     Deposit deposito(monto, usuario, fecha);
     usuario->getBankMovements().insert(deposito);
     std::cout << "Depósito exitoso.\n";
-    deposito.printReceipt(1); 
+    deposito.printReceipt(); 
     saveUsers();
 }
 
@@ -455,16 +455,5 @@ void UserManager::debugMostrarTodosLosMovimientos() {
     } while (currentUser != usuarios.getHead());
 }
 
-void printMovementsResults(const std::vector<BankMovement*>& results) {
-    if (results.empty()) {
-        std::cout << "No movements found with that criteria.\n";
-        return;
-    }
-    std::cout << "\n=== Resultados de la consulta ===\n";
-    for (auto& mov : results) {
-        mov->printReceipt();
-        std::cout << "------------------------------\n";
-    }
-}
 
 

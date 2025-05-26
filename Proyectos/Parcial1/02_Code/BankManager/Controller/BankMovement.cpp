@@ -62,10 +62,6 @@ void BankMovement::printReceipt()  {
     
 }
 
-void BankMovement::printReceipt(int type)  {
-    
-}
-
 int BankMovement::getLastId() {
     return lastId;
 }

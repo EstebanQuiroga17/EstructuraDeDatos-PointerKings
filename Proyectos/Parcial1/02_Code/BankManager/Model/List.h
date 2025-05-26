@@ -26,7 +26,7 @@ public:
 };
 
 
-//Implementation
+
 
 template <typename T>
 List<T>::List() : head(nullptr) {}
@@ -44,7 +44,7 @@ List<T>::~List() {
     head = nullptr;
 }
 
-//Iserts a new node at the end of the list
+
 template <typename T>
 void List<T>::insert(T value) {
     Node<T>* newNode = new Node<T>(value);
@@ -134,10 +134,10 @@ void List<T>::setHead(Node<T>* newHead) {
     head = newHead;
 }
 
-// Guarda la lista completa en binario (recorriendo solo con punteros, sin corchetes)
+
 template <typename T>
 void List<T>::saveBinary(std::ofstream& out) const {
-    // Contar elementos
+   
     int cantidad = 0;
     Node<T>* actual = head;
     if (actual) {
@@ -150,14 +150,14 @@ void List<T>::saveBinary(std::ofstream& out) const {
 
     actual = head;
     for (int i = 0; i < cantidad; ++i) {
-        actual->getValue().saveBinary(out); // Asume que T tiene saveBinary
+        actual->getValue().saveBinary(out); 
         actual = actual->getNextNode();
     }
 }
 
 template <typename T>
 bool List<T>::loadBinary(std::ifstream& in) {
-    // Limpiar la lista primero (opcional pero recomendado)
+    
     if (head) {
         Node<T>* current = head->getNextNode();
         while (current != head) {
@@ -174,8 +174,8 @@ bool List<T>::loadBinary(std::ifstream& in) {
 
     for (int i = 0; i < cantidad; ++i) {
         T obj;
-        obj.loadBinary(in); // Asume que T tiene loadBinary
-        insert(obj);           // Inserta usando solo punteros
+        obj.loadBinary(in);
+        insert(obj);           
     }
     return true;
 }

@@ -312,7 +312,6 @@ void UserManager::modificarUsuario() {
         return;
     }
 
-    // Menú de modificación
     bool volver = false;
     while (!volver) {
         system("cls");
@@ -355,8 +354,7 @@ void UserManager::modificarUsuario() {
                 else if (tipoCuenta == 'c') abrirCorriente = true;
                 else if (tipoCuenta == 'a') abrirAhorros = abrirCorriente = true;
                 else break; // Cancelar
-
-                // Modificar cuentas según la selección
+                
                 if (abrirAhorros) usuarioPtr->setSavingsAccount(crearCuentaAhorros());
                 if (abrirCorriente) usuarioPtr->setCheckingAccount(crearCuentaCorriente());
                 if (!abrirAhorros) usuarioPtr->setSavingsAccount(BankAccount()); // Elimina cuenta de ahorros

@@ -9,7 +9,6 @@ CursorMenu::CursorMenu() {
     cursor = nullptr;
 }
 
-// Carga las opciones al menú
 void CursorMenu::loadOptions(const vector<string>& opciones) {
     for (const auto& op : opciones) {
         menuOptions.insert(op);
@@ -17,7 +16,6 @@ void CursorMenu::loadOptions(const vector<string>& opciones) {
     cursor = menuOptions.getHead();
 }
 
-//impresion del menú
 void CursorMenu::printMenu() {
     Node<string>* current = menuOptions.getHead();
     if (!current) {

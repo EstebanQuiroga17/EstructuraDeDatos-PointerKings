@@ -85,7 +85,7 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
         switch (op)
         {
         case 0:
-        { // Depósito
+        { 
             float monto;
             do
             {
@@ -141,7 +141,7 @@ int MenuManager::menuQueryMovements()
     CursorMenu menu;
     menu.loadOptions({"Consultar por rango de fechas",
                       "Consultar por nombre y DNI",
-                      "Consultar por monto mínimo",
+                      "Consultar por monto minimo",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;
@@ -209,7 +209,7 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         }
 
         case 2:
-        { // Monto mínimo
+        { 
             float minAmount;
             std::cout << "Ingrese el monto mínimo: ";
             std::cin >> minAmount;

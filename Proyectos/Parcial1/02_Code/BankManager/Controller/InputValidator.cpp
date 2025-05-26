@@ -288,6 +288,12 @@ Date InputValidator::pedirFechaNacimiento() {
             edad--;
         }
 
+        if (edad < 18) {
+            cout << "Debe ser mayor de 18 anios" << endl;
+            validatorDate = false;
+            continue;
+        }
+
         cout << "Su edad es: " << edad << " anios." << endl;
 
     } while (!validatorDate);

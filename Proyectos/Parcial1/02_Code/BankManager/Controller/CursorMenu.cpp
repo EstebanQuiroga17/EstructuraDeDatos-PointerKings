@@ -21,7 +21,7 @@ void CursorMenu::loadOptions(const vector<string>& opciones) {
 void CursorMenu::printMenu() {
     Node<string>* current = menuOptions.getHead();
     if (!current) {
-        cout << "Menú vacío" << endl;
+        cout << "Menu vacio" << endl;
         return;
     }
     do {
@@ -34,7 +34,6 @@ void CursorMenu::printMenu() {
     } while (current != menuOptions.getHead());
 }
 
-//Función que retorna el índice seleccionado
 int CursorMenu::runMenuLoopReturnIndex() {
     bool running = true;
     int index = 0;

@@ -94,7 +94,7 @@ BankAccount UserManager::crearCuentaAhorros() {
 
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber();
-    cout << "Número de cuenta de ahorros generado: " << numCuenta << endl;
+    cout << "Numero de cuenta de ahorros generado: " << numCuenta << endl;
 
     float saldo = validator.isFloat("Saldo inicial de ahorros: ");
     cuenta.setAccountNumber(numCuenta);
@@ -109,7 +109,7 @@ BankAccount UserManager::crearCuentaCorriente() {
 
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber();
-    cout << "Número de cuenta corriente generado: " << numCuenta << endl;
+    cout << "Numero de cuenta corriente generado: " << numCuenta << endl;
 
     float saldo = validator.isFloat("Saldo inicial corriente: ");
     cuenta.setAccountNumber(numCuenta);
@@ -124,7 +124,7 @@ User* UserManager::login(char &tipoCuenta) {
     while (true) {
         system("cls");
         cout << "=== LOGIN ===" << endl;
-        cout << "Ingrese número de cuenta (ahorros o corriente), o escriba 0 para salir: ";
+        cout << "Ingrese numero de cuenta (ahorros o corriente), o escriba 0 para salir: ";
         cin >> cuentaIngresada;
 
         if (cuentaIngresada == "0") {
@@ -200,7 +200,7 @@ void UserManager::mostrarUsuarios() {
 
 void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
     if (!usuario) {
-        std::cout << "Usuario inválido.\n";
+        std::cout << "Usuario invalido.\n";
         return;
     }
     if (monto <= 0) {
@@ -212,19 +212,19 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
     } else if (tipoCuenta == 'c') {
         usuario->getCheckingAccount().setBalance(usuario->getCheckingAccount().getBalance() + monto);
     } else {
-        std::cout << "Tipo de cuenta inválido.\n";
+        std::cout << "Tipo de cuenta invalido.\n";
         return;
     }
     Deposit deposito(monto, usuario, fecha);
     usuario->getBankMovements().insert(deposito);
-    std::cout << "Depósito exitoso.\n";
+    std::cout << "Deposito exitoso.\n";
     deposito.printReceipt(); 
     saveUsers();
 }
 
 void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha) {
     if (!usuario) {
-        std::cout << "Usuario inválido.\n";
+        std::cout << "Usuario invalido.\n";
         return;
     }
     if (monto <= 0) {
@@ -246,7 +246,7 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
         }
         usuario->getCheckingAccount().setBalance(saldo - monto);
     } else {
-        std::cout << "Tipo de cuenta inválido.\n";
+        std::cout << "Tipo de cuenta invalido.\n";
         return;
     }
     WithDraw retiro(monto, usuario, fecha);
@@ -285,7 +285,7 @@ void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
     std::string cedula;
-    std::cout << "Ingrese la cédula del usuario a modificar: ";
+    std::cout << "Ingrese la cedula del usuario a modificar: ";
     std::cin >> cedula;
 
     Node<User>* head = usuarios.getHead();
@@ -297,8 +297,6 @@ void UserManager::modificarUsuario() {
 
     Node<User>* actual = head;
     User* usuarioPtr = nullptr;
-
-    // Buscar usuario por cédula
     do {
         User& usuario = actual->getValue();
         if (usuario.getPersonalData().getDNI() == cedula) {
@@ -332,10 +330,10 @@ void UserManager::modificarUsuario() {
                 std::cout << "Nombre y apellido modificados.\n";
                 break;
             }
-            case 1: { // Modificar cédula
+            case 1: { 
                 std::string nuevaCedula = validator.isDNI();
                 usuarioPtr->getPersonalData().setDNI(nuevaCedula);
-                std::cout << "Cédula modificada.\n";
+                std::cout << "Cedula modificada.\n";
                 break;
             }
             case 2: { // Modificar fecha de nacimiento
@@ -384,7 +382,7 @@ void UserManager::eliminarUsuario() {
     string cedula;
     system("cls");
     cout << "=== ELIMINAR USUARIO ===" << endl;
-    cout << "Ingrese la cédula del usuario a eliminar: ";
+    cout << "Ingrese la cedula del usuario a eliminar: ";
     cin >> cedula;
 
     Node<User>* head = usuarios.getHead();
@@ -407,7 +405,7 @@ void UserManager::eliminarUsuario() {
     } while (actual != head);
 
     if (encontrado) {
-        // Caso único: solo hay un nodo
+        // Caso unico: solo hay un nodo
         if (actual == actual->getNextNode()) {
             usuarios.setHead(nullptr);
         } else {

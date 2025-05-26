@@ -113,7 +113,7 @@ bool List<T>::update(Node<T>* oldValue, Node<T>* newValue) {
 template <typename T>
 void List<T>::printList() {
     if (!head) {
-        std::cout << "Lista vacía" << std::endl;
+        std::cout << "Lista vacia" << std::endl;
         return;
     }
     Node<T>* current = head;

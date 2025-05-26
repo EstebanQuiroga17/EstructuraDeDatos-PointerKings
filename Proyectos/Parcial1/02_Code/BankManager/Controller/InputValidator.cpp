@@ -17,7 +17,7 @@ int InputValidator::isInteger(const std::string& mensaje) {
         value = 0;
         char c;
         int i = 0;
-        char* fact = (char*)malloc(12 * sizeof(char)); // Reserva dinámica, sin []
+        char* fact = (char*)malloc(12 * sizeof(char)); 
         printf("%s", mensaje.c_str());
         while ((c = getch()) != 13) {
             if (c >= '0' && c <= '9') {
@@ -32,7 +32,7 @@ int InputValidator::isInteger(const std::string& mensaje) {
             value = std::stoi(fact);
             ok = true;
         } catch (...) {
-            printf("value no válido. Intente de nuevo.\n");
+            printf("value no valido. Intente de nuevo.\n");
         }
         free(fact); // Libera memoria reservada
     } while (!ok);
@@ -67,9 +67,9 @@ float InputValidator::isFloat(const std::string& mensaje) {
             value = std::stof(fact);
             ok = true;
         } catch (...) {
-            printf("Valor no válido. Intente de nuevo.\n");
+            printf("Valor no valido. Intente de nuevo.\n");
         }
-        free(fact); // Libera la memoria dinámica
+        free(fact); 
     } while (!ok);
     return value;
 }
@@ -83,7 +83,7 @@ string InputValidator::isEmail() {
         cout << "Email: ";
         cin >> email;
         if (!regex_match(email, pattern)) {
-            cout << "Email inválido. Intente de nuevo." << endl;
+            cout << "Email invalido. Intente de nuevo." << endl;
         } else {
             valido = true;
         }
@@ -110,11 +110,11 @@ string InputValidator::isDNI() {
     bool valida = false;
 
     do {
-        cout << "Cédula (10 dígitos): ";
+        cout << "Cedula (10 digitos): ";
         cin >> dni;
 
         if (!regex_match(dni, onlyNumbers)) {
-            cout << "La cédula debe ser numérica y de 10 dígitos." << endl;
+            cout << "La cedula debe ser numerica y de 10 digitos." << endl;
             continue;
         }
 
@@ -136,12 +136,12 @@ string InputValidator::isDNI() {
         int resto = add % 10;
         int calculateDigit = (resto == 0) ? 0 : 10 - resto;
 
-        free(weight); // Liberar memoria dinámica
+        free(weight); 
 
         if (validatorDigit == calculateDigit) {
             valida = true;
         } else {
-            cout << "Cédula ecuatoriana inválida (dígito verificador incorrecto)." << endl;
+            cout << "Cedula ecuatoriana invalida (digito verificador incorrecto)." << endl;
         }
 
     } while (!valida);
@@ -157,27 +157,22 @@ Date InputValidator::pedirFechaNacimiento() {
         year = InputValidator::isInteger("Año de nacimiento (ej: 2001): ");
         month = InputValidator::isInteger("Mes de nacimiento (1-12): ");
         int diasMes = DateValidator::monthDays(month, year);
-        day = InputValidator::isInteger("Día de nacimiento: ");
+        day = InputValidator::isInteger("Dia de nacimiento: ");
         validatorDate = DateValidator::validateDay(day, diasMes);
 
-        // Validar fecha válida
         if (!validatorDate) {
-            cout << "Fecha inválida. Intente de nuevo." << endl;
+            cout << "Fecha invalida. Intente de nuevo." << endl;
             continue;
         }
 
-        // Obtener fecha actual
         Date hoy = Date::localDate();
 
-        // Validar rango de años
         int edad = hoy.getYear().getYear() - year;
         if (edad > 100) {
             cout << "La edad no puede ser mayor a 100 años. Intente de nuevo." << endl;
             validatorDate = false;
             continue;
         }
-
-        // Validar que la fecha de nacimiento no sea futura
         if (year > hoy.getYear().getYear() ||
             (year == hoy.getYear().getYear() && month > hoy.getMonth()) ||
             (year == hoy.getYear().getYear() && month == hoy.getMonth() && day > hoy.getDay())) {

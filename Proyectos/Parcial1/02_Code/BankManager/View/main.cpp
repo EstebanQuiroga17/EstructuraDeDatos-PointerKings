@@ -17,9 +17,9 @@ int main() {
         system("cls");
         cout << "========== Menu Manager ==========\n\n";
 
-        int seleccion = menu.mostrarMenuPrincipal();
+        int selecction = menu.mostrarMenuPrincipal();
 
-        switch (seleccion) {
+        switch (selecction) {
             case 0:
                 gestor.crearUsuario();
                 break;
@@ -38,7 +38,7 @@ int main() {
                 system("cls");
                 gestor.mostrarUsuarios();
                 gestor.debugMostrarTodosLosMovimientos();
-                cout << "\nPresiona Enter para volver al menú...";
+                cout << "\nPresiona Enter para volver al menu...";
                 cin.ignore();
                 cin.get();
                 break;

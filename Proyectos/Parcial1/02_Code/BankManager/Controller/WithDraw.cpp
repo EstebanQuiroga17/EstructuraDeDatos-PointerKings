@@ -19,8 +19,8 @@ void WithDraw::printReceipt(void){
     std::cout << "\n";
     std::cout << "---------------------------------" << std::endl;
     std::cout << "Recibo de Retiro" << std::endl;
-    std::cout << "Monto: " << BankMovement::getAmmount() << std::endl;
-    std::cout << "Usuario: " << getUser()->getPersonalData().getName() << std::endl;
+    std::cout << "Monto: " << getAmmount() << std::endl;
+    std::cout << "Usuario (DNI): " << getUserDNI() << std::endl;
     std::cout << "Fecha: ";
     getDate().print();
     std::cout << "ID de Movimiento: " << getId() << std::endl;

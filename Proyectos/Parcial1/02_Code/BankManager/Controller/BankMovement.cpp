@@ -58,11 +58,11 @@ void BankMovement::setDate(Date newDate)
    date = newDate;
 }
 
-void BankMovement::printReceipt() {
+void BankMovement::printReceipt()  {
     
 }
 
-void BankMovement::printReceipt(int type) {
+void BankMovement::printReceipt(int type)  {
     
 }
 
@@ -75,8 +75,9 @@ void BankMovement::setLastId(int newLastId) {
 }
 
 BankMovement::BankMovement(float ammount, User* user, Date date)
-    : id(createId()), ammount(ammount), user(user), date(date)
+    : id(createId()), ammount(ammount), date(date)
 {
+   userDNI = user->getPersonalData().getDNI();
 }
 
 BankMovement::BankMovement()
@@ -84,34 +85,50 @@ BankMovement::BankMovement()
 }
 
 void BankMovement::saveBinary(std::ofstream& out) const {
+    
     int len = id.size();
     out.write(reinterpret_cast<const char*>(&len), sizeof(int));
-    const char* ptrId = id.c_str();
-    out.write(ptrId, len);
+    out.write(id.c_str(), len);
 
+    
     out.write(reinterpret_cast<const char*>(&ammount), sizeof(float));
 
-    user->saveBinary(out);
+    
+    int dniLen = userDNI.size();
+    out.write(reinterpret_cast<const char*>(&dniLen), sizeof(int));
+    out.write(userDNI.c_str(), dniLen);
 
+    
     date.saveBinary(out);
 }
 
-bool BankMovement::loadBinary(std::ifstream& in) {
 
+bool BankMovement::loadBinary(std::ifstream& in) {
+    
     int len = 0;
     in.read(reinterpret_cast<char*>(&len), sizeof(int));
     char* buffer = new char[len + 1];
     in.read(buffer, len);
-    *(buffer + len) = '\0';   
+    buffer[len] = '\0';
     id = buffer;
-    delete buffer;  
+    delete[] buffer;
 
+    
     in.read(reinterpret_cast<char*>(&ammount), sizeof(float));
 
-    user->loadBinary(in);
+    
+    int dniLen = 0;
+    in.read(reinterpret_cast<char*>(&dniLen), sizeof(int));
+    char* bufferDNI = new char[dniLen + 1];
+    in.read(bufferDNI, dniLen);
+    bufferDNI[dniLen] = '\0';
+    userDNI = bufferDNI;
+    delete[] bufferDNI;
 
+    
     date.loadBinary(in);
 
     return true;
 }
+
 

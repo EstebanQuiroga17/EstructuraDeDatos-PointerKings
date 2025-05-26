@@ -24,6 +24,9 @@ public:
    static void setLastId(int newLastId);
    void saveBinary(std::ofstream& out) const;
    bool loadBinary(std::ifstream& in);
+   std::string getUserDNI() const { return userDNI; }
+   void setUserDNI(const std::string& dni) { userDNI = dni; }
+
 
 
 
@@ -34,5 +37,6 @@ private:
    float ammount;
    User* user;
    Date date;
+   std::string userDNI; 
 };
 

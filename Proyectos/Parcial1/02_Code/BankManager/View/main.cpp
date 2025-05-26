@@ -68,6 +68,7 @@ int main() {
                 break;
             }
             case 7:
+                
                 salir = true;
                 break;
         }

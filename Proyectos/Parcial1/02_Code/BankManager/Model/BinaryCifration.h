@@ -1,9 +1,4 @@
-/***********************************************************************
- * Module:  BinaryCifration.h
- * Author:  TEVS
- * Modified: martes, 13 de mayo de 2025 20:02:07
- * Purpose: Declaration of the class BinaryCifration
- ***********************************************************************/
+
 
 #if !defined(__BankManagerProject_BinaryCifration_h)
 #define __BankManagerProject_BinaryCifration_h
@@ -33,7 +28,7 @@ template <typename T>
     static void saveList(const List<T>& lista, const std::string& ruta) {
         std::ofstream out(ruta.c_str(), std::ios::binary | std::ios::trunc);
         if (!out) return;
-        lista.saveBinary(out); // método de la lista
+        lista.saveBinary(out); 
         out.close();
     }
 
@@ -41,10 +36,25 @@ template <typename T>
     static bool loadList(List<T>& lista, const std::string& ruta) {
         std::ifstream in(ruta.c_str(), std::ios::binary);
         if (!in) return false;
-        lista.loadBinary(in); // método de la lista
+        lista.loadBinary(in); 
         in.close();
         return true;
     }
+
+static bool saveInt(int value, const std::string& ruta) {
+    std::ofstream out(ruta, std::ios::binary | std::ios::trunc);
+    if (!out) return false;
+    out.write(reinterpret_cast<const char*>(&value), sizeof(value));
+    return true;
+}
+
+static bool loadInt(int& value, const std::string& ruta) {
+    std::ifstream in(ruta, std::ios::binary);
+    if (!in) return false;
+    in.read(reinterpret_cast<char*>(&value), sizeof(value));
+    return true;
+}
+
     
 protected:
 private:

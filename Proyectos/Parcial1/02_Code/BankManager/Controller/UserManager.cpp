@@ -25,10 +25,8 @@ void UserManager::crearUsuario() {
     system("cls");
     std::cout << "=== Registro de nuevo usuario ===" << std::endl;
 
-    // 1. Capturar datos personales
     PersonalData datos = capturarDatosPersonales();
 
-    // 2. Validar datos personales
     if (datos.getName().empty() || datos.getLastName().empty() ||
         datos.getDNI().empty() || datos.getEmail().empty()) {
         std::cout << "\nError: Todos los campos personales son obligatorios.\n";
@@ -36,11 +34,8 @@ void UserManager::crearUsuario() {
         return;
     }
 
-    // 3. Menú de tipo de cuenta (con cursores)
     char tipoCuenta = MenuManager::menuTipoCuenta();
-    //char tipoCuenta = menuTipoCuenta(); // Retorna 's', 'c', 'a' o 'x'
 
-    // 4. Decidir qué cuentas crear
     bool abrirAhorros = false, abrirCorriente = false;
     if (tipoCuenta == 's') abrirAhorros = true;
     else if (tipoCuenta == 'c') abrirCorriente = true;
@@ -51,7 +46,6 @@ void UserManager::crearUsuario() {
         return;
     }
 
-    // 5. Llamar a guardar usuario (esto pedirá los datos de cuentas según selección)
     guardarUsuario(datos, abrirAhorros, abrirCorriente);
 }
 
@@ -98,7 +92,6 @@ BankAccount UserManager::crearCuentaAhorros() {
     InputValidator validator;
     cout << "\n--- Datos de la cuenta de AHORROS ---" << endl;
 
-    // Generar número automáticamente
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Número de cuenta de ahorros generado: " << numCuenta << endl;
@@ -114,7 +107,6 @@ BankAccount UserManager::crearCuentaCorriente() {
     InputValidator validator;
     cout << "\n--- Datos de la cuenta CORRIENTE ---" << endl;
 
-    // Generar número automáticamente
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Número de cuenta corriente generado: " << numCuenta << endl;
@@ -171,15 +163,15 @@ User* UserManager::login(char &tipoCuenta) {
 
 void UserManager::saveUsers() {
     BinaryCifration::saveList(usuarios, "users.dat");
-    CesarCifration cesar(3); // Usa tu desplazamiento preferido
+    CesarCifration cesar(3); 
     cesar.encryptFile("users.dat");
 }
 
 void UserManager::loadUsers() {
-    CesarCifration cesar(3); // Usa el mismo desplazamiento que arriba
+    CesarCifration cesar(3); 
     cesar.decryptFile("users.dat");
     BinaryCifration::loadList(usuarios, "users.dat");
-    cesar.encryptFile("users.dat"); // Vuelve a cifrar inmediatamente después de leer
+    cesar.encryptFile("users.dat"); 
 }
 
 void UserManager::mostrarUsuarios() {
@@ -246,7 +238,6 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
         }
         usuario->getSavingsAccount().setBalance(saldo - monto);
     } else if (tipoCuenta == 'c') {
-        // Si tu cuenta corriente permite sobregiro, ajusta aquí
         float saldo = usuario->getCheckingAccount().getBalance();
         if (saldo < monto) {
             std::cout << "Saldo insuficiente.\n";
@@ -291,11 +282,8 @@ void UserManager::queryMovements(const std::function<bool(const BankMovement&)>&
         std::cout << "No movements found with that criteria.\n";
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 1f0ef02ff4b062e08a86eef2cf6f4a3a6c2eb4b0
 void UserManager::eliminarUsuario() {
     string cuenta;
     system("cls");
@@ -313,7 +301,6 @@ void UserManager::eliminarUsuario() {
     Node<User>* anterior = nullptr;
     bool encontrado = false;
 
-    // Recorre la lista circular
     do {
         User& usuario = actual->getValue();
         if (usuario.getSavingsAccount().getAccountNumber() == cuenta || usuario.getCheckingAccount().getAccountNumber() == cuenta) {
@@ -325,14 +312,11 @@ void UserManager::eliminarUsuario() {
     } while (actual != usuarios.getHead());
 
     if (encontrado) {
-        // Si solo hay un usuario
         if (actual == usuarios.getHead() && actual->getNextNode() == actual) {
             usuarios.setHead(nullptr);
         } else {
-            // Quita el nodo de la lista circular
             if (actual == usuarios.getHead()) usuarios.setHead(actual->getNextNode());
             anterior->setNextNode(actual->getNextNode());
-            // Libera memoria si es necesario, dependiendo de tu implementación
         }
         saveUsers();
         cout << "\nUsuario eliminado exitosamente.\n";

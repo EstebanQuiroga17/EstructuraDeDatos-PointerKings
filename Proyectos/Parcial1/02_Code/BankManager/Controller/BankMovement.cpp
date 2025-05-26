@@ -2,17 +2,20 @@
 #include <chrono>
 #include <fstream>
 #include "../Model/User.h"
+#include "../Model/BinaryCifration.h"
 using namespace std;
 
-string BankMovement::lastId = "0000001";
+int BankMovement::lastId = 0;
 
 string BankMovement::createId(void){
-   string initialNumbers = "23230";
-   string newId = initialNumbers + lastId;
-   int lastIdNumber = stoi(lastId);
-   lastIdNumber++;
-   setLastId(to_string(lastIdNumber));
-   return newId;
+   if(!BinaryCifration::loadInt(lastId, "BankMovementsIdConfig.dat"))
+      lastId=1;
+   string initialNumbers = "23230-";
+   string lastIdString = to_string(lastId);
+   string id = initialNumbers + lastIdString;
+   lastId++;
+   BinaryCifration::saveInt(lastId, "BankMovementsIdConfig.dat");
+   return id; 
 }
 
 string BankMovement::getId(void)
@@ -63,11 +66,11 @@ void BankMovement::printReceipt(int type) {
     
 }
 
-string BankMovement::getLastId() {
+int BankMovement::getLastId() {
     return lastId;
 }
 
-void BankMovement::setLastId(const string& newLastId) {
+void BankMovement::setLastId(int newLastId) {
     lastId = newLastId;
 }
 
@@ -81,39 +84,32 @@ BankMovement::BankMovement()
 }
 
 void BankMovement::saveBinary(std::ofstream& out) const {
-    // Guardar id
     int len = id.size();
     out.write(reinterpret_cast<const char*>(&len), sizeof(int));
     const char* ptrId = id.c_str();
     out.write(ptrId, len);
 
-    // Guardar ammount
     out.write(reinterpret_cast<const char*>(&ammount), sizeof(float));
 
-    // Guardar user
     user->saveBinary(out);
 
-    // Guardar date
     date.saveBinary(out);
 }
 
 bool BankMovement::loadBinary(std::ifstream& in) {
-    // Leer id
+
     int len = 0;
     in.read(reinterpret_cast<char*>(&len), sizeof(int));
     char* buffer = new char[len + 1];
     in.read(buffer, len);
-    *(buffer + len) = '\0';   // buffer[len] = '\0' equivalente sin corchetes
+    *(buffer + len) = '\0';   
     id = buffer;
-    delete buffer;  // Para liberar correctamente, debería ser delete[] buffer, pero si solo delete es aceptado por tu profesor, úsalo así.
+    delete buffer;  
 
-    // Leer ammount
     in.read(reinterpret_cast<char*>(&ammount), sizeof(float));
 
-    // Leer user
     user->loadBinary(in);
 
-    // Leer date
     date.loadBinary(in);
 
     return true;

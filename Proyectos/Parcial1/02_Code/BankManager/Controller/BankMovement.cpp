@@ -59,7 +59,13 @@ void BankMovement::setDate(Date newDate)
 }
 
 void BankMovement::printReceipt()  {
-    
+   std::cout << ">>> IMPRIMIENDO RECIBO <<<" << std::endl;
+   std::cout << "[BankMovement] Monto: " << ammount << std::endl;
+   std::cout << "DNI: " << userDNI << std::endl;
+   std::cout << "Fecha: ";
+   date.print(); 
+   std::cout << "ID de Movimiento: " << id << std::endl;
+
 }
 
 int BankMovement::getLastId() {

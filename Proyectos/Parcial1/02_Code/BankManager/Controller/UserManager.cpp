@@ -263,7 +263,7 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     retiro.printReceipt(); 
 }
 
-void UserManager::queryMovements(const std::function<bool(const BankMovement&)>& predicate) const {
+void UserManager::queryMovements( const std::function<bool( BankMovement&)>& predicate)  {
     bool found = false;
     Node<User>* currentUser = usuarios.getHead();
     if (!currentUser) {
@@ -291,11 +291,6 @@ void UserManager::queryMovements(const std::function<bool(const BankMovement&)>&
         std::cout << "No movements found with that criteria.\n";
 }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 1f0ef02ff4b062e08a86eef2cf6f4a3a6c2eb4b0
 void UserManager::eliminarUsuario() {
     string cuenta;
     system("cls");

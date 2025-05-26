@@ -109,11 +109,13 @@ int MenuManager::menuQueryMovements() {
     return seleccion;
 }
 
-void showMovementsQueryMenu(UserManager& manager) {
+void MenuManager::showMovementsQueryMenu(UserManager& manager) {
     InputValidator validator;
     bool back = false;
 
     while (!back) {
+        system("cls");
+        std::cout << "==== CONSULTA DE MOVIMIENTOS ====" << std::endl;
         int option = MenuManager::menuQueryMovements();
 
         switch (option) {
@@ -125,7 +127,7 @@ void showMovementsQueryMenu(UserManager& manager) {
                 std::cin >> y2 >> m2 >> d2;
                 Date from(y1, m1, d1), to(y2, m2, d2);
 
-                manager.queryMovements([&](BankMovement mov) {
+                manager.queryMovements([&]( BankMovement& mov) {
                     return mov.getDate() >= from && mov.getDate() <= to;
                 });
                 system("pause");
@@ -134,10 +136,11 @@ void showMovementsQueryMenu(UserManager& manager) {
             case 1: { // Nombre y DNI
                 std::string name, dni;
                 std::cout << "Ingrese el nombre: ";
-                std::cin >> name;
+                std::cin.ignore(); // Limpia el buffer
+                std::getline(std::cin, name);
                 std::cout << "Ingrese el DNI: ";
-                std::cin >> dni;
-                manager.queryMovements([&](BankMovement mov) {
+                std::getline(std::cin, dni);
+                manager.queryMovements([&]( BankMovement& mov) {
                     return mov.getUser()->getPersonalData().getName() == name &&
                            mov.getUser()->getPersonalData().getDNI() == dni;
                 });
@@ -148,7 +151,7 @@ void showMovementsQueryMenu(UserManager& manager) {
                 float minAmount;
                 std::cout << "Ingrese el monto mínimo: ";
                 std::cin >> minAmount;
-                manager.queryMovements([&](BankMovement mov) {
+                manager.queryMovements([&]( BankMovement& mov) {
                     return mov.getAmmount() >= minAmount;
                 });
                 system("pause");

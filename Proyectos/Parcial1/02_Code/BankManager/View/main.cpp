@@ -42,7 +42,7 @@ int main() {
                 cin.get();
                 break;
             case 4:
-                menu.menuQueryMovements();
+                menu.showMovementsQueryMenu(gestor);
                 break;
             case 5: {
                 std::string backupName = BackupManager::getTimestampedBackupName();

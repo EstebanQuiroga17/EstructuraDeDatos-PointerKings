@@ -298,37 +298,41 @@ void UserManager::eliminarUsuario() {
     cout << "Ingrese el número de cuenta de ahorros o corriente del usuario a eliminar: ";
     cin >> cuenta;
 
-    if (!usuarios.getHead()) {
+    Node<User>* head = usuarios.getHead();
+    if (!head) {
         cout << "No hay usuarios registrados.\n";
         system("pause");
         return;
     }
 
-    Node<User>* actual = usuarios.getHead();
-    Node<User>* anterior = nullptr;
+    Node<User>* actual = head;
     bool encontrado = false;
 
     // Recorre la lista circular
     do {
         User& usuario = actual->getValue();
-        if (usuario.getSavingsAccount().getAccountNumber() == cuenta || usuario.getCheckingAccount().getAccountNumber() == cuenta) {
+        if (usuario.getSavingsAccount().getAccountNumber() == cuenta ||
+            usuario.getCheckingAccount().getAccountNumber() == cuenta) {
             encontrado = true;
             break;
         }
-        anterior = actual;
         actual = actual->getNextNode();
-    } while (actual != usuarios.getHead());
+    } while (actual != head);
 
     if (encontrado) {
-        // Si solo hay un usuario
-        if (actual == usuarios.getHead() && actual->getNextNode() == actual) {
+        // Caso único: solo hay un nodo
+        if (actual == actual->getNextNode()) {
             usuarios.setHead(nullptr);
         } else {
-            // Quita el nodo de la lista circular
-            if (actual == usuarios.getHead()) usuarios.setHead(actual->getNextNode());
-            anterior->setNextNode(actual->getNextNode());
-            // Libera memoria si es necesario, dependiendo de tu implementación
+            // Religa los nodos anterior y siguiente
+            Node<User>* prev = actual->getPreviousNode();
+            Node<User>* next = actual->getNextNode();
+            prev->setNextNode(next);
+            next->setPreviousNode(prev);
+            if (actual == head) usuarios.setHead(next);
         }
+        // Libera memoria si es necesario:
+        // delete actual; // (solo si tu lista NO maneja destrucción automática)
         saveUsers();
         cout << "\nUsuario eliminado exitosamente.\n";
     } else {
@@ -336,3 +340,4 @@ void UserManager::eliminarUsuario() {
     }
     system("pause");
 }
+

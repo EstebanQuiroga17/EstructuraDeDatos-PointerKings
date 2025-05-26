@@ -13,4 +13,6 @@ public:
     int menuOperacionBancaria();
     static int menuQueryMovements();
     static void showMovementsQueryMenu(UserManager& manager);
+    static int menuModifyUser();
+    static void showModifyUserMenu(UserManager& manager);
 };

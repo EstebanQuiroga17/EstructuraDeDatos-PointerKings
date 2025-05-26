@@ -68,6 +68,10 @@ int main() {
                 break;
             }
             case 7:
+                // NUEVO SUBMENÚ MODIFICAR/ELIMINAR USUARIO
+                menu.showModifyUserMenu(gestor);
+                break;
+            case 8:
                 salir = true;
                 break;
         }

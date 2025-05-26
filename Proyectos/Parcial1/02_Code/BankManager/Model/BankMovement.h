@@ -20,8 +20,8 @@ public:
    virtual void printReceipt(int type);
    virtual void printReceipt();
    std::string createId(void);
-   static std::string getLastId();
-   static void setLastId(const std::string& newLastId);
+   static int getLastId();
+   static void setLastId(int newLastId);
    void saveBinary(std::ofstream& out) const;
    bool loadBinary(std::ifstream& in);
 
@@ -29,7 +29,7 @@ public:
 
 protected:
 private:
-   static std::string lastId;
+   static int lastId;
    std::string id;
    float ammount;
    User* user;

@@ -25,10 +25,8 @@ void UserManager::crearUsuario() {
     system("cls");
     std::cout << "=== Registro de nuevo usuario ===" << std::endl;
 
-    // 1. Capturar datos personales
     PersonalData datos = capturarDatosPersonales();
 
-    // 2. Validar datos personales
     if (datos.getName().empty() || datos.getLastName().empty() ||
         datos.getDNI().empty() || datos.getEmail().empty()) {
         std::cout << "\nError: Todos los campos personales son obligatorios.\n";
@@ -36,11 +34,8 @@ void UserManager::crearUsuario() {
         return;
     }
 
-    // 3. Menú de tipo de cuenta (con cursores)
     char tipoCuenta = MenuManager::menuTipoCuenta();
-    //char tipoCuenta = menuTipoCuenta(); // Retorna 's', 'c', 'a' o 'x'
 
-    // 4. Decidir qué cuentas crear
     bool abrirAhorros = false, abrirCorriente = false;
     if (tipoCuenta == 's') abrirAhorros = true;
     else if (tipoCuenta == 'c') abrirCorriente = true;
@@ -51,7 +46,6 @@ void UserManager::crearUsuario() {
         return;
     }
 
-    // 5. Llamar a guardar usuario (esto pedirá los datos de cuentas según selección)
     guardarUsuario(datos, abrirAhorros, abrirCorriente);
 }
 
@@ -98,7 +92,6 @@ BankAccount UserManager::crearCuentaAhorros() {
     InputValidator validator;
     cout << "\n--- Datos de la cuenta de AHORROS ---" << endl;
 
-    // Generar número automáticamente
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Número de cuenta de ahorros generado: " << numCuenta << endl;
@@ -114,7 +107,6 @@ BankAccount UserManager::crearCuentaCorriente() {
     InputValidator validator;
     cout << "\n--- Datos de la cuenta CORRIENTE ---" << endl;
 
-    // Generar número automáticamente
     BankAccount cuenta;
     std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Número de cuenta corriente generado: " << numCuenta << endl;
@@ -171,15 +163,15 @@ User* UserManager::login(char &tipoCuenta) {
 
 void UserManager::saveUsers() {
     BinaryCifration::saveList(usuarios, "users.dat");
-    CesarCifration cesar(3); // Usa tu desplazamiento preferido
+    CesarCifration cesar(3); 
     cesar.encryptFile("users.dat");
 }
 
 void UserManager::loadUsers() {
-    CesarCifration cesar(3); // Usa el mismo desplazamiento que arriba
+    CesarCifration cesar(3); 
     cesar.decryptFile("users.dat");
     BinaryCifration::loadList(usuarios, "users.dat");
-    cesar.encryptFile("users.dat"); // Vuelve a cifrar inmediatamente después de leer
+    cesar.encryptFile("users.dat"); 
 }
 
 void UserManager::mostrarUsuarios() {
@@ -246,7 +238,6 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
         }
         usuario->getSavingsAccount().setBalance(saldo - monto);
     } else if (tipoCuenta == 'c') {
-        // Si tu cuenta corriente permite sobregiro, ajusta aquí
         float saldo = usuario->getCheckingAccount().getBalance();
         if (saldo < monto) {
             std::cout << "Saldo insuficiente.\n";
@@ -291,6 +282,7 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         std::cout << "No movements found with that criteria.\n";
 }
 
+<<<<<<< HEAD
 void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
@@ -391,6 +383,13 @@ void UserManager::modificarUsuario() {
 }
 
 
+=======
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
+>>>>>>> 463115d4576e137158fb3b5d9786726e5841b466
 void UserManager::eliminarUsuario() {
     string cedula;
     system("cls");
@@ -408,7 +407,6 @@ void UserManager::eliminarUsuario() {
     Node<User>* actual = head;
     bool encontrado = false;
 
-    // Recorre la lista circular
     do {
         User& usuario = actual->getValue();
         if (usuario.getPersonalData().getDNI() == cedula) {
@@ -419,6 +417,13 @@ void UserManager::eliminarUsuario() {
     } while (actual != head);
 
     if (encontrado) {
+<<<<<<< HEAD
+        if (actual == usuarios.getHead() && actual->getNextNode() == actual) {
+            usuarios.setHead(nullptr);
+        } else {
+            if (actual == usuarios.getHead()) usuarios.setHead(actual->getNextNode());
+            anterior->setNextNode(actual->getNextNode());
+=======
         // Caso único: solo hay un nodo
         if (actual == actual->getNextNode()) {
             usuarios.setHead(nullptr);
@@ -429,6 +434,7 @@ void UserManager::eliminarUsuario() {
             prev->setNextNode(next);
             next->setPreviousNode(prev);
             if (actual == head) usuarios.setHead(next);
+>>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
         }
         // delete actual; // Si tu lista no gestiona memoria sola
         saveUsers();

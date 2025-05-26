@@ -262,12 +262,12 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         return;
     }
     do {
-        User user = currentUser->getValue();
-        List<BankMovement> movements = user.getBankMovements();
+        User& user = currentUser->getValue();
+        const List<BankMovement>& movements = user.getBankMovements();
         Node<BankMovement>* currentMov = movements.getHead();
         if (currentMov) {
             do {
-                BankMovement mov = currentMov->getValue();
+                BankMovement& mov = currentMov->getValue();
                 if (predicate(mov)) {
                     mov.printReceipt();
                     found = true;
@@ -282,9 +282,6 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         std::cout << "No movements found with that criteria.\n";
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
@@ -385,14 +382,6 @@ void UserManager::modificarUsuario() {
 }
 
 
-=======
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
->>>>>>> 463115d4576e137158fb3b5d9786726e5841b466
->>>>>>> 953dc572a61baf5677eaecca722e133698184d33
 void UserManager::eliminarUsuario() {
     string cedula;
     system("cls");

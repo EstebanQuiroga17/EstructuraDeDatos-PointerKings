@@ -37,6 +37,7 @@ int main() {
             case 3:
                 system("cls");
                 gestor.mostrarUsuarios();
+                gestor.debugMostrarTodosLosMovimientos();
                 cout << "\nPresiona Enter para volver al menú...";
                 cin.ignore();
                 cin.get();

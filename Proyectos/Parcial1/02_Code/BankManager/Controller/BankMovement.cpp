@@ -58,11 +58,11 @@ void BankMovement::setDate(Date newDate)
    date = newDate;
 }
 
-void BankMovement::printReceipt() {
+void BankMovement::printReceipt()  {
     
 }
 
-void BankMovement::printReceipt(int type) {
+void BankMovement::printReceipt(int type)  {
     
 }
 

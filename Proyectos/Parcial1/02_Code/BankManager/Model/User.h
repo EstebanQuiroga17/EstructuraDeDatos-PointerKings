@@ -16,7 +16,7 @@ public:
    void setSavingsAccount(BankAccount newSavingsAccount);
    BankAccount& getCheckingAccount(void); //cambio a constante
    void setCheckingAccount(BankAccount newCheckingAccount);
-   List<BankMovement> getBankMovements(void);
+   List<BankMovement>& getBankMovements(void);
    
    void setBankMovements(List<BankMovement> newBankMovements);
    void saveBinary(std::ofstream& out) const;

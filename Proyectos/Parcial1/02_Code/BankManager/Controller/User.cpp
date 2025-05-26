@@ -38,7 +38,7 @@ void User::setCheckingAccount(BankAccount newCheckingAccount)
    checkingAccount = newCheckingAccount;
 }
 
-List<BankMovement> User::getBankMovements(void)
+List<BankMovement>& User::getBankMovements(void)
 {
    return bankMovements;
 }

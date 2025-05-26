@@ -20,7 +20,7 @@ int InputValidator::isInteger(const std::string& mensaje) {
         printf("%s", mensaje.c_str());
         while ((c = getch()) != 13) { // Enter para finalizar
             if (c >= '0' && c <= '9') {
-                if (i < 11) { // Evita desbordamiento (máximo 11 dígitos más '\0')
+                if (i < 11) { 
                     *(fact + i) = c;
                     printf("%c", c);
                     i++;
@@ -29,7 +29,7 @@ int InputValidator::isInteger(const std::string& mensaje) {
                 i--;
                 printf("\b \b");
             }
-            // Ignora cualquier otro carácter
+            
         }
         *(fact + i) = '\0';
         printf("\n");
@@ -105,7 +105,7 @@ string InputValidator::isEmail() {
                 cout << endl;
                 break;
             } else {
-                cout << "\nFormato inválido. Ejemplo: nombre@dominio.com\n";
+                cout << "\nFormato invalido. Ejemplo: nombre@dominio.com\n";
                 input.clear();
                 atCount = 0;
                 dotCount = 0;
@@ -139,7 +139,7 @@ string InputValidator::isEmail() {
             cout << ch;
             dotCount = 1;
         }
-        // Todo lo demás se ignora
+        
     }
     return input;
 }
@@ -186,7 +186,6 @@ string InputValidator::isDNI() {
         int i = 0;
         char c;
         printf("Cedula: ");
-        // Captura carácter a carácter
         while (true) {
             c = _getch();
             if (c == 13) { // Enter

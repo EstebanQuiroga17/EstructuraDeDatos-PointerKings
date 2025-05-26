@@ -166,28 +166,28 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         case 0:
         { // Rango de fechas
             std::cout << "Fecha de inicio:\n";
-            int y1 = validator.isInteger("Año: ");
+            int y1 = validator.isInteger("Anio: ");
             int m1 = validator.isInteger("Mes (1-12): ");
-            int d1 = validator.isInteger("Día: ");
+            int d1 = validator.isInteger("Dia: ");
             while (!DateValidator::validateDay(d1, DateValidator::monthDays(m1, y1)))
             {
-                std::cout << "Fecha inválida. Intente de nuevo.\n";
-                y1 = validator.isInteger("Año: ");
+                std::cout << "Fecha invalida. Intente de nuevo.\n";
+                y1 = validator.isInteger("Anio: ");
                 m1 = validator.isInteger("Mes (1-12): ");
                 d1 = validator.isInteger("Día: ");
             }
             Date from(y1, m1, d1);
 
             std::cout << "Fecha de fin:\n";
-            int y2 = validator.isInteger("Año: ");
+            int y2 = validator.isInteger("Anio: ");
             int m2 = validator.isInteger("Mes (1-12): ");
-            int d2 = validator.isInteger("Día: ");
+            int d2 = validator.isInteger("Dia: ");
             while (!DateValidator::validateDay(d2, DateValidator::monthDays(m2, y2)))
             {
-                std::cout << "Fecha inválida. Intente de nuevo.\n";
-                y2 = validator.isInteger("Año: ");
+                std::cout << "Fecha invalida. Intente de nuevo.\n";
+                y2 = validator.isInteger("Anio: ");
                 m2 = validator.isInteger("Mes (1-12): ");
-                d2 = validator.isInteger("Día: ");
+                d2 = validator.isInteger("Dia: ");
             }
             Date to(y2, m2, d2);
 
@@ -221,11 +221,11 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         }
         case 2:
         { // Monto mínimo
-            float minAmount = validator.isFloat("Ingrese el monto mínimo: ");
+            float minAmount = validator.isFloat("Ingrese el monto minimo: ");
             while (minAmount < 0)
             {
                 std::cout << "El monto debe ser positivo.\n";
-                minAmount = validator.isFloat("Ingrese el monto mínimo: ");
+                minAmount = validator.isFloat("Ingrese el monto minimo: ");
             }
 
             std::vector<BankMovement *> results;

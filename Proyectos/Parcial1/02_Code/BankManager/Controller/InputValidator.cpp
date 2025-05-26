@@ -159,9 +159,42 @@ Date InputValidator::pedirFechaNacimiento() {
         int diasMes = DateValidator::monthDays(month, year);
         day = InputValidator::isInteger("Día de nacimiento: ");
         validatorDate = DateValidator::validateDay(day, diasMes);
+
+        // Validar fecha válida
         if (!validatorDate) {
             cout << "Fecha inválida. Intente de nuevo." << endl;
+            continue;
         }
+
+        // Obtener fecha actual
+        Date hoy = Date::localDate();
+
+        // Validar rango de años
+        int edad = hoy.getYear().getYear() - year;
+        if (edad > 100) {
+            cout << "La edad no puede ser mayor a 100 años. Intente de nuevo." << endl;
+            validatorDate = false;
+            continue;
+        }
+
+        // Validar que la fecha de nacimiento no sea futura
+        if (year > hoy.getYear().getYear() ||
+            (year == hoy.getYear().getYear() && month > hoy.getMonth()) ||
+            (year == hoy.getYear().getYear() && month == hoy.getMonth() && day > hoy.getDay())) {
+            cout << "No puede ingresar una fecha futura. Intente de nuevo." << endl;
+            validatorDate = false;
+            continue;
+        }
+
+        // Recalcula edad exacta
+        edad = hoy.getYear().getYear() - year;
+        if (hoy.getMonth() < month || (hoy.getMonth() == month && hoy.getDay() < day)) {
+            edad--;
+        }
+
+        cout << "Su edad es: " << edad << " años." << endl;
+
     } while (!validatorDate);
-    return Date(day, month, year); 
+
+    return Date(day, month, year);
 }

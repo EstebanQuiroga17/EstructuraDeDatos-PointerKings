@@ -262,12 +262,12 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         return;
     }
     do {
-        User user = currentUser->getValue();
-        List<BankMovement> movements = user.getBankMovements();
+        User& user = currentUser->getValue();
+        const List<BankMovement>& movements = user.getBankMovements();
         Node<BankMovement>* currentMov = movements.getHead();
         if (currentMov) {
             do {
-                BankMovement mov = currentMov->getValue();
+                BankMovement& mov = currentMov->getValue();
                 if (predicate(mov)) {
                     mov.printReceipt();
                     found = true;
@@ -283,12 +283,18 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
 }
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
 
 =======
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+>>>>>>> 663124097e8f1edbeb8793e2b567fe73d998a87d
+>>>>>>> 4513b061b8131cdea2e93c4d0d9fdb57adffbf1c
 void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
@@ -388,7 +394,11 @@ void UserManager::modificarUsuario() {
     }
 }
 
+<<<<<<< HEAD
+=======
 
+<<<<<<< HEAD
+=======
 =======
 <<<<<<< HEAD
 
@@ -398,6 +408,8 @@ void UserManager::modificarUsuario() {
 >>>>>>> 463115d4576e137158fb3b5d9786726e5841b466
 >>>>>>> 953dc572a61baf5677eaecca722e133698184d33
 >>>>>>> f0384f3ca1be5ce3b83d318010111a9cfbf72b00
+>>>>>>> 663124097e8f1edbeb8793e2b567fe73d998a87d
+>>>>>>> 4513b061b8131cdea2e93c4d0d9fdb57adffbf1c
 void UserManager::eliminarUsuario() {
     string cedula;
     system("cls");

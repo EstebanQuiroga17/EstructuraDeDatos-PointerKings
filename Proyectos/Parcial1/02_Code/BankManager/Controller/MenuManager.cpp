@@ -21,6 +21,7 @@ int MenuManager::mostrarMenuPrincipal() {
         "Consultar movimientos",
         "Crear backup",
         "Restaurar backup",
+        "Modificacion de usuarios",
         "Salir"
     });
     return menu.runMenuLoopReturnIndex();
@@ -109,11 +110,13 @@ int MenuManager::menuQueryMovements() {
     return seleccion;
 }
 
-void showMovementsQueryMenu(UserManager& manager) {
+void MenuManager::showMovementsQueryMenu(UserManager& manager) {
     InputValidator validator;
     bool back = false;
 
     while (!back) {
+        system("cls");
+        std::cout << "==== CONSULTA DE MOVIMIENTOS ====" << std::endl;
         int option = MenuManager::menuQueryMovements();
 
         switch (option) {
@@ -125,7 +128,7 @@ void showMovementsQueryMenu(UserManager& manager) {
                 std::cin >> y2 >> m2 >> d2;
                 Date from(y1, m1, d1), to(y2, m2, d2);
 
-                manager.queryMovements([&](BankMovement mov) {
+                manager.queryMovements([&]( BankMovement& mov) {
                     return mov.getDate() >= from && mov.getDate() <= to;
                 });
                 system("pause");
@@ -134,10 +137,11 @@ void showMovementsQueryMenu(UserManager& manager) {
             case 1: { // Nombre y DNI
                 std::string name, dni;
                 std::cout << "Ingrese el nombre: ";
-                std::cin >> name;
+                std::cin.ignore(); // Limpia el buffer
+                std::getline(std::cin, name);
                 std::cout << "Ingrese el DNI: ";
-                std::cin >> dni;
-                manager.queryMovements([&](BankMovement mov) {
+                std::getline(std::cin, dni);
+                manager.queryMovements([&]( BankMovement& mov) {
                     return mov.getUser()->getPersonalData().getName() == name &&
                            mov.getUser()->getPersonalData().getDNI() == dni;
                 });
@@ -148,7 +152,7 @@ void showMovementsQueryMenu(UserManager& manager) {
                 float minAmount;
                 std::cout << "Ingrese el monto mínimo: ";
                 std::cin >> minAmount;
-                manager.queryMovements([&](BankMovement mov) {
+                manager.queryMovements([&]( BankMovement& mov) {
                     return mov.getAmmount() >= minAmount;
                 });
                 system("pause");
@@ -160,3 +164,38 @@ void showMovementsQueryMenu(UserManager& manager) {
         }
     }
 }
+
+int MenuManager::menuModifyUser() {
+    CursorMenu menu;
+    menu.loadOptions({
+        "Modificar usuario",
+        "Eliminar usuario",
+        "Volver"
+    });
+    int seleccion = menu.runMenuLoopReturnIndex();
+    return seleccion;
+}
+
+void MenuManager::showModifyUserMenu(UserManager& manager) {
+    bool back = false;
+    while (!back) {
+        system("cls");
+        std::cout << "==== MODIFICAR / ELIMINAR USUARIO ====" << std::endl;
+        int option = MenuManager::menuModifyUser();
+
+        switch (option) {
+            case 0: // Modificar usuario
+                //manager.modificarUsuario();
+                system("pause");
+                break;
+            case 1: // Eliminar usuario
+                manager.eliminarUsuario();
+                system("pause");
+                break;
+            case 2: // Volver
+                back = true;
+                break;
+        }
+    }
+}
+

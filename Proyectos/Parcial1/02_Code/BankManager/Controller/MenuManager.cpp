@@ -1,6 +1,6 @@
 #include "../Model/MenuManager.h"
-#include "../Model/CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
-#include "../Model/InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
+#include "../Model/CursorMenu.h"  
+#include "../Model/InputValidator.h" 
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>

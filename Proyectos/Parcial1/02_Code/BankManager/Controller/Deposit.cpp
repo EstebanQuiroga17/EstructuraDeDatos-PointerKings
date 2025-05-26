@@ -38,7 +38,6 @@ void Deposit::printReceipt(){
     std::cout << "Monto: " << getAmmount() << std::endl;
     std::cout << "Usuario: " << getUser()->getPersonalData().getName() << std::endl;
     std::cout << "Cuenta Destino: " << getUser()->getPersonalData().getName() << std::endl;
-    std::cout << "Fecha: ";
     getDate().print();
     std::cout << "ID de Movimiento: " << getId() << std::endl;
     std::cout << "---------------------------------" << std::endl;

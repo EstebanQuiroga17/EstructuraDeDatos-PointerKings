@@ -9,7 +9,6 @@
 #include <cstdlib> // Para system("cls") y system("pause")
 using namespace std;
 
-
 int InputValidator::isInteger(const std::string& mensaje) {
     int value = 0;
     bool ok = false;
@@ -19,12 +18,18 @@ int InputValidator::isInteger(const std::string& mensaje) {
         int i = 0;
         char* fact = (char*)malloc(12 * sizeof(char)); 
         printf("%s", mensaje.c_str());
-        while ((c = getch()) != 13) {
+        while ((c = getch()) != 13) { // Enter para finalizar
             if (c >= '0' && c <= '9') {
-                *(fact + i) = c;
-                printf("%c", c);
-                i++;
+                if (i < 11) { // Evita desbordamiento (máximo 11 dígitos más '\0')
+                    *(fact + i) = c;
+                    printf("%c", c);
+                    i++;
+                }
+            } else if (c == 8 && i > 0) { // Backspace
+                i--;
+                printf("\b \b");
             }
+            // Ignora cualquier otro carácter
         }
         *(fact + i) = '\0';
         printf("\n");
@@ -32,7 +37,7 @@ int InputValidator::isInteger(const std::string& mensaje) {
             value = std::stoi(fact);
             ok = true;
         } catch (...) {
-            printf("value no valido. Intente de nuevo.\n");
+            printf("Invalido\n");
         }
         free(fact);
     } while (!ok);
@@ -74,22 +79,71 @@ float InputValidator::isFloat(const std::string& mensaje) {
     return value;
 }
 
-
 string InputValidator::isEmail() {
-    string email;
-    regex pattern(R"(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|net|org|gov|edu|edu\.ec|es|info|co|ec)$)");
-    bool valido = false;
-    do {
-        cout << "Email: ";
-        cin >> email;
-        if (!regex_match(email, pattern)) {
-            cout << "Email invalido. Intente de nuevo." << endl;
-        } else {
-            valido = true;
+    string input;
+    char ch;
+    int atCount = 0;
+    int dotCount = 0;
+    bool afterAt = false;
+
+    cout << "Email: ";
+    while (true) {
+        ch = _getch();
+
+        // ENTER: validar formato
+        if (ch == 13) {
+            // Validar: exactamente 1 arroba, 1 punto después del arroba, no al inicio/fin
+            size_t atPos = input.find('@');
+            size_t dotPos = input.find('.', (atPos != string::npos) ? atPos : 0);
+            bool formatoOK =
+                atCount == 1 &&
+                dotCount == 1 &&
+                atPos != string::npos && atPos > 0 &&
+                dotPos != string::npos && dotPos > atPos + 1 && dotPos < input.size() - 1;
+
+            if (formatoOK) {
+                cout << endl;
+                break;
+            } else {
+                cout << "\nFormato inválido. Ejemplo: nombre@dominio.com\n";
+                input.clear();
+                atCount = 0;
+                dotCount = 0;
+                afterAt = false;
+                cout << "Email: ";
+                continue;
+            }
         }
-    } while (!valido);
-    return email;
+        // BACKSPACE
+        else if (ch == 8 && !input.empty()) {
+            if (input.back() == '@') { atCount--; afterAt = false; dotCount = 0; }
+            if (input.back() == '.') { dotCount--; }
+            input.pop_back();
+            cout << "\b \b";
+        }
+        // Minúsculas
+        else if (ch >= 'a' && ch <= 'z') {
+            input += ch;
+            cout << ch;
+        }
+        // Un solo @, no al inicio
+        else if (ch == '@' && atCount == 0 && !input.empty() && input.find('@') == string::npos) {
+            input += ch;
+            cout << ch;
+            atCount = 1;
+            afterAt = true;
+        }
+        // Un solo punto, solo después de @, no inmediatamente después del @, no al final
+        else if (ch == '.' && atCount == 1 && dotCount == 0 && input.back() != '@' && input.find('@') != string::npos) {
+            input += ch;
+            cout << ch;
+            dotCount = 1;
+        }
+        // Todo lo demás se ignora
+    }
+    return input;
 }
+
 
 string InputValidator::isLetter(const string& mensaje) {
     string input;
@@ -131,19 +185,29 @@ string InputValidator::isDNI() {
     do {
         int i = 0;
         char c;
-        printf("Cédula (10 dígitos): ");
-        // Entrada caracter a caracter
-        while (i < 10) {
+        printf("Cedula: ");
+        // Captura carácter a carácter
+        while (true) {
             c = _getch();
-            if (c >= '0' && c <= '9') {
-                *(dni + i) = c;
-                printf("%c", c); // Mostrar
-                i++;
+            if (c == 13) { // Enter
+                if (i == 10) { // Solo permite finalizar si hay 10 dígitos
+                    break;
+                } else {
+                    // No hace nada si se presiona enter antes de los 10
+                    continue;
+                }
             } else if (c == 8 && i > 0) { // Backspace
                 i--;
                 printf("\b \b");
+            } else if (c >= '0' && c <= '9') {
+                if (i < 10) { // Solo permite hasta 10 dígitos
+                    *(dni + i) = c;
+                    printf("%c", c);
+                    i++;
+                }
+                // Si son 10, ignora números extra
             }
-            // Ignora todo lo que no sea número o backspace
+            // Ignora otros caracteres
         }
         *(dni + i) = '\0'; // Fin de cadena
         printf("\n");
@@ -151,7 +215,7 @@ string InputValidator::isDNI() {
         // Validación del formato con regex
         regex onlyNumbers("^[0-9]{10}$");
         if (!regex_match(dni, onlyNumbers)) {
-            cout << "La cedula debe ser numerica y de 10 digitos." << endl;
+            cout << "La cedula debe 10 numeros." << endl;
             continue;
         }
 
@@ -178,61 +242,15 @@ string InputValidator::isDNI() {
         if (validatorDigit == calculateDigit) {
             valida = true;
         } else {
-            cout << "Cédula invalida." << endl;
+            cout << "cedula invalida" << endl;
         }
 
     } while (!valida);
 
-    string result(dni);
+    string result(dni); // Convertir a std::string antes de liberar memoria
     free(dni);
     return result;
 }
-
-
-// string InputValidator::isDNI() {
-//     string dni;
-//     regex onlyNumbers("^[0-9]{10}$");
-//     bool valida = false;
-
-//     do {
-//         cout << "Cedula (10 digitos): ";
-//         cin >> dni;
-
-//         if (!regex_match(dni, onlyNumbers)) {
-//             cout << "La cedula debe ser numerica y de 10 digitos." << endl;
-//             continue;
-//         }
-
-//         int add = 0;
-//         int* weight = (int*)malloc(9 * sizeof(int));
-//         *(weight + 0) = 2; *(weight + 1) = 1; *(weight + 2) = 2; *(weight + 3) = 1; *(weight + 4) = 2;
-//         *(weight + 5) = 1; *(weight + 6) = 2; *(weight + 7) = 1; *(weight + 8) = 2;
-
-//         const char* ptr = dni.c_str();
-//         int validatorDigit = *(ptr + 9) - '0';
-
-//         for (int i = 0; i < 9; ++i) {
-//             int digit = *(ptr + i) - '0';             
-//             int mult = digit * (*(weight + i));
-//             if (mult >= 10) mult -= 9;
-//             add += mult;
-//         }
-
-//         int resto = add % 10;
-//         int calculateDigit = (resto == 0) ? 0 : 10 - resto;
-
-//         free(weight); 
-
-//         if (validatorDigit == calculateDigit) {
-//             valida = true;
-//         } else {
-//             cout << "Cedula ecuatoriana invalida (digito verificador incorrecto)." << endl;
-//         }
-
-//     } while (!valida);
-
-//     return dni;
-// }
 
 Date InputValidator::pedirFechaNacimiento() {
     int day, month, year;

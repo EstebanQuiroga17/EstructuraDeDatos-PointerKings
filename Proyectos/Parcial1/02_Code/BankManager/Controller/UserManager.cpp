@@ -455,5 +455,16 @@ void UserManager::debugMostrarTodosLosMovimientos() {
     } while (currentUser != usuarios.getHead());
 }
 
+void printMovementsResults(const std::vector<BankMovement*>& results) {
+    if (results.empty()) {
+        std::cout << "No movements found with that criteria.\n";
+        return;
+    }
+    std::cout << "\n=== Resultados de la consulta ===\n";
+    for (auto& mov : results) {
+        mov->printReceipt();
+        std::cout << "------------------------------\n";
+    }
+}
 
 

@@ -11,7 +11,7 @@ int main() {
     UserManager gestor;
     MenuManager menu;
     gestor.loadUsers(); 
-
+    gestor.loadUsers();
     bool salir = false;
     while (!salir) {
         system("cls");

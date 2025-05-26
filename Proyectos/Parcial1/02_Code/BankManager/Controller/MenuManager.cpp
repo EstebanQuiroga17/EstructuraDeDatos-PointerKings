@@ -123,14 +123,25 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
     }
 }
 
-void printMovementsResults(const std::vector<BankMovement *> &results);
+void MenuManager::printMovementsResults(const std::vector<BankMovement*>& results) {
+    if (results.empty()) {
+        std::cout << "No movements found with that criteria.\n";
+        return;
+    }
+    std::cout << "\n=== Resultados de la consulta ===\n";
+    for (auto& mov : results) {
+        mov->printReceipt();
+        std::cout << "------------------------------\n";
+    }
+}
+
 
 int MenuManager::menuQueryMovements()
 {
     CursorMenu menu;
     menu.loadOptions({"Consultar por rango de fechas",
                       "Consultar por nombre y DNI",
-                      "Consultar por monto minimo",
+                      "Consultar por monto mínimo",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;
@@ -200,7 +211,7 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         case 2:
         { // Monto mínimo
             float minAmount;
-            std::cout << "Ingrese el monto minimo: ";
+            std::cout << "Ingrese el monto mínimo: ";
             std::cin >> minAmount;
 
             std::vector<BankMovement *> results; // <<< corregido

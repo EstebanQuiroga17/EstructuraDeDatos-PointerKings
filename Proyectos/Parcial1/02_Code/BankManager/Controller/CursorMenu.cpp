@@ -49,7 +49,7 @@ int CursorMenu::runMenuLoopReturnIndex() {
 
     while (running) {
         system("cls");
-        cout << " Usa ↑ y ↓ para navegar. Enter para seleccionar.\n\n";
+        cout << " Usa flechas para navegar. Enter para seleccionar.\n\n";
         printMenu();
 
         char key = _getch();

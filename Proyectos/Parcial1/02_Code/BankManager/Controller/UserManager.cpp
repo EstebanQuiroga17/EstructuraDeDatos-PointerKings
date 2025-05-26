@@ -282,11 +282,6 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         std::cout << "No movements found with that criteria.\n";
 }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
 void UserManager::eliminarUsuario() {
     string cuenta;
     system("cls");
@@ -315,13 +310,6 @@ void UserManager::eliminarUsuario() {
     } while (actual != head);
 
     if (encontrado) {
-<<<<<<< HEAD
-        if (actual == usuarios.getHead() && actual->getNextNode() == actual) {
-            usuarios.setHead(nullptr);
-        } else {
-            if (actual == usuarios.getHead()) usuarios.setHead(actual->getNextNode());
-            anterior->setNextNode(actual->getNextNode());
-=======
         // Caso único: solo hay un nodo
         if (actual == actual->getNextNode()) {
             usuarios.setHead(nullptr);
@@ -332,7 +320,6 @@ void UserManager::eliminarUsuario() {
             prev->setNextNode(next);
             next->setPreviousNode(prev);
             if (actual == head) usuarios.setHead(next);
->>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
         }
         // Libera memoria si es necesario:
         // delete actual; // (solo si tu lista NO maneja destrucción automática)

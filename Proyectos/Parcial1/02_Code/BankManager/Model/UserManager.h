@@ -25,6 +25,7 @@ public:
     void withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha);
     void queryMovements( const std::function<bool( BankMovement&)>&);
     void eliminarUsuario();
+    void modificarUsuario();
 
 };
     

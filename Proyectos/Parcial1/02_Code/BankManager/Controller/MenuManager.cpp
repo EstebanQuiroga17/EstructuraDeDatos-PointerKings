@@ -44,6 +44,21 @@ char MenuManager::menuTipoCuenta() {
     }
 }
 
+int MenuManager::menuUpdateUser() {
+    CursorMenu menu;
+    menu.loadOptions({
+        "Modificar nombre y apellido",
+        "Modificar cédula",
+        "Modificar fecha de nacimiento",
+        "Modificar email",
+        "Modificar tipos de cuentas",
+        "Volver"
+    });
+    int seleccion = menu.runMenuLoopReturnIndex();
+    return seleccion;
+}
+
+
 int MenuManager::menuOperacionBancaria() {
     CursorMenu menu;
     menu.loadOptions({
@@ -185,7 +200,7 @@ void MenuManager::showModifyUserMenu(UserManager& manager) {
 
         switch (option) {
             case 0: // Modificar usuario
-                //manager.modificarUsuario();
+                manager.modificarUsuario();
                 system("pause");
                 break;
             case 1: // Eliminar usuario

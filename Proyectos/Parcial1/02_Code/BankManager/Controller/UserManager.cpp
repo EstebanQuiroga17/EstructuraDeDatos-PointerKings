@@ -282,14 +282,128 @@ void UserManager::queryMovements( const std::function<bool( BankMovement&)>& pre
         std::cout << "No movements found with that criteria.\n";
 }
 
+<<<<<<< HEAD
 
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+void UserManager::modificarUsuario() {
+    system("cls");
+    std::cout << "=== MODIFICAR USUARIO ===" << std::endl;
+    std::string cedula;
+    std::cout << "Ingrese la cédula del usuario a modificar: ";
+    std::cin >> cedula;
+
+    Node<User>* head = usuarios.getHead();
+    if (!head) {
+        std::cout << "No hay usuarios registrados.\n";
+        system("pause");
+        return;
+    }
+
+    Node<User>* actual = head;
+    User* usuarioPtr = nullptr;
+
+    // Buscar usuario por cédula
+    do {
+        User& usuario = actual->getValue();
+        if (usuario.getPersonalData().getDNI() == cedula) {
+            usuarioPtr = &usuario;
+            break;
+        }
+        actual = actual->getNextNode();
+    } while (actual != head);
+
+    if (!usuarioPtr) {
+        std::cout << "Usuario no encontrado.\n";
+        system("pause");
+        return;
+    }
+
+    // Menú de modificación
+    bool volver = false;
+    while (!volver) {
+        system("cls");
+        std::cout << "=== MODIFICANDO USUARIO: " << usuarioPtr->getPersonalData().getName()
+                  << " " << usuarioPtr->getPersonalData().getLastName() << " ===\n";
+        MenuManager menuMan;
+        int opcion = menuMan.menuUpdateUser();
+        InputValidator validator;
+        switch (opcion) {
+            case 0: { // Modificar nombre y apellido
+                std::string nombre = validator.isLetter("Nuevo nombre: ");
+                std::string apellido = validator.isLetter("Nuevo apellido: ");
+                usuarioPtr->getPersonalData().setName(nombre);
+                usuarioPtr->getPersonalData().setLastName(apellido);
+                std::cout << "Nombre y apellido modificados.\n";
+                break;
+            }
+            case 1: { // Modificar cédula
+                std::string nuevaCedula = validator.isDNI();
+                usuarioPtr->getPersonalData().setDNI(nuevaCedula);
+                std::cout << "Cédula modificada.\n";
+                break;
+            }
+            case 2: { // Modificar fecha de nacimiento
+                Date fechaNac = validator.pedirFechaNacimiento();
+                usuarioPtr->getPersonalData().setBirthDate(fechaNac);
+                std::cout << "Fecha de nacimiento modificada.\n";
+                break;
+            }
+            case 3: { // Modificar email
+                std::string email = validator.isEmail();
+                usuarioPtr->getPersonalData().setEmail(email);
+                std::cout << "Email modificado.\n";
+                break;
+            }
+            case 4: { // Modificar tipos de cuentas
+                char tipoCuenta = MenuManager::menuTipoCuenta();
+                bool abrirAhorros = false, abrirCorriente = false;
+                if (tipoCuenta == 's') abrirAhorros = true;
+                else if (tipoCuenta == 'c') abrirCorriente = true;
+                else if (tipoCuenta == 'a') abrirAhorros = abrirCorriente = true;
+                else break; // Cancelar
+
+                // Modificar cuentas según la selección
+                if (abrirAhorros) usuarioPtr->setSavingsAccount(crearCuentaAhorros());
+                if (abrirCorriente) usuarioPtr->setCheckingAccount(crearCuentaCorriente());
+                if (!abrirAhorros) usuarioPtr->setSavingsAccount(BankAccount()); // Elimina cuenta de ahorros
+                if (!abrirCorriente) usuarioPtr->setCheckingAccount(BankAccount()); // Elimina cuenta corriente
+
+                std::cout << "Tipo(s) de cuenta modificado(s).\n";
+                break;
+            }
+            case 5: // Volver
+                volver = true;
+                break;
+        }
+        saveUsers();
+        if (!volver) {
+            std::cout << "Presiona Enter para continuar...";
+            std::cin.ignore();
+            std::cin.get();
+        }
+    }
+}
+
+
+=======
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 7a73ddaa9b86ee4592bf0aaed3d1f4689bcd4888
+>>>>>>> 463115d4576e137158fb3b5d9786726e5841b466
+>>>>>>> 953dc572a61baf5677eaecca722e133698184d33
+>>>>>>> f0384f3ca1be5ce3b83d318010111a9cfbf72b00
 void UserManager::eliminarUsuario() {
-    string cuenta;
+    string cedula;
     system("cls");
     cout << "=== ELIMINAR USUARIO ===" << endl;
-    cout << "Ingrese el número de cuenta de ahorros o corriente del usuario a eliminar: ";
-    cin >> cuenta;
+    cout << "Ingrese la cédula del usuario a eliminar: ";
+    cin >> cedula;
 
     Node<User>* head = usuarios.getHead();
     if (!head) {
@@ -303,8 +417,7 @@ void UserManager::eliminarUsuario() {
 
     do {
         User& usuario = actual->getValue();
-        if (usuario.getSavingsAccount().getAccountNumber() == cuenta ||
-            usuario.getCheckingAccount().getAccountNumber() == cuenta) {
+        if (usuario.getPersonalData().getDNI() == cedula) {
             encontrado = true;
             break;
         }
@@ -323,8 +436,7 @@ void UserManager::eliminarUsuario() {
             next->setPreviousNode(prev);
             if (actual == head) usuarios.setHead(next);
         }
-        // Libera memoria si es necesario:
-        // delete actual; // (solo si tu lista NO maneja destrucción automática)
+        // delete actual; // Si tu lista no gestiona memoria sola
         saveUsers();
         cout << "\nUsuario eliminado exitosamente.\n";
     } else {

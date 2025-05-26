@@ -256,30 +256,30 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     saveUsers();
 }
 
-void UserManager::queryMovements(const std::function<bool(BankMovement&)>& predicate, std::vector< BankMovement*>& results
-) const
-{
-    Node<User>* currentUser = usuarios.getHead();
-    if (!currentUser) {
-        std::cout << "No hay usuarios registrados.\n";
-        return;
-    }
+// UserManager.cpp
+void UserManager::queryMovements(
+    const std::function<bool(BankMovement&)>& predicate,
+    std::vector<BankMovement*>& results
+) {
+    Node<User>* userNode = usuarios.getHead();
+    if (!userNode) return;
     do {
-        User& user = currentUser->getValue();
+        User& user = userNode->getValue();
         List<BankMovement>& movements = user.getBankMovements();
-        Node<BankMovement>* currentMov = movements.getHead();
-        if (currentMov) {
+        Node<BankMovement>* movNode = movements.getHead();
+        if (movNode) {
             do {
-                BankMovement& mov = currentMov->getValue();
+                BankMovement& mov = movNode->getValue();
                 if (predicate(mov)) {
                     results.push_back(&mov);
                 }
-                currentMov = currentMov->getNextNode();
-            } while (currentMov != movements.getHead());
+                movNode = movNode->getNextNode();
+            } while (movNode != movements.getHead());
         }
-        currentUser = currentUser->getNextNode();
-    } while (currentUser != usuarios.getHead());
+        userNode = userNode->getNextNode();
+    } while (userNode != usuarios.getHead());
 }
+
 
 void UserManager::modificarUsuario() {
     system("cls");
@@ -455,5 +455,100 @@ void UserManager::debugMostrarTodosLosMovimientos() {
     } while (currentUser != usuarios.getHead());
 }
 
+void printMovementsResults(const std::vector<BankMovement*>& results);
+
+void printMovementsResults(const std::vector<BankMovement*>& results) {
+    if (results.empty()) {
+        std::cout << "No movements found with that criteria.\n";
+        return;
+    }
+    std::cout << "\n=== Resultados de la consulta ===\n";
+    for (auto& mov : results) {
+        mov->printReceipt(); // SIN const
+        std::cout << "------------------------------\n";
+    }
+}
+
+void MenuManager::showMovementsQueryMenu(UserManager &manager)
+{
+    InputValidator validator;
+    bool back = false;
+
+    while (!back)
+    {
+        system("cls");
+        std::cout << "==== CONSULTA DE MOVIMIENTOS ====" << std::endl;
+        int option = MenuManager::menuQueryMovements();
+
+        switch (option)
+        {
+        case 0:
+        { // Rango de fechas
+            int y1, m1, d1, y2, m2, d2;
+            std::cout << "Fecha de inicio (AAAA MM DD): ";
+            std::cin >> y1 >> m1 >> d1;
+            std::cout << "Fecha de fin (AAAA MM DD): ";
+            std::cin >> y2 >> m2 >> d2;
+            Date from(y1, m1, d1), to(y2, m2, d2);
+
+            std::vector<BankMovement *> results;
+            manager.queryMovements([&](BankMovement &mov)
+                                   { return mov.getDate() >= from && mov.getDate() <= to; }, results);
+
+            printMovementsResults(results);
+
+            std::cout << "Presione Enter para continuar . . .";
+            std::cin.ignore();
+            std::cin.get();
+            break;
+        }
+
+        case 1:
+        { // Nombre y DNI
+            std::string name, dni;
+            std::cout << "Ingrese el nombre: ";
+            std::cin.ignore();
+            std::getline(std::cin, name);
+            std::cout << "Ingrese el DNI: ";
+            std::getline(std::cin, dni);
+
+            std::vector<BankMovement *> results;
+            manager.queryMovements([&](BankMovement &mov)
+                                   {
+                                       // Cambia el filtro según tus datos
+                                       // return mov.getUserDNI() == dni;
+                                       return true;
+                                   }, results);
+
+            printMovementsResults(results);
+
+            std::cout << "Presione Enter para continuar . . .";
+            std::cin.ignore();
+            std::cin.get();
+            break;
+        }
+        case 2:
+        { // Monto mínimo
+            float minAmount;
+            std::cout << "Ingrese el monto mínimo: ";
+            std::cin >> minAmount;
+
+            std::vector<BankMovement *> results;
+            manager.queryMovements([&](BankMovement &mov)
+                                   { return mov.getAmmount() >= minAmount; }, results);
+
+            printMovementsResults(results);
+
+            std::cout << "Presione Enter para continuar . . .";
+            std::cin.ignore();
+            std::cin.get();
+            break;
+        }
+        case 3: // Volver
+            back = true;
+            break;
+        }
+    }
+}
 
 

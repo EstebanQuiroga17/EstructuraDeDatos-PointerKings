@@ -33,7 +33,7 @@ bool BackupManager::restoreBackup(const std::string& backup, const std::string& 
 
     std::ifstream checkBackup(backup, std::ios::binary | std::ios::ate);
     std::streamsize backupSize = checkBackup.tellg();
-    std::cout << "[DEBUG] Tamaño del backup tras descifrar: " << backupSize << " bytes\n";
+    std::cout << "[DEBUG] Tamanio del backup tras descifrar: " << backupSize << " bytes\n";
     checkBackup.close();
 
     std::cout << "[DEBUG] Copiando backup sobre original...\n";
@@ -46,7 +46,7 @@ bool BackupManager::restoreBackup(const std::string& backup, const std::string& 
 
     std::ifstream checkOriginal(original, std::ios::binary | std::ios::ate);
     std::streamsize origSize = checkOriginal.tellg();
-    std::cout << "[DEBUG] Tamaño del archivo original tras copiar: " << origSize << " bytes\n";
+    std::cout << "[DEBUG] Tamanio del archivo original tras copiar: " << origSize << " bytes\n";
     checkOriginal.close();
 
     cesar.encryptFile(backup);

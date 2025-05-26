@@ -22,7 +22,7 @@ public:
     PersonalData capturarDatosPersonales();
     void deposit(User* usuario, float monto, char tipoCuenta, const Date& fecha);
     void withdraw(User* usuario, float monto, char tipoCuenta, const Date& fecha);
-    void queryMovements( const std::function<bool( BankMovement&)>&, std::vector<BankMovement*>& results) const;
+    void queryMovements(const std::function<bool(BankMovement&)>& predicate, std::vector<BankMovement*>& results);
     void eliminarUsuario();
     void modificarUsuario();
     void debugMostrarTodosLosMovimientos();

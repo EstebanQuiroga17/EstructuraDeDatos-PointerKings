@@ -281,7 +281,10 @@ void UserManager::queryMovements(const std::function<bool(BankMovement&)>& predi
     } while (currentUser != usuarios.getHead());
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> e0511885be6cbb3719d56c7914cb76e6b6feecbb
 void UserManager::modificarUsuario() {
     system("cls");
     std::cout << "=== MODIFICAR USUARIO ===" << std::endl;

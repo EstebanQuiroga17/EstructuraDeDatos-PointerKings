@@ -15,7 +15,7 @@ public:
     CursorMenu();
     void loadOptions(const std::vector<std::string>& opciones);
     void printMenu();
-    int runMenuLoopReturnIndex(); // <-- AGRÉGALO AQUÍ
+    int runMenuLoopReturnIndex(); 
 };
 
 #endif

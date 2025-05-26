@@ -10,12 +10,10 @@ private:
     List<User> usuarios;
 public:
     UserManager();
-    void crearUsuario();           // Pide datos y crea un usuario nuevo
-    User* login(char &tipoCuenta);                 // Pide número de cuenta y retorna puntero al usuario si existe
-    void mostrarUsuarios();        // Para debug (opcional)
-    // Puedes agregar métodos como eliminar, modificar, etc.
-    List<User>& getUsuarios();     // Acceso a la lista si la necesitas afuera
-    void saveUsers();
+    void crearUsuario();           
+    User* login(char &tipoCuenta);                 
+    void mostrarUsuarios();       
+    List<User>& getUsuarios();     
     void loadUsers();
     BankAccount crearCuentaAhorros();
     BankAccount crearCuentaCorriente();

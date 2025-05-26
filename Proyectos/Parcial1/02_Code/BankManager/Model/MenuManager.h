@@ -12,7 +12,7 @@ public:
     void menuOperations(UserManager& gestor, User* usuario, char tipoCuenta);
     int menuOperacionBancaria();
     static int menuQueryMovements();
-    static void showMovementsQueryMenu(UserManager& manager);
+    static void showMovementsQueryMenu(UserManager&);
     static int menuModifyUser();
     static void showModifyUserMenu(UserManager& manager);
     int menuUpdateUser();

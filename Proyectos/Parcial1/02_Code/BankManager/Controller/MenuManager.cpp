@@ -1,6 +1,6 @@
 #include "../Model/MenuManager.h"
-#include "../Model/CursorMenu.h"     // Cambia según dónde esté tu clase de menú con cursores
-#include "../Model/InputValidator.h" // Cambia según dónde esté tu clase de menú con cursores
+#include "../Model/CursorMenu.h"  
+#include "../Model/InputValidator.h" 
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
@@ -50,7 +50,7 @@ int MenuManager::menuUpdateUser()
 {
     CursorMenu menu;
     menu.loadOptions({"Modificar nombre y apellido",
-                      "Modificar cédula",
+                      "Modificar cedula",
                       "Modificar fecha de nacimiento",
                       "Modificar email",
                       "Modificar tipos de cuentas",
@@ -62,7 +62,7 @@ int MenuManager::menuUpdateUser()
 int MenuManager::menuOperacionBancaria()
 {
     CursorMenu menu;
-    menu.loadOptions({"Depósito",
+    menu.loadOptions({"Deposito",
                       "Retiro",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();

@@ -15,6 +15,7 @@
                 "Controller/BankAccount.cpp",
                 "Controller/BackupManager.cpp",
                 "Controller/BankMovement.cpp",
+                "Controller/CesarCifration.cpp",
                 "Controller/Clock.cpp",
                 "Controller/Date.cpp",
                 "Controller/DateValidator.cpp",

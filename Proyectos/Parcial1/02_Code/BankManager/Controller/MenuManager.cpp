@@ -1,9 +1,10 @@
 #include "../Model/MenuManager.h"
-#include "../Model/CursorMenu.h"  
-#include "../Model/InputValidator.h" 
+#include "../Model/CursorMenu.h"
+#include "../Model/InputValidator.h"
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
+#include <DateValidator.h>
 
 using std::cin;
 using std::cout;
@@ -85,7 +86,7 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
         switch (op)
         {
         case 0:
-        { 
+        {
             float monto;
             do
             {
@@ -123,18 +124,20 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
     }
 }
 
-void MenuManager::printMovementsResults(const std::vector<BankMovement*>& results) {
-    if (results.empty()) {
+void MenuManager::printMovementsResults(const std::vector<BankMovement *> &results)
+{
+    if (results.empty())
+    {
         std::cout << "No movements found with that criteria.\n";
         return;
     }
     std::cout << "\n=== Resultados de la consulta ===\n";
-    for (auto& mov : results) {
+    for (auto &mov : results)
+    {
         mov->printReceipt();
         std::cout << "------------------------------\n";
     }
 }
-
 
 int MenuManager::menuQueryMovements()
 {
@@ -162,14 +165,33 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
         {
         case 0:
         { // Rango de fechas
-            int y1, m1, d1, y2, m2, d2;
-            std::cout << "Fecha de inicio (AAAA MM DD): ";
-            std::cin >> y1 >> m1 >> d1;
-            std::cout << "Fecha de fin (AAAA MM DD): ";
-            std::cin >> y2 >> m2 >> d2;
-            Date from(y1, m1, d1), to(y2, m2, d2);
+            std::cout << "Fecha de inicio:\n";
+            int y1 = validator.isInteger("Año: ");
+            int m1 = validator.isInteger("Mes (1-12): ");
+            int d1 = validator.isInteger("Día: ");
+            while (!DateValidator::validateDay(d1, DateValidator::monthDays(m1, y1)))
+            {
+                std::cout << "Fecha inválida. Intente de nuevo.\n";
+                y1 = validator.isInteger("Año: ");
+                m1 = validator.isInteger("Mes (1-12): ");
+                d1 = validator.isInteger("Día: ");
+            }
+            Date from(y1, m1, d1);
 
-            std::vector<BankMovement *> results; // <<< corregido
+            std::cout << "Fecha de fin:\n";
+            int y2 = validator.isInteger("Año: ");
+            int m2 = validator.isInteger("Mes (1-12): ");
+            int d2 = validator.isInteger("Día: ");
+            while (!DateValidator::validateDay(d2, DateValidator::monthDays(m2, y2)))
+            {
+                std::cout << "Fecha inválida. Intente de nuevo.\n";
+                y2 = validator.isInteger("Año: ");
+                m2 = validator.isInteger("Mes (1-12): ");
+                d2 = validator.isInteger("Día: ");
+            }
+            Date to(y2, m2, d2);
+
+            std::vector<BankMovement *> results;
             manager.queryMovements([&](BankMovement &mov)
                                    { return mov.getDate() >= from && mov.getDate() <= to; }, results);
 
@@ -180,25 +202,15 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
             std::cin.get();
             break;
         }
-
         case 1:
         { // Nombre y DNI
-            std::string name, dni;
-            std::cout << "Ingrese el nombre: ";
-            std::cin.ignore(); // Limpia el buffer
-            std::getline(std::cin, name);
-            std::cout << "Ingrese el DNI: ";
-            std::getline(std::cin, dni);
+            std::string name = validator.isLetter("Ingrese el nombre: ");
+            std::string dni = validator.isDNI();
 
-            std::vector<BankMovement *> results; // <<< corregido
+            std::vector<BankMovement *> results;
             manager.queryMovements([&](BankMovement &mov)
-                                   {
-                                       // Aquí tu filtro real:
-                                       // return mov.getUserDNI() == dni; // ejemplo
-                                       std::cout << "[DEBUG] Movimiento encontrado: DNI=" << mov.getUserDNI() << std::endl;
-                                       return true;
-                                   },
-                                   results);
+                                   { return (mov.getUser()->getPersonalData().getName() == name &&
+                                             mov.getUser()->getPersonalData().getDNI() == dni); }, results);
 
             printMovementsResults(results);
 
@@ -207,14 +219,16 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
             std::cin.get();
             break;
         }
-
         case 2:
-        { 
-            float minAmount;
-            std::cout << "Ingrese el monto mínimo: ";
-            std::cin >> minAmount;
+        { // Monto mínimo
+            float minAmount = validator.isFloat("Ingrese el monto mínimo: ");
+            while (minAmount < 0)
+            {
+                std::cout << "El monto debe ser positivo.\n";
+                minAmount = validator.isFloat("Ingrese el monto mínimo: ");
+            }
 
-            std::vector<BankMovement *> results; // <<< corregido
+            std::vector<BankMovement *> results;
             manager.queryMovements([&](BankMovement &mov)
                                    { return mov.getAmmount() >= minAmount; }, results);
 
@@ -225,7 +239,6 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
             std::cin.get();
             break;
         }
-
         case 3: // Volver
             back = true;
             break;

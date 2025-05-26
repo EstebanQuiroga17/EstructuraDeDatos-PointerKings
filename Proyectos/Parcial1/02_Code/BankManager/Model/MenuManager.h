@@ -15,4 +15,5 @@ public:
     static void showMovementsQueryMenu(UserManager& manager);
     static int menuModifyUser();
     static void showModifyUserMenu(UserManager& manager);
+    int menuUpdateUser();
 };

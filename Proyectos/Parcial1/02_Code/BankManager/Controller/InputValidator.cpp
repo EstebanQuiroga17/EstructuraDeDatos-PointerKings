@@ -6,26 +6,25 @@
 #include <conio.h>
 #include <iostream>
 #include <string>
-#include <cstdlib> // Para system("cls") y system("pause")
+#include <cstdlib> 
 using namespace std;
 
 int InputValidator::isInteger(const std::string& mensaje) {
     int value = 0;
     bool ok = false;
     do {
-        value = 0;
         char c;
         int i = 0;
         char* fact = (char*)malloc(12 * sizeof(char)); 
         printf("%s", mensaje.c_str());
-        while ((c = getch()) != 13) { // Enter para finalizar
+        while ((c = getch()) != 13) { 
             if (c >= '0' && c <= '9') {
                 if (i < 11) { 
                     *(fact + i) = c;
                     printf("%c", c);
                     i++;
                 }
-            } else if (c == 8 && i > 0) { // Backspace
+            } else if (c == 8 && i > 0) {
                 i--;
                 printf("\b \b");
             }
@@ -48,7 +47,6 @@ float InputValidator::isFloat(const std::string& mensaje) {
     float value = 0.0f;
     bool ok = false;
     do {
-        value = 0.0f;
         char c;
         bool dot = false;
         int i = 0;
@@ -90,9 +88,7 @@ string InputValidator::isEmail() {
     while (true) {
         ch = _getch();
 
-        // ENTER: validar formato
         if (ch == 13) {
-            // Validar: exactamente 1 arroba, 1 punto después del arroba, no al inicio/fin
             size_t atPos = input.find('@');
             size_t dotPos = input.find('.', (atPos != string::npos) ? atPos : 0);
             bool formatoOK =
@@ -114,26 +110,22 @@ string InputValidator::isEmail() {
                 continue;
             }
         }
-        // BACKSPACE
         else if (ch == 8 && !input.empty()) {
             if (input.back() == '@') { atCount--; afterAt = false; dotCount = 0; }
             if (input.back() == '.') { dotCount--; }
             input.pop_back();
             cout << "\b \b";
         }
-        // Minúsculas
         else if (ch >= 'a' && ch <= 'z') {
             input += ch;
             cout << ch;
         }
-        // Un solo @, no al inicio
         else if (ch == '@' && atCount == 0 && !input.empty() && input.find('@') == string::npos) {
             input += ch;
             cout << ch;
             atCount = 1;
             afterAt = true;
         }
-        // Un solo punto, solo después de @, no inmediatamente después del @, no al final
         else if (ch == '.' && atCount == 1 && dotCount == 0 && input.back() != '@' && input.find('@') != string::npos) {
             input += ch;
             cout << ch;
@@ -179,7 +171,7 @@ string InputValidator::isLetter(const string& mensaje) {
 }
 
 string InputValidator::isDNI() {
-    char* dni = (char*)malloc(11 * sizeof(char)); // 10 dígitos + '\0'
+    char* dni = (char*)malloc(11 * sizeof(char));
     bool valida = false;
 
     do {
@@ -188,37 +180,33 @@ string InputValidator::isDNI() {
         printf("Cedula: ");
         while (true) {
             c = _getch();
-            if (c == 13) { // Enter
-                if (i == 10) { // Solo permite finalizar si hay 10 dígitos
+            if (c == 13) { 
+                if (i == 10) { 
                     break;
                 } else {
-                    // No hace nada si se presiona enter antes de los 10
                     continue;
                 }
-            } else if (c == 8 && i > 0) { // Backspace
+            } else if (c == 8 && i > 0) { 
                 i--;
                 printf("\b \b");
             } else if (c >= '0' && c <= '9') {
-                if (i < 10) { // Solo permite hasta 10 dígitos
+                if (i < 10) { 
                     *(dni + i) = c;
                     printf("%c", c);
                     i++;
                 }
-                // Si son 10, ignora números extra
             }
-            // Ignora otros caracteres
+
         }
-        *(dni + i) = '\0'; // Fin de cadena
+        *(dni + i) = '\0';
         printf("\n");
 
-        // Validación del formato con regex
         regex onlyNumbers("^[0-9]{10}$");
         if (!regex_match(dni, onlyNumbers)) {
             cout << "La cedula debe 10 numeros." << endl;
             continue;
         }
 
-        // Validación de dígito verificador (como tu función original)
         int add = 0;
         int* weight = (int*)malloc(9 * sizeof(int));
         *(weight + 0) = 2; *(weight + 1) = 1; *(weight + 2) = 2; *(weight + 3) = 1; *(weight + 4) = 2;
@@ -246,7 +234,7 @@ string InputValidator::isDNI() {
 
     } while (!valida);
 
-    string result(dni); // Convertir a std::string antes de liberar memoria
+    string result(dni);
     free(dni);
     return result;
 }
@@ -281,8 +269,6 @@ Date InputValidator::pedirFechaNacimiento() {
             validatorDate = false;
             continue;
         }
-
-        // Recalcula edad exacta
         edad = hoy.getYear().getYear() - year;
         if (hoy.getMonth() < month || (hoy.getMonth() == month && hoy.getDay() < day)) {
             edad--;

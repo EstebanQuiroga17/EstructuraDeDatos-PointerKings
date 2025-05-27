@@ -12,8 +12,8 @@ public:
    void saveBinary(std::ofstream& out) const;
    bool loadBinary(std::ifstream& in);
    bool operator==(const BankAccount& account1) const;
-   static int getLastId();
-   static void setLastId(int newLastId);
+   static std::string getLastId();
+   static void setLastId(std::string newLastId);
    BankAccount(); 
    BankAccount( std::string type);
    static std::string generateAccountNumber();
@@ -21,7 +21,7 @@ public:
 
 protected:
 private:
-   static int lastId;
+   static std::string lastId;
    float balance;
    std::string accountNumber;
    std::string type;

@@ -21,6 +21,7 @@ int MenuManager::mostrarMenuPrincipal()
                       "Consultar movimientos",
                       "Crear backup",
                       "Restaurar backup",
+                      "Generar archivo descifrado para demostracion",
                       "Modificacion de usuarios",
                       "Salir"});
     return menu.runMenuLoopReturnIndex();

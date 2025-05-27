@@ -1,0 +1,7 @@
+- opción que diga transferir 
+- el users.dat no se carga correctamente
+- despues de un deposito/retiro se debe mostrar el saldo actual
+- las consultas deben devolver si es un retiro o deposito
+- estandarizar el numero de transaccion (listo)
+- el monto minimo para un mov bancario es 0.01 (listo)
+- validar que no existan cuentas repetidas con la cedula

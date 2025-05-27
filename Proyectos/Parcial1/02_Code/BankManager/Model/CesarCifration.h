@@ -9,6 +9,7 @@ public:
 
     bool encryptFile(const std::string& path);
     bool decryptFile(const std::string& path);
+    bool decryptFileTo(const std::string& encryptedPath, const std::string& decryptedPath);
 
 private:
     int key;

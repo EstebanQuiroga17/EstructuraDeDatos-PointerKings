@@ -55,6 +55,27 @@ static bool loadInt(int& value, const std::string& ruta) {
     return true;
 }
 
+static bool saveString(const std::string& value, const std::string& ruta) {
+    std::ofstream out(ruta, std::ios::binary | std::ios::trunc);
+    if (!out) return false;
+
+    size_t len = value.size();
+    out.write(reinterpret_cast<const char*>(&len), sizeof(len)); // Guardar tamaño
+    out.write(value.data(), len);
+    return true;
+}
+
+static bool loadString(std::string& value, const std::string& ruta) {
+    std::ifstream in(ruta, std::ios::binary);
+    if (!in) return false;
+
+    size_t lenght = 0;
+    in.read(reinterpret_cast<char*>(&lenght), sizeof(lenght)); // Leer tamaño
+    value.resize(lenght);
+    in.read(&value[0], lenght);
+    return true;
+}
+
     
 protected:
 private:

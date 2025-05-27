@@ -4,7 +4,7 @@
 #include <cstdlib>
 using namespace std;
 
-int BankAccount::lastId = 0;
+string BankAccount::lastId = "000001";
 
 float BankAccount::getBalance(void)
 {
@@ -37,13 +37,17 @@ void BankAccount::setType(std::string newType)
 }
 
 std::string BankAccount::generateAccountNumber() {
-   if(!BinaryCifration::loadInt(lastId, "BankAccountIdConfig.dat"))
+   if(!BinaryCifration::loadString(lastId, "BankAccountIdConfig.dat"))
       lastId=1;
    string initialNumbers = "131415";
-   string lastIdString = to_string(lastId);
-   string id = initialNumbers + lastIdString;
-   lastId++;
-   BinaryCifration::saveInt(lastId, "BankAccountIdConfig.dat");
+   string id = initialNumbers + lastId;
+   int lastIdInt = stoi(lastId);
+   lastIdInt++;
+   lastId = to_string(lastIdInt);
+   while(lastId.length()<6){
+      lastId = "0" + lastId;
+   }
+   BinaryCifration::saveString(lastId, "BankAccountIdConfig.dat");
    return id;
 }
 
@@ -109,10 +113,10 @@ bool BankAccount::operator==(const BankAccount& account1) const{
     }
 }
 
-int BankAccount::getLastId(){
+string BankAccount::getLastId(){
     return lastId;
 }
 
-void BankAccount::setLastId(int newLastId){
+void BankAccount::setLastId(string newLastId){
     lastId = newLastId;
 }

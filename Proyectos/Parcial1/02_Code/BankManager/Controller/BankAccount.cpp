@@ -1,7 +1,10 @@
 #include <fstream>
 #include "../Model/BankAccount.h"
+#include "../Model/BinaryCifration.h"
 #include <cstdlib>
 using namespace std;
+
+int BankAccount::lastId = 0;
 
 float BankAccount::getBalance(void)
 {
@@ -33,19 +36,15 @@ void BankAccount::setType(std::string newType)
    type = newType;
 }
 
-std::string BankAccount::generateAccountNumber(int digits, std::string number) {
-    if (digits == 0) {
-        if (!number.empty() && number[0] == '0') {
-            return generateAccountNumber(10, "");
-        }
-        return number;
-    }
-    if (number.empty()) {
-        number += '1' + rand() % 9;  
-    } else {
-        number += '0' + rand() % 10; 
-    }
-    return generateAccountNumber(digits - 1, number);
+std::string BankAccount::generateAccountNumber() {
+   if(!BinaryCifration::loadInt(lastId, "BankAccountIdConfig.dat"))
+      lastId=1;
+   string initialNumbers = "131415";
+   string lastIdString = to_string(lastId);
+   string id = initialNumbers + lastIdString;
+   lastId++;
+   BinaryCifration::saveInt(lastId, "BankAccountIdConfig.dat");
+   return id;
 }
 
 
@@ -108,4 +107,12 @@ bool BankAccount::operator==(const BankAccount& account1) const{
     }else{
         return false;
     }
+}
+
+int BankAccount::getLastId(){
+    return lastId;
+}
+
+void BankAccount::setLastId(int newLastId){
+    lastId = newLastId;
 }

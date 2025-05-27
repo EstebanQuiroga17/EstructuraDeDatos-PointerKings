@@ -69,7 +69,7 @@ int main() {
                 break;
             }
             case 7:
-                // NUEVO SUBMENÚ MODIFICAR/ELIMINAR USUARIO
+                gestor.loadUsers(); 
                 menu.showModifyUserMenu(gestor);
                 break;
             case 8:

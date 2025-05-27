@@ -14,7 +14,7 @@ using std::vector;
 int MenuManager::mostrarMenuPrincipal()
 {
     CursorMenu menu;
-    menu.loadOptions({"Crear usuario",
+    menu.loadOptions({"Crear cuenta",
                       "Login",
                       "Menu de ayuda",
                       "Mostrar usuarios",

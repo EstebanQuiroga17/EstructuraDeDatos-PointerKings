@@ -49,25 +49,52 @@ void UserManager::crearUsuario() {
     guardarUsuario(datos, abrirAhorros, abrirCorriente);
 }
 
-
 PersonalData UserManager::capturarDatosPersonales() {
     InputValidator validator;
+    string cedula;
+    cout << "Ingrese su número de cédula (o 0 para cancelar): ";
+    cin >> cedula;
 
+    if (cedula == "0") {
+        cout << "Captura de datos cancelada.\n";
+        system("pause");
+        return PersonalData(); // Retorna datos vacíos
+    }
+
+    Node<User>* actual = usuarios.getHead();
+    if (actual) {
+        do {
+            User& usuario = actual->getValue();
+            if (usuario.getPersonalData().getDNI() == cedula) {
+                cout << "Usuario encontrado: " << usuario.getPersonalData().getName() << " "
+                     << usuario.getPersonalData().getLastName() << "\n";
+                cout << "No es necesario capturar los datos nuevamente.\n";
+                system("pause");
+                return usuario.getPersonalData();  // Retorna los datos encontrados
+            }
+            actual = actual->getNextNode();
+        } while (actual != usuarios.getHead());
+    }
+
+    // Si no se encontró la cédula, capturar nuevos datos
+    cout << "Usuario no encontrado. Por favor, ingrese sus datos personales.\n";
+
+    // Validación y captura de nuevos datos
     string nombre   = validator.isLetter("Nombre: ");
     string apellido = validator.isLetter("Apellido: ");
-    string cedula   = validator.isDNI();
     Date fechaNac   = validator.pedirFechaNacimiento();
     string email    = validator.isEmail();
 
     PersonalData datos;
     datos.setName(nombre);
     datos.setLastName(apellido);
-    datos.setDNI(cedula);
+    datos.setDNI(cedula); // Usa la cédula ingresada inicialmente
     datos.setBirthDate(fechaNac);
     datos.setEmail(email);
 
     return datos;
 }
+
 
 void UserManager::guardarUsuario(const PersonalData& datos, bool abrirAhorros, bool abrirCorriente) {
     BankAccount cuentaAhorros, cuentaCorriente;

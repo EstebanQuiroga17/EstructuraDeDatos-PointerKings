@@ -8,6 +8,7 @@ class MenuManager {
 public:
     static int mostrarMenuPrincipal();
     static char menuTipoCuenta();
+    static char menuAgregarCuenta();
     static void mostrarAyuda();
     void menuOperations(UserManager& gestor, User* usuario, char tipoCuenta);
     int menuOperacionBancaria();

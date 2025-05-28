@@ -23,24 +23,44 @@ UserManager::UserManager() {
 
 void UserManager::crearUsuario() {
     system("cls");
+    char tipoCuenta;
+    InputValidator validator;
     std::cout << "=== Registro de nuevo usuario ===" << std::endl;
 
     PersonalData datos = capturarDatosPersonales();
+    User* usuarioExistente = findUserByDNI(datos.getDNI());
 
     if (datos.getName().empty() || datos.getLastName().empty() ||
         datos.getDNI().empty() || datos.getEmail().empty()) {
-        std::cout << "\nError: Todos los campos personales son obligatorios.\n";
+        std::cout << "\nVolveras al menu principal.\n";
         system("pause");
         return;
     }
 
-    char tipoCuenta = MenuManager::menuTipoCuenta();
+    if(usuarioExistente == nullptr){
+        tipoCuenta = MenuManager::menuTipoCuenta();
+    }else{
+        tipoCuenta = MenuManager::menuAgregarCuenta();
+    }
+    
 
     bool abrirAhorros = false, abrirCorriente = false;
-    if (tipoCuenta == 's') abrirAhorros = true;
-    else if (tipoCuenta == 'c') abrirCorriente = true;
-    else if (tipoCuenta == 'a') abrirAhorros = abrirCorriente = true;
-    else {
+
+    if (usuarioExistente == nullptr) {
+        if(tipoCuenta == 's') {
+            abrirAhorros = true;
+        } else if (tipoCuenta == 'c') {
+            abrirCorriente = true;
+        } else if (tipoCuenta == 'a') {
+            abrirAhorros = true;
+            abrirCorriente = true;
+        }
+    }else{
+        addBankAccount(*usuarioExistente, tipoCuenta);
+        return;
+    }
+    
+    if (tipoCuenta == 'x') {
         std::cout << "\nRegistro cancelado por el usuario.\n";
         system("pause");
         return;
@@ -52,13 +72,12 @@ void UserManager::crearUsuario() {
 PersonalData UserManager::capturarDatosPersonales() {
     InputValidator validator;
     string cedula;
-    cout << "Ingrese su número de cédula (o 0 para cancelar): ";
-    cin >> cedula;
+    cedula = validator.isDNI();
 
     if (cedula == "0") {
         cout << "Captura de datos cancelada.\n";
         system("pause");
-        return PersonalData(); // Retorna datos vacíos
+        return PersonalData();
     }
 
     Node<User>* actual = usuarios.getHead();
@@ -70,16 +89,14 @@ PersonalData UserManager::capturarDatosPersonales() {
                      << usuario.getPersonalData().getLastName() << "\n";
                 cout << "No es necesario capturar los datos nuevamente.\n";
                 system("pause");
-                return usuario.getPersonalData();  // Retorna los datos encontrados
+                return usuario.getPersonalData();  
             }
             actual = actual->getNextNode();
         } while (actual != usuarios.getHead());
     }
 
-    // Si no se encontró la cédula, capturar nuevos datos
     cout << "Usuario no encontrado. Por favor, ingrese sus datos personales.\n";
 
-    // Validación y captura de nuevos datos
     string nombre   = validator.isLetter("Nombre: ");
     string apellido = validator.isLetter("Apellido: ");
     Date fechaNac   = validator.pedirFechaNacimiento();
@@ -88,13 +105,27 @@ PersonalData UserManager::capturarDatosPersonales() {
     PersonalData datos;
     datos.setName(nombre);
     datos.setLastName(apellido);
-    datos.setDNI(cedula); // Usa la cédula ingresada inicialmente
+    datos.setDNI(cedula); 
     datos.setBirthDate(fechaNac);
     datos.setEmail(email);
 
     return datos;
 }
 
+User* UserManager::findUserByDNI(const std::string& dni){
+    Node<User>* actual = usuarios.getHead();
+    if (!actual) return nullptr;
+
+    do {
+        User& usuario = actual->getValue();
+        if (usuario.getPersonalData().getDNI() == dni) {
+            return &usuario;
+        }
+        actual = actual->getNextNode();
+    } while (actual != usuarios.getHead());
+
+    return nullptr;
+}
 
 void UserManager::guardarUsuario(const PersonalData& datos, bool abrirAhorros, bool abrirCorriente) {
     BankAccount cuentaAhorros, cuentaCorriente;
@@ -490,4 +521,24 @@ void printMovementsResults(const std::vector<BankMovement*>& results) {
     }
 }
 
-
+void UserManager::addBankAccount(User& user, char bankAccount){
+    if (bankAccount == 's') {
+        if (user.getSavingsAccount().getAccountNumber().empty()) {
+            user.setSavingsAccount(crearCuentaAhorros());
+            std::cout << "Cuenta de ahorros creada exitosamente.\n";
+        } else {
+            std::cout << "Ya existe una cuenta de ahorros para este usuario.\n";
+            system("pause");
+        }
+    } else if (bankAccount == 'c') {
+        if (user.getCheckingAccount().getAccountNumber().empty()) {
+            user.setCheckingAccount(crearCuentaCorriente());
+            std::cout << "Cuenta corriente creada exitosamente.\n";
+        } else {
+            std::cout << "Ya existe una cuenta corriente para este usuario.\n";
+            
+        }
+    } else {
+        std::cout << "Tipo de cuenta no reconocido.\n";
+    }
+}

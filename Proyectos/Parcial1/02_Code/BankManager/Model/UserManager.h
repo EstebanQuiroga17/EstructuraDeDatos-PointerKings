@@ -26,5 +26,7 @@ public:
     void eliminarUsuario();
     void modificarUsuario();
     void debugMostrarTodosLosMovimientos();
+    User* findUserByDNI(const std::string& dni);
+    void addBankAccount(User& user, char accountType);
 };
     

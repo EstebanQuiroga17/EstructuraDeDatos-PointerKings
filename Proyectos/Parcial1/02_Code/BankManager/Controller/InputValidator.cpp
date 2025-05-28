@@ -190,7 +190,7 @@ string InputValidator::isDNI() {
         printf("Cedula: ");
         while (true) {
             c = _getch();
-            if (c == 13) { 
+            if (c == 13) {
                 if (i == 10) { 
                     break;
                 } else {

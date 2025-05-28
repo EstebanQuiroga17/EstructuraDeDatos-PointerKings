@@ -27,6 +27,23 @@ int MenuManager::mostrarMenuPrincipal()
     return menu.runMenuLoopReturnIndex();
 }
 
+char MenuManager::menuAgregarCuenta(){
+    CursorMenu menu;
+    menu.loadOptions({"Cuenta de Ahorros",
+                      "Cuenta Corriente",
+                      "Cancelar"});
+    int seleccion = menu.runMenuLoopReturnIndex();
+    switch (seleccion)
+    {
+    case 0:
+        return 's'; // Solo ahorros
+    case 1:
+        return 'c'; // Solo corriente
+    default:
+        return 'x'; // Cancelar
+    }
+}
+
 char MenuManager::menuTipoCuenta()
 {
     CursorMenu menu;

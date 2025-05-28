@@ -218,7 +218,7 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
     Deposit deposito(monto, usuario, fecha);
     usuario->getBankMovements().insert(deposito);
     std::cout << "Deposito exitoso.\n";
-    deposito.printReceipt(); 
+    deposito.printReceipt(tipoCuenta); 
     saveUsers();
 }
 
@@ -252,7 +252,7 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     WithDraw retiro(monto, usuario, fecha);
     usuario->getBankMovements().insert(retiro);
     std::cout << "Retiro exitoso.\n";
-    retiro.printReceipt(); 
+    retiro.printReceipt(tipoCuenta); 
     saveUsers();
 }
 
@@ -458,7 +458,7 @@ void printMovementsResults(const std::vector<BankMovement*>& results) {
     }
     std::cout << "\n=== Resultados de la consulta ===\n";
     for (auto& mov : results) {
-        mov->printReceipt();
+        mov->printReceipt('n'); // 'n' for no specific account type
         std::cout << "------------------------------\n";
     }
 }

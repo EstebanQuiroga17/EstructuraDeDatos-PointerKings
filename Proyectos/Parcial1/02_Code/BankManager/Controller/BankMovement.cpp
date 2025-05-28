@@ -58,7 +58,7 @@ void BankMovement::setDate(Date newDate)
    date = newDate;
 }
 
-void BankMovement::printReceipt()  {
+void BankMovement::printReceipt(char accountType) {
    std::cout << ">>> IMPRIMIENDO RECIBO <<<" << std::endl;
    std::cout << "[BankMovement] Monto: " << ammount << std::endl;
    std::cout << "DNI: " << userDNI << std::endl;

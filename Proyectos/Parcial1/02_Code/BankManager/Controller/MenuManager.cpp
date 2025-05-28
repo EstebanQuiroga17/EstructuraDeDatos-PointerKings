@@ -139,7 +139,7 @@ void MenuManager::printMovementsResults(const std::vector<BankMovement *> &resul
     std::cout << "\n=== Resultados de la consulta ===\n";
     for (auto &mov : results)
     {
-        mov->printReceipt();
+        mov->printReceipt('n'); // 'n' for no specific account type
         std::cout << "------------------------------\n";
     }
 }

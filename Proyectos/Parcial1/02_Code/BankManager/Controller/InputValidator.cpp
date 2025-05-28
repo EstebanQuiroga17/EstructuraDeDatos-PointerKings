@@ -48,6 +48,7 @@ float InputValidator::isFloat(const std::string& mensaje) {
     bool ok = false;
     do {
         char c;
+        int decimalCount = -1;
         bool dot = false;
         int i = 0;
         char* fact = (char*)malloc(15 * sizeof(char)); 
@@ -55,10 +56,19 @@ float InputValidator::isFloat(const std::string& mensaje) {
         while ((c = getch()) != 13) { 
             if ((c >= '0' && c <= '9') || c == '.') {
                 if (i == 0 && c == '.') continue;
+                if (c == 8 && i > 0) {
+                i--;
+                printf("\b \b");
+                continue;
+                }
                 if (c == '.') {
                     if (dot) continue;
                     dot = true;
                 }
+                if(dot == true){
+                    decimalCount++;
+                }
+                if(decimalCount > 2) continue; 
                 *(fact + i) = c;
                 printf("%c", c);
                 i++;

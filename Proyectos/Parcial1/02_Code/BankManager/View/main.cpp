@@ -105,7 +105,7 @@ int main()
         }
 
         case 8:
-            // NUEVO SUBMENÚ MODIFICAR/ELIMINAR USUARIO
+        
             menu.showModifyUserMenu(gestor);
             gestor.saveUsers();
             break;

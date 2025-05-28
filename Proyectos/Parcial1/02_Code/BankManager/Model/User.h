@@ -9,12 +9,12 @@
 class User
 {
 public:
-   PersonalData getPersonalData(void) const; //cambio a constante
+   PersonalData getPersonalData(void) const; 
 
    void setPersonalData(PersonalData newPersonalData);
-   BankAccount& getSavingsAccount(void); //cambio a constante
+   BankAccount& getSavingsAccount(void); 
    void setSavingsAccount(BankAccount newSavingsAccount);
-   BankAccount& getCheckingAccount(void); //cambio a constante
+   BankAccount& getCheckingAccount(void); 
    void setCheckingAccount(BankAccount newCheckingAccount);
    List<BankMovement>& getBankMovements(void);
    

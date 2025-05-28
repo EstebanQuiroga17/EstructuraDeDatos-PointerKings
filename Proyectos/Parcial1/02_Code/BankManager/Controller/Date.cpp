@@ -90,29 +90,19 @@ Date Date::localDate() {
 }
 
 void Date::saveBinary(std::ofstream& out) const {
-    // Guardar day
     out.write(reinterpret_cast<const char*>(&day), sizeof(int));
-    // Guardar month
     out.write(reinterpret_cast<const char*>(&month), sizeof(int));
-    // Guardar year
     year.saveBinary(out);
-    // Guardar daysInMonth
     out.write(reinterpret_cast<const char*>(&daysInMonth), sizeof(int));
-    // Guardar time
     time.saveBinary(out);
 }
 
 
 bool Date::loadBinary(std::ifstream& in) {
-    // Leer day
     in.read(reinterpret_cast<char*>(&day), sizeof(int));
-    // Leer month
     in.read(reinterpret_cast<char*>(&month), sizeof(int));
-    // Leer year
     year.loadBinary(in);
-    // Leer daysInMonth
     in.read(reinterpret_cast<char*>(&daysInMonth), sizeof(int));
-    // Leer time
     time.loadBinary(in);
 
     return true;

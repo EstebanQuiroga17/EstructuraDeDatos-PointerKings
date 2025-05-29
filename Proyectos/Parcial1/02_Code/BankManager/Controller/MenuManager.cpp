@@ -22,7 +22,6 @@ int MenuManager::mostrarMenuPrincipal()
                       "Crear backup",
                       "Restaurar backup",
                       "Generar archivo descifrado para demostracion",
-                      "Modificacion de usuarios",
                       "Salir"});
     return menu.runMenuLoopReturnIndex();
 }
@@ -78,12 +77,13 @@ int MenuManager::menuUpdateUser()
     return seleccion;
 }
 
-int MenuManager::menuOperacionBancaria()
+int MenuManager::menuOperacionBancariaLogin()
 {
     CursorMenu menu;
     menu.loadOptions({"Deposito",
                       "Retiro",
-                      "Volver"});
+                      "Modificar mis datos",
+                      "Volver",});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;
 }
@@ -99,7 +99,7 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
     {
         system("cls");
         std::cout << "=== Operaciones Bancarias (" << tipoCuentaStr << ") ===\n";
-        int op = MenuManager::menuOperacionBancaria();
+        int op = MenuManager::menuOperacionBancariaLogin();
 
         switch (op)
         {
@@ -140,8 +140,16 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
             break;
         }
         case 2:
+        {
+            // Modificar mis datos
+            gestor.modificarUsuarioLogeado(usuario->getPersonalData().getDNI());
+            break;
+        }
+        case 3:
+        {
             volver = true;
             break;
+        }    
         }
     }
 }
@@ -262,42 +270,6 @@ void MenuManager::showMovementsQueryMenu(UserManager &manager)
             break;
         }
         case 3: // Volver
-            back = true;
-            break;
-        }
-    }
-}
-
-int MenuManager::menuModifyUser()
-{
-    CursorMenu menu;
-    menu.loadOptions({"Modificar usuario",
-                      "Eliminar usuario",
-                      "Volver"});
-    int seleccion = menu.runMenuLoopReturnIndex();
-    return seleccion;
-}
-
-void MenuManager::showModifyUserMenu(UserManager &manager)
-{
-    bool back = false;
-    while (!back)
-    {
-        system("cls");
-        std::cout << "==== MODIFICAR / ELIMINAR USUARIO ====" << std::endl;
-        int option = MenuManager::menuModifyUser();
-
-        switch (option)
-        {
-        case 0: // Modificar usuario
-            manager.modificarUsuario();
-            system("pause");
-            break;
-        case 1: // Eliminar usuario
-            manager.eliminarUsuario();
-            system("pause");
-            break;
-        case 2: // Volver
             back = true;
             break;
         }

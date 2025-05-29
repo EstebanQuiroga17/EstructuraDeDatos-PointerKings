@@ -104,16 +104,12 @@ int main()
             break;
         }
 
-        case 8:
-        
-            menu.showModifyUserMenu(gestor);
-            gestor.saveUsers();
-            break;
-        case 9:
+        case 8:{
             gestor.saveUsers();
             salir = true;
             break;
         }
+        }  
     }
     return 0;
 }

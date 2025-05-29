@@ -71,7 +71,6 @@ int MenuManager::menuUpdateUser()
                       "Modificar cedula",
                       "Modificar fecha de nacimiento",
                       "Modificar email",
-                      "Modificar tipos de cuentas",
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;

@@ -8,9 +8,9 @@
 
 using namespace std;
 
-PersonalData User::getPersonalData(void) const 
+PersonalData& User::getPersonalData(void) 
 {
-   return personalData;
+   return this->personalData;
 }
 
 void User::setPersonalData(PersonalData newPersonalData)

@@ -219,9 +219,6 @@ User* UserManager::login(char &tipoCuenta) {
     }
 }
 
-
-#include "../Model/CursorMenu.h" // ¡Asegúrate de incluirlo!
-
 void UserManager::modificarUsuarioLogeado(const std::string& cedulaLogeado) {
     system("cls");
     std::cout << "=== MODIFICAR MIS DATOS ===" << std::endl;
@@ -250,17 +247,9 @@ void UserManager::modificarUsuarioLogeado(const std::string& cedulaLogeado) {
         return;
     }
 
-    // Opciones para el menú cursor
-    vector<string> opciones = {
-        "Modificar nombre y apellido",
-        "Modificar cedula",
-        "Modificar fecha de nacimiento",
-        "Modificar email",
-        "Volver"
-    };
-
     bool volver = false;
     InputValidator validator;
+    MenuManager menuMan;
 
     while (!volver) {
         system("cls");
@@ -268,10 +257,7 @@ void UserManager::modificarUsuarioLogeado(const std::string& cedulaLogeado) {
                   << usuarioPtr->getPersonalData().getName() << " "
                   << usuarioPtr->getPersonalData().getLastName() << " ===\n";
 
-        // Usar CursorMenu para el menú de selección
-        CursorMenu menu;
-        menu.loadOptions(opciones);
-        int seleccion = menu.runMenuLoopReturnIndex();
+        int seleccion = menuMan.menuUpdateUser();
 
         switch (seleccion) {
             case 0: { // Nombre y apellido
@@ -312,6 +298,7 @@ void UserManager::modificarUsuarioLogeado(const std::string& cedulaLogeado) {
         }
     }
 }
+
 
 void UserManager::eliminarUsuario() {
     string cedula;

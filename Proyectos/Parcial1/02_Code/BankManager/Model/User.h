@@ -9,7 +9,7 @@
 class User
 {
 public:
-   PersonalData getPersonalData(void) const; 
+   PersonalData& getPersonalData(void); 
 
    void setPersonalData(PersonalData newPersonalData);
    BankAccount& getSavingsAccount(void); 

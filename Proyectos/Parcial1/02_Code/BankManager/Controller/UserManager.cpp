@@ -521,7 +521,7 @@ void UserManager::addBankAccount(User& user, char bankAccount){
             std::cout << "Cuenta corriente creada exitosamente.\n";
         } else {
             std::cout << "Ya existe una cuenta corriente para este usuario.\n";
-            
+            system("pause");
         }
     } else {
         std::cout << "Tipo de cuenta no reconocido.\n";

@@ -154,12 +154,21 @@ BankAccount UserManager::crearCuentaAhorros() {
     std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Numero de cuenta de ahorros generado: " << numCuenta << endl;
 
-    float saldo = validator.isFloat("Saldo inicial de ahorros: ");
+    float saldo;
+    do {
+        saldo = validator.isFloat("Saldo inicial de ahorros (minimo 10, maximo 250): ");
+        if (saldo < 10)
+            cout << "El saldo inicial debe ser al menos 10.\n";
+        else if (saldo > 50000)
+            cout << "El saldo inicial no puede exceder 50000.\n";
+    } while (saldo < 10 || saldo > 50000);
+
     cuenta.setAccountNumber(numCuenta);
     cuenta.setType("Ahorros");
     cuenta.setBalance(saldo);
     return cuenta;
 }
+
 
 BankAccount UserManager::crearCuentaCorriente() {
     InputValidator validator;
@@ -169,12 +178,21 @@ BankAccount UserManager::crearCuentaCorriente() {
     std::string numCuenta = cuenta.generateAccountNumber();
     cout << "Numero de cuenta corriente generado: " << numCuenta << endl;
 
-    float saldo = validator.isFloat("Saldo inicial corriente: ");
+    float saldo;
+    do {
+        saldo = validator.isFloat("Saldo inicial corriente (minimo 250, maximo 50000): ");
+        if (saldo < 250)
+            cout << "El saldo inicial debe ser al menos 250.\n";
+        else if (saldo > 50000)
+            cout << "El saldo inicial no puede exceder 50000.\n";
+    } while (saldo < 250 || saldo > 50000);
+
     cuenta.setAccountNumber(numCuenta);
     cuenta.setType("Corriente");
     cuenta.setBalance(saldo);
     return cuenta;
 }
+
 
 User* UserManager::login(char &tipoCuenta) {
     string cuentaIngresada;
@@ -271,7 +289,7 @@ void UserManager::modificarUsuarioLogeado(const std::string& cedulaLogeado) {
             case 1: { // DNI
                 std::string nuevaCedula = validator.isDNI();
                 usuarioPtr->getPersonalData().setDNI(nuevaCedula);
-                std::cout << "Cédula modificada.\n";
+                std::cout << "Cedula modificada.\n";
                 break;
             }
             case 2: { // Fecha nacimiento

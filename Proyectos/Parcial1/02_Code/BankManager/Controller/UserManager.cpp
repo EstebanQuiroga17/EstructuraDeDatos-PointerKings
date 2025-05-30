@@ -405,7 +405,7 @@ void UserManager::deposit(User* usuario, float monto, char tipoCuenta, const Dat
         std::cout << "Tipo de cuenta invalido.\n";
         return;
     }
-    Deposit deposito(monto, usuario, fecha);
+    BankMovement deposito(monto, usuario, fecha, nullptr);
     usuario->getBankMovements().insert(deposito);
     std::cout << "Deposito exitoso.\n";
     deposito.printReceipt(tipoCuenta); 
@@ -439,7 +439,7 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
         std::cout << "Tipo de cuenta invalido.\n";
         return;
     }
-    WithDraw retiro(monto, usuario, fecha);
+    BankMovement retiro(monto, usuario, fecha, nullptr);
     usuario->getBankMovements().insert(retiro);
     std::cout << "Retiro exitoso.\n";
     retiro.printReceipt(tipoCuenta); 

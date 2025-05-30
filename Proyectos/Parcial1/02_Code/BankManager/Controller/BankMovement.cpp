@@ -76,8 +76,8 @@ void BankMovement::setLastId(int newLastId) {
     lastId = newLastId;
 }
 
-BankMovement::BankMovement(float ammount, User* user, Date date)
-    : id(createId()), ammount(ammount), date(date),user(user)
+BankMovement::BankMovement(float ammount, User* user, Date date, User* destinationUser)
+    : id(createId()), ammount(ammount), date(date),user(user), destinationUser(destinationUser)
 {
    userDNI = user->getPersonalData().getDNI();
 }

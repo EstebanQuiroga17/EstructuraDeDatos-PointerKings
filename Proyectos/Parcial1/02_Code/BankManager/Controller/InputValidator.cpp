@@ -103,7 +103,6 @@ string InputValidator::isEmail() {
             size_t dotPos = input.find('.', (atPos != string::npos) ? atPos : 0);
             bool formatoOK =
                 atCount == 1 &&
-                dotCount == 1 &&
                 atPos != string::npos && atPos > 0 &&
                 dotPos != string::npos && dotPos > atPos + 1 && dotPos < input.size() - 1;
 
@@ -126,7 +125,7 @@ string InputValidator::isEmail() {
             input.pop_back();
             cout << "\b \b";
         }
-        else if (ch >= 'a' && ch <= 'z') {
+        else if (ch >= 'a' && ch <= 'z' || ch>= '0' && ch<= '9' || ch == '_' || ch == '-' || ch == '.') {
             input += ch;
             cout << ch;
         }
@@ -294,5 +293,5 @@ Date InputValidator::pedirFechaNacimiento() {
 
     } while (!validatorDate);
 
-    return Date(day, month, year);
+    return Date(year, month, day);
 }

@@ -374,6 +374,10 @@ void UserManager::mostrarUsuarios() {
         std::cout << "Usuario #" << i << ":\n";
         std::cout << "  Nombre: " << pd.getName() << " " << pd.getLastName() << "\n";
         std::cout << "  Cedula: " << pd.getDNI() << "\n";
+        std::cout << "  Email: " << pd.getEmail() << "\n";
+        std::cout << "  Fecha Nacimiento: "<< pd.getBirthDate().getDay() << "/"
+                  << pd.getBirthDate().getMonth() << "/"
+                  << pd.getBirthDate().getYear().getYear() << "\n";
         std::cout << "  Cuenta Ahorros: " << usuario.getSavingsAccount().getAccountNumber()
                   << " | Saldo: $" << usuario.getSavingsAccount().getBalance() << "\n";
         std::cout << "  Cuenta Corriente: " << usuario.getCheckingAccount().getAccountNumber()

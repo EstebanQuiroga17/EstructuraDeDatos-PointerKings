@@ -19,7 +19,6 @@ int MenuManager::mostrarMenuPrincipal()
                       "Menu de ayuda",
                       "Mostrar usuarios",
                       "Consultar movimientos",
-                      "Crear backup",
                       "Restaurar backup",
                       "Generar archivo descifrado para demostracion",
                       "Salir"});

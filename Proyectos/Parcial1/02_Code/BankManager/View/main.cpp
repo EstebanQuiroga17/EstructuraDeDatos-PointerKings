@@ -13,7 +13,6 @@ int main()
     UserManager gestor;
     MenuManager menu;
     gestor.loadUsers();
-    gestor.loadUsers();
     bool salir = false;
     while (!salir)
     {
@@ -53,20 +52,6 @@ int main()
             break;
         case 5:
         {
-            std::string backupName = BackupManager::getTimestampedBackupName();
-            if (BackupManager::makeBackup("users.dat", backupName))
-            {
-                std::cout << "Backup realizado: " << backupName << std::endl;
-            }
-            else
-            {
-                std::cout << "Error al realizar el backup." << std::endl;
-            }
-            system("pause");
-            break;
-        }
-        case 6:
-        {
             std::string backupToRestore;
             std::cout << "Ingrese nombre del backup a restaurar: ";
             std::cin >> backupToRestore;
@@ -82,7 +67,7 @@ int main()
             system("pause");
             break;
         }
-        case 7:
+        case 6:
         { 
             std::string archivoCifrado, archivoDescifrado;
             std::cout << "Ingrese el nombre del archivo cifrado (ej: users.dat): ";
@@ -104,8 +89,19 @@ int main()
             break;
         }
 
-        case 8:{
+        case 7:{
+            
+            std::string backupName = BackupManager::getTimestampedBackupName();
+            if (BackupManager::makeBackup("users.dat", backupName))
+            {
+                std::cout << "Saliendo del programa y backup realizado: " << backupName << std::endl;
+            }
+            else
+            {
+                std::cout << "Error al realizar el backup." << std::endl;
+            }
             gestor.saveUsers();
+            system("pause");
             salir = true;
             break;
         }

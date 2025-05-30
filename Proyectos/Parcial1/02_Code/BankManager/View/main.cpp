@@ -13,7 +13,6 @@ int main()
     UserManager gestor;
     MenuManager menu;
     gestor.loadUsers();
-    gestor.loadUsers();
     bool salir = false;
     while (!salir)
     {
@@ -101,8 +100,8 @@ int main()
             {
                 std::cout << "Error al realizar el backup." << std::endl;
             }
-            system("pause");
             gestor.saveUsers();
+            system("pause");
             salir = true;
             break;
         }

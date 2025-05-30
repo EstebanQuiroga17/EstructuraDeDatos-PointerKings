@@ -7,7 +7,7 @@ class User;
 class BankMovement
 {
 public:
-   BankMovement(float ammount, User* user, Date date);
+   BankMovement(float ammount, User* user, Date date, User* destinationUser = nullptr);
    BankMovement();
    std::string getId(void);
    void setId(const std::string& newId);
@@ -37,5 +37,6 @@ private:
    User* user;
    Date date;
    std::string userDNI; 
+   User* destinationUser = nullptr;
 };
 

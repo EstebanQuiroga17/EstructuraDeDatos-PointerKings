@@ -106,18 +106,20 @@ void MenuManager::menuOperations(UserManager &gestor, User *usuario, char tipoCu
             float monto;
             do
             {
-                monto = validator.isFloat("\nIngrese monto a depositar: ");
-                if (monto <= 0)
-                    std::cout << "El monto debe ser mayor que 0\n";
-                if(monto<=0.009)
-                    std::cout << "El monto minimo es 0.01\n";
-            } while (monto <= 0 || monto <= 0.009);
+            monto = validator.isFloat("\nIngrese monto a depositar: ");
+            if (monto <= 0)
+                std::cout << "El monto debe ser mayor que 0\n";
+            else if (monto <= 0.009)
+                std::cout << "El monto minimo es 0.01\n";
+            else if (monto > 50000)
+                std::cout << "El monto maximo permitido es 50,000\n";
+            } while (monto <= 0 || monto <= 0.009 || monto > 50000);
 
-            Date fecha = Date::localDate();
-            gestor.deposit(usuario, monto, tipoCuenta, fecha);
-            gestor.saveUsers();
-            system("pause");
-            break;
+        Date fecha = Date::localDate();
+        gestor.deposit(usuario, monto, tipoCuenta, fecha);
+        gestor.saveUsers();
+        system("pause");
+        break;
         }
         case 1:
         { // Retiro

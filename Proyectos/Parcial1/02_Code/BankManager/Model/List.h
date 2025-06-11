@@ -23,6 +23,7 @@ public:
     Node<T>* getElement(int index);
     Node<T>* getHead() const;
     void setHead(Node<T>* newHead);
+    void swapElements(int index1, int index2);
 };
 
 
@@ -205,4 +206,19 @@ Node<T>* List<T>::getElement(int index){
         }
     }
     return current;
+}
+
+template <typename T>
+void swap(int index1, int index2){
+    if (index1 < 0 || index2 < 0 || index1 == index2) {
+        return; 
+    }
+    Node<T>* node1 = getElement(index1);
+    Node<T>* node2 = getElement(index2);
+    if (!node1 || !node2) {
+        return; 
+    }
+    T temp = node1->getValue();
+    node1->setValue(node2->getValue());
+    node2->setValue(temp);
 }

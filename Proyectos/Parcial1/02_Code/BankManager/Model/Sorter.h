@@ -11,22 +11,26 @@ class Sorter
 };
 
 template <typename T, typename Attribute,typename Comparator>
-bool Sorter<T, Attribute, Comparator>::quickSort(List<T>& list, int left, int right,Comparator comparator) {
-    if (left >= right) {
-        return true; 
-    }
-    int i = left, j = right;
-    Node<T>* pivot = list.getElement((left + right) / 2);
+bool Sorter<T, Attribute, Comparator>::quickSort(List<T>& list, int left, int right, Comparator comparator) {
+    if (left >= right) return true;
 
-    while(comparator(pivot->getValue(), list.getElement(i)->getValue()) > 0) {
-        i++;
+    int i = left;
+    int j = right;
+    T pivot = list.getElement((left + right) / 2)->getValue();
+
+    while (i <= j) {
+        while (comparator(list.getElement(i)->getValue, pivot) < 0) i++;
+        while (comparator(list.getElement(j)->getValue(), pivot) > 0) j--;
+
+        if (i <= j) {
+            list.swapElements(i, j);
+            i++;
+            j--;
+        }
     }
 
+    if (left < j) quickSort(list, left, j, comparator);
+    if (i < right) quickSort(list, i, right, comparator);
 
     return true;
-}
-
-template <typename T, typename Attribute, typename Comparator>
-void Sorter<T, Attribute, Comparator>::quickSortByAttribute(List<T>& list, int left, int right, Attribute T::* attr) {
-    // TODO: implementación
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+class User;
 class BankAccount
 {
 public:
@@ -16,7 +17,7 @@ public:
    static void setLastId(std::string newLastId);
    BankAccount(); 
    BankAccount( std::string type);
-   static std::string generateAccountNumber();
+   static std::string generateAccountNumber(std::string type);
    ~BankAccount();
 
 protected:

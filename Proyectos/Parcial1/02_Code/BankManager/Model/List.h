@@ -19,8 +19,8 @@ public:
     void printList();
     void saveBinary(std::ofstream& out) const;
     bool loadBinary(std::ifstream& in);
-
-
+    int getSize();
+    Node<T>* getElement(int index);
     Node<T>* getHead() const;
     void setHead(Node<T>* newHead);
 };
@@ -178,4 +178,31 @@ bool List<T>::loadBinary(std::ifstream& in) {
         insert(obj);           
     }
     return true;
+}
+
+template <typename T>
+int List<T>::getSize() {
+    if (!head) return 0;
+    int size = 0;
+    Node<T>* current = head;
+    do {
+        size++;
+        current = current->getNextNode();
+    } while (current != head);
+    return size;
+}
+
+template <typename T>
+Node<T>* List<T>::getElement(int index){
+    Node<T>* current = head;
+    if(!head || index < 0 || index >= getSize()) {
+        return nullptr; 
+    }
+    for (int i = 0; i < index; ++i) {
+        current = current->getNextNode();
+        if (current == head) {
+            return nullptr; 
+        }
+    }
+    return current;
 }

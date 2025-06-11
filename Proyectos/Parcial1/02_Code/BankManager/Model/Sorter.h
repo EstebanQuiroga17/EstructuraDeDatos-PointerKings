@@ -7,7 +7,6 @@ class Sorter
 {
     public: 
     bool quickSort(List<T>& list, int left, int right,Comparator comparator);
-    void quickSortByAttribute(List<T>& list, int left, int right, Attribute T::* attribute);
 };
 
 template <typename T, typename Attribute,typename Comparator>

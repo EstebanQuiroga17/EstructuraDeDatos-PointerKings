@@ -175,6 +175,7 @@ int MenuManager::menuQueryMovements()
     menu.loadOptions({"Consultar por rango de fechas",
                       "Consultar por nombre y DNI",
                       "Consultar por monto minimo",
+                      "Consulta por "
                       "Volver"});
     int seleccion = menu.runMenuLoopReturnIndex();
     return seleccion;

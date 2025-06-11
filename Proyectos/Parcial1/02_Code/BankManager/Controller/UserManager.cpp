@@ -151,7 +151,7 @@ BankAccount UserManager::crearCuentaAhorros() {
     cout << "\n--- Datos de la cuenta de AHORROS ---" << endl;
 
     BankAccount cuenta;
-    std::string numCuenta = cuenta.generateAccountNumber();
+    std::string numCuenta = cuenta.generateAccountNumber("s");
     cout << "Numero de cuenta de ahorros generado: " << numCuenta << endl;
 
     float saldo;
@@ -175,7 +175,7 @@ BankAccount UserManager::crearCuentaCorriente() {
     cout << "\n--- Datos de la cuenta CORRIENTE ---" << endl;
 
     BankAccount cuenta;
-    std::string numCuenta = cuenta.generateAccountNumber();
+    std::string numCuenta = cuenta.generateAccountNumber("c");
     cout << "Numero de cuenta corriente generado: " << numCuenta << endl;
 
     float saldo;

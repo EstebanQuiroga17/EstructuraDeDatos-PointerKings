@@ -1,6 +1,7 @@
 #include <fstream>
 #include "../Model/BankAccount.h"
 #include "../Model/BinaryCifration.h"
+#include "../Model/User.h"
 #include <cstdlib>
 using namespace std;
 
@@ -36,19 +37,47 @@ void BankAccount::setType(std::string newType)
    type = newType;
 }
 
-std::string BankAccount::generateAccountNumber() {
-   if(!BinaryCifration::loadString(lastId, "BankAccountIdConfig.dat"))
-      lastId=1;
-   string initialNumbers = "131415";
-   string id = initialNumbers + lastId;
-   int lastIdInt = stoi(lastId);
-   lastIdInt++;
-   lastId = to_string(lastIdInt);
-   while(lastId.length()<6){
+std::string BankAccount::generateAccountNumber(std::string type) {
+   string accountNumber;
+   string extraDigit = "0"; // Default extra digit
+   bool isValid = false;
+   int sum = 0;
+   int integerExtraDigit = 0;
+   if(!BinaryCifration::loadString(lastId, "BankAccountIdConfig.dat")){
+      lastId="1";
+   }
+   string branchNumber = "88"; 
+   string accountTypeNumber;
+   if(type == "s"){
+      accountTypeNumber = "1";
+   }else if(type == "c"){
+      accountTypeNumber = "2";
+   }else{
+      cout<< "Invalid account type." << endl;
+      return "";
+   }
+   
+   accountNumber = branchNumber + accountTypeNumber + lastId + extraDigit;
+   do{
+      for(int i = 0; i<accountNumber.size(); i++){
+         sum += accountNumber[i] - '0';
+      }
+      if(sum % 10 == 0){
+         isValid = true;
+      }else{
+         integerExtraDigit = 10 - (sum % 10);
+         extraDigit = std::to_string(integerExtraDigit);
+         accountNumber = branchNumber + accountTypeNumber + lastId + extraDigit;
+         sum = 0;
+      }
+   } while(!isValid);
+
+   lastId = std::to_string(std::stoi(lastId) + 1);
+   for(int i = lastId.size(); i < 6; i++) {
       lastId = "0" + lastId;
    }
    BinaryCifration::saveString(lastId, "BankAccountIdConfig.dat");
-   return id;
+   return accountNumber;
 }
 
 
@@ -56,7 +85,7 @@ BankAccount::BankAccount(std::string type)
    : type(type)
 {
     srand(static_cast<unsigned int>(time(nullptr)));
-    accountNumber = generateAccountNumber();
+    accountNumber = generateAccountNumber(type);
     setBalance(0.0f);
 }
 

@@ -464,7 +464,6 @@ void UserManager::withdraw(User* usuario, float monto, char tipoCuenta, const Da
     saveUsers();
 }
 
-// UserManager.cpp
 void UserManager::queryMovements(
     const std::function<bool(BankMovement&)>& predicate,
     std::vector<BankMovement*>& results
@@ -549,3 +548,4 @@ void UserManager::addBankAccount(User& user, char bankAccount){
         std::cout << "Tipo de cuenta no reconocido.\n";
     }
 }
+

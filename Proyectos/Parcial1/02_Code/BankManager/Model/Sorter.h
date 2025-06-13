@@ -18,7 +18,7 @@ bool Sorter<T, Attribute, Comparator>::quickSort(List<T>& list, int left, int ri
     T pivot = list.getElement((left + right) / 2)->getValue();
 
     while (i <= j) {
-        while (comparator(list.getElement(i)->getValue, pivot) < 0) i++;
+        while (comparator(list.getElement(i)->getValue(), pivot) < 0) i++;
         while (comparator(list.getElement(j)->getValue(), pivot) > 0) j--;
 
         if (i <= j) {
